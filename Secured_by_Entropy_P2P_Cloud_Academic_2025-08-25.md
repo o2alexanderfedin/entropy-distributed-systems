@@ -1,4 +1,4 @@
-# Secured by Entropy: A Quantum-Inspired Cybersecurity Framework for Decentralized Cloud Infrastructures
+# Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures
 
 **Author:** Alex Fedin  
 **Affiliation:** O2.services (af@O2.services)  
@@ -7,9 +7,9 @@
 
 ## Abstract
 
-This paper presents a novel entropy-native peer-to-peer (P2P) architecture for decentralized cloud computing that addresses fundamental limitations in conventional static defense paradigms. By leveraging principles from information theory, quantum mechanics, and Moving Target Defense (MTD), we propose a self-obscuring, probabilistic swarm infrastructure utilizing WebAssembly-based isolation, ephemeral cryptographic keys, and randomized task distribution. Node discovery operates through entropy-driven random hash lookups in a Distributed Hash Table (DHT), ensuring unpredictable node selection patterns. Our framework demonstrates that systematic injection of entropy at multiple architectural layers—DHT-based node discovery, task scheduling, session management, and runtime isolation—creates an unpredictable attack surface that imposes probabilistic limitations on adversaries while enabling verifiable computation. We provide formal security analysis, implementation specifications for .NET AOT-compiled WebAssembly modules, and theoretical comparison with existing decentralized security frameworks. The architecture achieves O(log n) complexity for DHT-based node discovery with entropy-augmented lookup, maintains perfect forward secrecy, and demonstrates resistance to both classical and quantum cryptographic attacks. Applications span swarm robotics, privacy-preserving computation, and post-quantum cloud infrastructure.
+This paper presents a novel entropy-native peer-to-peer (P2P) architecture for decentralized cloud computing that addresses fundamental limitations in conventional static defense paradigms. By leveraging principles from information theory and Moving Target Defense (MTD), we propose a self-obscuring, probabilistic swarm infrastructure utilizing WebAssembly-based isolation, ephemeral cryptographic keys, and randomized task distribution. Node discovery operates through entropy-driven random hash lookups in a Distributed Hash Table (DHT), ensuring unpredictable node selection patterns. Our framework demonstrates that systematic injection of entropy at multiple architectural layers—DHT-based node discovery, task scheduling, session management, and runtime isolation—creates an unpredictable attack surface that imposes probabilistic limitations on adversaries while enabling verifiable computation. We provide formal security analysis, implementation specifications for .NET AOT-compiled WebAssembly modules, and theoretical comparison with existing decentralized security frameworks. The architecture achieves O(log n) complexity for DHT-based node discovery with entropy-augmented lookup, provides forward secrecy properties, and demonstrates enhanced resistance to classical attacks with considerations for quantum threats. Applications span swarm robotics, privacy-preserving computation, and post-quantum cloud infrastructure.
 
-**Keywords:** Entropy-based security, Decentralized systems, WebAssembly, Moving Target Defense, Peer-to-peer architecture, Quantum-inspired computing, Zero-trust networks, Distributed Hash Tables, Kademlia
+**Keywords:** Entropy-based security, Decentralized systems, WebAssembly, Moving Target Defense, Peer-to-peer architecture, Information-theoretic security, Zero-trust networks, Distributed Hash Tables, Kademlia
 
 ---
 
@@ -40,7 +40,7 @@ This paper makes the following contributions:
 1. **Theoretical Framework**: A formal model for entropy-based security that extends Shannon's information theory to distributed systems with DHT-based discovery
 2. **Architectural Design**: A complete P2P architecture leveraging WebAssembly sandboxing, ephemeral cryptographic protocols, and entropy-augmented DHT for node location
 3. **Implementation Specifications**: Detailed technical specifications for .NET 9 AOT compilation to WebAssembly with runtime isolation and Kademlia-based DHT integration
-4. **Security Analysis**: Formal proofs of security properties including perfect forward secrecy, Sybil resistance in DHT lookups, and quantum resistance
+4. **Security Analysis**: Formal proofs of security properties including forward secrecy, Sybil resistance in DHT lookups, and enhanced classical attack resistance
 5. **Theoretical Analysis**: Performance projections and theoretical comparison with existing decentralized frameworks
 
 ---
@@ -73,7 +73,7 @@ WebAssembly's security architecture, as detailed in recent 2025 developments, pr
 
 **Microsoft's Wassette Runtime (August 2025)**: Introduces security-oriented runtime for WebAssembly Components via Model Context Protocol (MCP) with fine-grained, deny-by-default permission systems. Built on Wasmtime runtime using Rust, it offers browser-grade sandboxing with capability-based security.
 
-**Hyperlight Integration (CNCF Sandbox, February 2025)**: Microsoft's Hyperlight Wasm combines WebAssembly with micro-VMs, achieving 1-2 millisecond launch times (with work ongoing to reach sub-1ms) while maintaining strict memory constraints and time-bounded execution guarantees.
+**Hyperlight Integration (CNCF Sandbox, February 2025)**: Microsoft's Hyperlight Wasm combines WebAssembly with micro-VMs, achieving microsecond-to-low-millisecond launch times (with Microsoft demonstrating 0.9ms execution times in controlled conditions) while maintaining strict memory constraints and time-bounded execution guarantees.
 
 ### 2.4 Decentralized Security Frameworks
 
@@ -175,7 +175,7 @@ public sealed class EntropyDHT
     {
         // Generate random lookup key with entropy
         var entropy = await _entropySource.GetBytes(32);
-        var lookupKey = SHA3_256(Concat(taskId, entropy));
+        var lookupKey = ComputeSha3Hash(ConcatenateBytes(taskId, entropy));
         
         // Perform iterative lookup with XOR distance metric
         var candidates = await _dht.FindClosestNodes(lookupKey, K);
@@ -189,7 +189,8 @@ public sealed class EntropyDHT
     {
         // Verify node hasn't been selected recently (anti-prediction)
         var nodeHistory = GetNodeSelectionHistory(node.Id);
-        if (nodeHistory.LastSelected < TimeSpan.FromMinutes(5))
+        var timeSinceLastSelection = DateTime.UtcNow - nodeHistory.LastSelected;
+        if (timeSinceLastSelection < TimeSpan.FromMinutes(5))
             return false;
             
         // Verify node's proof-of-work for Sybil resistance
@@ -457,13 +458,20 @@ We consider an adversary A with capabilities:
 
 ### 7.2 Security Properties
 
-**Theorem 1 (Perfect Forward Secrecy)**: The compromise of long-term keys does not compromise past session keys.
+**Theorem 1 (Forward Secrecy Properties)**: The compromise of long-term keys does not compromise past session keys, subject to implementation constraints.
 
-*Proof*: Each session key k_session is derived from ephemeral keys (a, b) and entropy (e_A, e_B) that are destroyed after use. Without these values, computing k_session requires solving the ECDLP, which is computationally infeasible.
+*Proof*: Each session key k_session is derived from ephemeral keys (a, b) and entropy (e_A, e_B) that are destroyed after use. Without these values, computing k_session requires solving the ECDLP, which is computationally infeasible under current cryptographic assumptions.
 
-**Theorem 2 (Quantum Resistance)**: The system maintains security against quantum adversaries with bounded resources.
+*Limitations*: This assumes (1) secure random number generation, (2) proper key destruction, (3) no implementation vulnerabilities, and (4) protection against man-in-the-middle attacks during key exchange.
 
-*Proof*: While quantum algorithms (Shor's) can break ECDLP, our entropy injection creates an additional search space of 2^256. Combined with ephemeral keys and session limits, this exceeds practical quantum computing capabilities projected through 2030.
+**Theorem 2 (Quantum Considerations)**: The system provides enhanced security against quantum adversaries through entropy augmentation, with important caveats.
+
+*Analysis*: While quantum algorithms (Shor's) can break ECDLP, entropy injection increases the computational complexity. However, this does not constitute true "quantum resistance" as:
+1. ECDLP-based components remain vulnerable to sufficiently powerful quantum computers
+2. Entropy augmentation provides only probabilistic protection
+3. True quantum resistance requires post-quantum cryptographic primitives (e.g., lattice-based, hash-based cryptography)
+
+*Practical Security*: The framework provides enhanced security against classical attacks and may increase quantum attack complexity, but should not be considered fully quantum-resistant without post-quantum cryptographic components.
 
 **Theorem 3 (DHT Lookup Security)**: The probability of an adversary predicting the next node selection in our entropy-augmented DHT is negligible.
 
@@ -504,10 +512,10 @@ Where:
 
 ### 7.4 Entropy Analysis
 
-The system entropy at time t is:
+The system entropy at time t is bounded by:
 
 ```
-H(S_t) = H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)
+H(S_t) ≤ H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)
 ```
 
 Where:
@@ -517,12 +525,18 @@ Where:
 - H(M_t): Memory layout entropy
 - H(D_t): DHT lookup entropy
 
-For security, we require:
+**Important**: This upper bound assumes perfect independence between entropy sources. In practice, sources are correlated and the actual system entropy H(S_t) will be significantly lower due to mutual information I(Xi;Xj) between sources.
+
+For correlated sources, Shannon's sub-additivity property gives us:
 ```
-H(D_t) = H(lookup_entropy) + H(task_id) ≥ 512 bits
+H(S_t) = H(N_t, K_t, R_t, M_t, D_t) ≤ H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)
 ```
 
-Maintaining H(S_t) > 768 bits ensures computational infeasibility of system state prediction.
+A conservative security requirement is:
+```
+H_∞(S_t) ≥ 256 bits (min-entropy)
+```
+where H_∞ represents the min-entropy, which provides the strongest security guarantee against adversaries.
 
 ---
 
@@ -537,34 +551,43 @@ Maintaining H(S_t) > 768 bits ensures computational infeasibility of system stat
 - **Workload**: Mixed cryptographic and computational tasks - *simulated workload*
 - **Baseline**: Traditional cloud with static allocation - *theoretical comparison*
 
-### 8.2 Estimated Performance Metrics
+### 8.2 Theoretical Performance Analysis
 
-*Note: The following metrics are theoretical estimates based on architectural analysis, not empirical measurements.*
+*Note: The following analysis is based on architectural complexity considerations, not empirical measurements.*
 
 | Metric | Traditional Cloud (Est.) | Entropy-Native P2P (Est.) | Improvement (Est.) |
 |--------|--------------------------|---------------------------|--------------------|
-| Task Latency (p50) | ~45ms | ~52ms | -15.6% |
-| Task Latency (p99) | ~320ms | ~285ms | +10.9% |
-| Throughput (tasks/sec) | ~10,450 | ~9,820 | -6.0% |
-| Security Events Detected | ~2,341 | ~18 | +99.2% |
-| Successful Attacks | ~47 | ~0 | +100% |
-| Resource Utilization | ~62% | ~71% | +14.5% |
+**Expected Performance Trade-offs**:
+- **Increased Latency**: Entropy generation, DHT lookups, and cryptographic operations add computational overhead
+- **Reduced Throughput**: Additional security operations decrease overall system throughput
+- **Enhanced Security**: Systematic entropy injection should reduce successful attacks
+- **Higher Resource Usage**: Cryptographic operations and entropy management increase CPU/memory usage
 
-### 8.3 DHT Performance Analysis (Estimated)
+**Complexity Analysis**:
+- DHT lookup: O(log n) hops as per Kademlia specification
+- Entropy generation: O(1) per operation
+- Cryptographic verification: O(1) per node
+- Overall: O(log n) complexity maintained with added constant factors
 
-**Estimated Lookup Performance**:
-- Random hash generation: ~0.3ms (SHA3-256) - *estimated*
-- DHT traversal: ~1.8ms average (log₂(1000) ≈ 10 hops) - *theoretical calculation*
-- Node verification: ~0.7ms (proof-of-work check) - *estimated*
-- Total DHT overhead: ~2.8ms per lookup - *estimated*
+### 8.3 DHT Complexity Analysis
 
-**Estimated Comparison with Traditional DHT**:
-| Metric | Standard Kademlia (Est.) | Entropy-Enhanced DHT (Est.) | Overhead (Est.) |
-|--------|--------------------------|----------------------------|----------------|
-| Lookup Latency | ~1.2ms | ~2.8ms | +133% |
-| Security Events | ~47 per day | ~0 per day | -100% |
-| Sybil Resistance | Weak | Strong | N/A |
-| Predictability | High | None | N/A |
+**Theoretical Complexity**:
+- **Standard Kademlia**: O(log n) hops for n nodes (proven)
+- **Entropy-Enhanced DHT**: O(log n) + O(k) where k is constant entropy operations
+- **Asymptotic Complexity**: Still O(log n) due to dominating logarithmic term
+
+**Additional Operations per Lookup**:
+- Entropy generation: Constant time O(1)
+- Hash computation: Constant time O(1)
+- Proof-of-work verification: Constant time O(1)
+- Anti-prediction check: Constant time O(1)
+
+**Security Properties**:
+- **Sybil Resistance**: Enhanced through proof-of-work requirements
+- **Predictability**: Reduced through entropy injection
+- **Eclipse Attacks**: Mitigated by random node selection
+
+*Note: Actual performance would depend on implementation, network conditions, and hardware capabilities.*
 
 ### 8.4 Estimated Entropy Overhead Analysis
 
@@ -592,7 +615,7 @@ This theoretical overhead would be offset by elimination of security incident re
 - Differential privacy noise injection
 - Random node selection for each batch
 
-**Projected Results**: Theoretical capability to train 7B parameter model across 500 nodes with zero data leakage - *conceptual framework only*.
+**Projected Results**: Theoretical framework for distributed training across multiple nodes with privacy preservation - *conceptual approach requiring significant additional research*.
 
 ### 9.2 Theoretical Critical Infrastructure Protection
 
@@ -603,7 +626,7 @@ This theoretical overhead would be offset by elimination of security incident re
 - ~100ms key rotation for command channels - *estimated*
 - Random relay selection for sensor data
 
-**Projected Outcome**: Estimated 99.97% uptime over 6 months with ~1,247 attack attempts blocked - *theoretical projection only*.
+**Projected Outcome**: Enhanced system resilience through unpredictable attack surface - *theoretical security improvement requiring empirical validation*.
 
 ### 9.3 Theoretical Privacy-Preserving Healthcare Analytics
 
@@ -614,7 +637,7 @@ This theoretical overhead would be offset by elimination of security incident re
 - Entropy-based participant selection
 - Federated learning with differential privacy
 
-**Projected Impact**: Theoretical analysis of ~10M patient records across 50 institutions with HIPAA compliance - *conceptual framework only*.
+**Projected Impact**: Framework for privacy-preserving multi-institutional research - *conceptual approach requiring regulatory and technical validation*.
 
 ---
 
@@ -626,7 +649,7 @@ This theoretical overhead would be offset by elimination of security incident re
 2. **Resilience**: No single point of failure or persistent vulnerability
 3. **Scalability**: Peer-to-peer architecture scales horizontally
 4. **Privacy**: Ephemeral keys and random routing prevent tracking
-5. **Quantum-ready**: Entropy augmentation provides post-quantum security margin
+5. **Enhanced Security**: Entropy augmentation increases attack complexity against classical threats
 
 ### 10.2 Limitations and Challenges
 
@@ -678,11 +701,11 @@ This theoretical overhead would be offset by elimination of security incident re
 
 This paper presents a paradigm shift in distributed system security through systematic entropy injection. By treating unpredictability as a fundamental architectural property rather than an operational inconvenience, we achieve robust defense against both current and emerging threats.
 
-Our entropy-native P2P architecture demonstrates that security need not come at the expense of functionality. Through careful application of information theory, quantum-inspired design principles, and modern isolation technologies like WebAssembly, we create systems that are simultaneously secure, scalable, and practical.
+Our entropy-native P2P architecture demonstrates that security need not come at the expense of functionality. Through careful application of information theory, entropy-based design principles, and modern isolation technologies like WebAssembly, we create systems that are simultaneously secure, scalable, and practical.
 
-The implications extend beyond traditional cybersecurity. As we move toward an era of quantum computing, artificial general intelligence, and increasingly sophisticated cyber threats, the principles of entropy-based defense will become essential. Security is no longer about building higher walls—it is about creating an ever-shifting fog that makes those walls impossible to find.
+The implications extend beyond traditional cybersecurity. As we move toward an era of increasingly sophisticated cyber threats and advanced computing capabilities, the principles of entropy-based defense will become essential. Security is no longer about building higher walls—it is about creating an ever-shifting fog that makes those walls impossible to find.
 
-> _"In the quantum age, security is not a state but a continuous perturbation of possibilities."_
+> _"In the information age, security is achieved through systematic uncertainty rather than static barriers."_
 
 ---
 
@@ -864,14 +887,14 @@ Let A be adversary controlling m < n/3 nodes. For eclipse attack on target T:
 | Eclipse | Static routing | Random hash lookup | ~99.8% reduction |
 | Code injection | Signature verification | + Wasm sandboxing | ~100% prevention |
 | DHT poisoning | Replication | Entropy-based verification | ~99.9% reduction |
-| Quantum cryptanalysis | Larger keys | + Entropy augmentation | Post-quantum secure |
+| Advanced cryptanalysis | Larger keys | + Entropy augmentation | Enhanced security |
 | Replay attacks | Timestamps | Ephemeral keys | ~100% prevention |
 | Man-in-the-middle | TLS | + Random DHT routing | ~99.9% reduction |
 
 ---
 
 **Citation**:  
-Fedin, A. (2025). Secured by Entropy: A Quantum-Inspired Cybersecurity Framework for Decentralized Cloud Infrastructures. *Nolock.social*. https://nolock.social
+Fedin, A. (2025). Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures. *Nolock.social*. https://nolock.social
 
 **Contact**: af@O2.services
 
