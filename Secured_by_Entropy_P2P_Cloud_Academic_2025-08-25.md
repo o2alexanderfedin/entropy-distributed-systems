@@ -25,9 +25,7 @@ Recent developments highlight this crisis. Industry analysis suggests that Autom
 
 Information theory, established by Claude Shannon in 1948, provides the mathematical foundation for understanding uncertainty in systems. Shannon's entropy H(X) for a discrete random variable X with probability mass function p(x) is defined as:
 
-```
-H(X) = -Σ p(x) log₂ p(x)
-```
+$$H(X) = -\sum_{x} p(x) \log_2 p(x)$$
 
 This measure quantifies the average information content or uncertainty in a system. In cryptographic contexts, Shannon proved that perfect secrecy requires the key entropy to equal or exceed the message entropy—a principle fundamental to one-time pad encryption.
 
@@ -153,9 +151,7 @@ Let S = (N, T, K, R, E, D) represent our system where:
 - D = (H, d, k) is the DHT with hash space H, distance metric d, and replication factor k
 
 The system maintains the invariant:
-```
-E(S) ≥ H_min
-```
+$$E(S) \geq H_{\text{min}}$$
 where H_min is the minimum entropy threshold for security.
 
 ### 3.3 DHT-Based Node Discovery
@@ -200,11 +196,9 @@ public sealed class EntropyDHT
 ```
 
 The XOR distance metric in Kademlia provides uniform distribution:
-```
-d(x, y) = x ⊕ y
-```
+$$d(x, y) = x \oplus y$$
 
-This ensures O(log n) lookup complexity with high probability.
+This ensures $O(\log n)$ lookup complexity with high probability.
 
 ### 3.4 Node Architecture
 
@@ -300,9 +294,7 @@ public class EntropyAggregator : IEntropySource
 
 The entropy distribution across the system follows a min-entropy model:
 
-```
-H_∞(X) = -log₂(max_x P(X = x))
-```
+$$H_{\infty}(X) = -\log_2\left(\max_x P(X = x)\right)$$
 
 This conservative measure ensures security even against adversaries with partial system knowledge.
 
@@ -320,7 +312,7 @@ Protocol: Entropy-Enhanced ECDHE
 2. Bob generates ephemeral key pair (b, B = bG) with entropy e_B  
 3. Exchange: Alice → Bob: A || H(e_A), Bob → Alice: B || H(e_B)
 4. Shared secret: K = KDF(abG || e_A || e_B)
-5. Session key: k_session = HKDF(K, "session", 256)
+5. Session key: $k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$
 6. Destroy ephemeral keys after use
 ```
 
@@ -460,7 +452,7 @@ We consider an adversary A with capabilities:
 
 **Theorem 1 (Forward Secrecy Properties)**: The compromise of long-term keys does not compromise past session keys, subject to implementation constraints.
 
-*Proof*: Each session key k_session is derived from ephemeral keys (a, b) and entropy (e_A, e_B) that are destroyed after use. Without these values, computing k_session requires solving the ECDLP, which is computationally infeasible under current cryptographic assumptions.
+*Proof*: Each session key $k_{\text{session}}$ is derived from ephemeral keys $(a, b)$ and entropy $(e_A, e_B)$ that are destroyed after use. Without these values, computing $k_{\text{session}}$ requires solving the ECDLP, which is computationally infeasible under current cryptographic assumptions.
 
 *Limitations*: This assumes (1) secure random number generation, (2) proper key destruction, (3) no implementation vulnerabilities, and (4) protection against man-in-the-middle attacks during key exchange.
 
@@ -476,47 +468,43 @@ We consider an adversary A with capabilities:
 **Theorem 3 (DHT Lookup Security)**: The probability of an adversary predicting the next node selection in our entropy-augmented DHT is negligible.
 
 *Proof*: Let P_predict be the probability of predicting the next lookup target. Given:
-- Random entropy injection e with H(e) ≥ 256 bits
+- Random entropy injection $e$ with $H(e) \geq 256$ bits
 - Task identifier t with uniform distribution
 - Lookup key k = SHA3(t || e)
-- XOR distance metric d(k, n_i) = k ⊕ node_id_i
+- XOR distance metric $d(k, n_i) = k \oplus \text{node\_id}_i$
 
 The adversary must predict both e and the resulting closest nodes. Since SHA3 is cryptographically secure:
-P_predict ≤ 2^(-256) + ε
+$P_{\text{predict}} \leq 2^{-256} + \varepsilon$
 where ε is negligible for practical purposes.
 
 **Theorem 4 (DHT Sybil Resistance)**: The system resists Sybil attacks through entropy-based proof-of-work in node admission.
 
 *Proof*: For a node to participate, it must solve:
-SHA3(node_id || entropy || difficulty_target) < 2^(256-k)
-where k is the difficulty parameter. An adversary creating m Sybil nodes requires 2^k work per node, making large-scale Sybil attacks economically infeasible.
+$\text{SHA3}(\text{node\_id} || \text{entropy} || \text{difficulty\_target}) < 2^{(256-k)}$
+where $k$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires $2^k$ work per node, making large-scale Sybil attacks economically infeasible.
 
 ### 7.3 DHT Complexity Analysis
 
 The entropy-augmented DHT maintains O(log n) lookup complexity while adding security properties:
 
 **Lookup Complexity**: For n nodes in the DHT with replication factor k:
-- Expected hops: log₂(n) / log₂(k)
-- Worst-case hops: log₂(n) + c (where c is small constant)
+- Expected hops: $\log_2(n) / \log_2(k)$
+- Worst-case hops: $\log_2(n) + c$ (where $c$ is small constant)
 - Entropy generation overhead: O(1)
 - Total complexity: O(log n)
 
 **Security Properties**:
-```
-P_discovery = P_entropy × P_routing × P_verification
-```
+$$P_{\text{discovery}} = P_{\text{entropy}} \times P_{\text{routing}} \times P_{\text{verification}}$$
 Where:
-- P_entropy ≈ 2^(-256): Probability of guessing entropy
-- P_routing ≈ k/n: Probability of being selected in k-bucket
-- P_verification ≈ 2^(-k): Proof-of-work verification
+- $P_{\text{entropy}} \approx 2^{-256}$: Probability of guessing entropy
+- $P_{\text{routing}} \approx k/n$: Probability of being selected in k-bucket
+- $P_{\text{verification}} \approx 2^{-k}$: Proof-of-work verification
 
 ### 7.4 Entropy Analysis
 
 The system entropy at time t is bounded by:
 
-```
-H(S_t) ≤ H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)
-```
+$$H(S_t) \leq H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)$$
 
 Where:
 - H(N_t): Node selection entropy
@@ -525,18 +513,14 @@ Where:
 - H(M_t): Memory layout entropy
 - H(D_t): DHT lookup entropy
 
-**Important**: This upper bound assumes perfect independence between entropy sources. In practice, sources are correlated and the actual system entropy H(S_t) will be significantly lower due to mutual information I(Xi;Xj) between sources.
+**Important**: This upper bound assumes perfect independence between entropy sources. In practice, sources are correlated and the actual system entropy $H(S_t)$ will be significantly lower due to mutual information $I(X_i; X_j)$ between sources.
 
 For correlated sources, Shannon's sub-additivity property gives us:
-```
-H(S_t) = H(N_t, K_t, R_t, M_t, D_t) ≤ H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)
-```
+$$H(S_t) = H(N_t, K_t, R_t, M_t, D_t) \leq H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)$$
 
 A conservative security requirement is:
-```
-H_∞(S_t) ≥ 256 bits (min-entropy)
-```
-where H_∞ represents the min-entropy, which provides the strongest security guarantee against adversaries.
+$$H_{\infty}(S_t) \geq 256 \text{ bits (min-entropy)}$$
+where $H_{\infty}$ represents the min-entropy, which provides the strongest security guarantee against adversaries.
 
 ---
 
@@ -564,23 +548,23 @@ where H_∞ represents the min-entropy, which provides the strongest security gu
 - **Higher Resource Usage**: Cryptographic operations and entropy management increase CPU/memory usage
 
 **Complexity Analysis**:
-- DHT lookup: O(log n) hops as per Kademlia specification
-- Entropy generation: O(1) per operation
-- Cryptographic verification: O(1) per node
-- Overall: O(log n) complexity maintained with added constant factors
+- DHT lookup: $O(\log n)$ hops as per Kademlia specification
+- Entropy generation: $O(1)$ per operation
+- Cryptographic verification: $O(1)$ per node
+- Overall: $O(\log n)$ complexity maintained with added constant factors
 
 ### 8.3 DHT Complexity Analysis
 
 **Theoretical Complexity**:
-- **Standard Kademlia**: O(log n) hops for n nodes (proven)
-- **Entropy-Enhanced DHT**: O(log n) + O(k) where k is constant entropy operations
-- **Asymptotic Complexity**: Still O(log n) due to dominating logarithmic term
+- **Standard Kademlia**: $O(\log n)$ hops for $n$ nodes (proven)
+- **Entropy-Enhanced DHT**: $O(\log n) + O(k)$ where $k$ is constant entropy operations
+- **Asymptotic Complexity**: Still $O(\log n)$ due to dominating logarithmic term
 
 **Additional Operations per Lookup**:
-- Entropy generation: Constant time O(1)
-- Hash computation: Constant time O(1)
-- Proof-of-work verification: Constant time O(1)
-- Anti-prediction check: Constant time O(1)
+- Entropy generation: Constant time $O(1)$
+- Hash computation: Constant time $O(1)$
+- Proof-of-work verification: Constant time $O(1)$
+- Anti-prediction check: Constant time $O(1)$
 
 **Security Properties**:
 - **Sybil Resistance**: Enhanced through proof-of-work requirements
@@ -753,30 +737,30 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 ### A.1 Proof of Minimum Entropy Maintenance
 
-**Lemma 1**: Given n nodes with individual min-entropy H_∞(nᵢ) ≥ h_min, the system has aggregate entropy bounded below.
+**Lemma 1**: Given $n$ nodes with individual min-entropy $H_{\infty}(n_i) \geq h_{\text{min}}$, the system has aggregate entropy bounded below.
 
 *Modified Proof*:
-- For independent entropy sources: H(S) ≥ max(H(n₁), H(n₂), ..., H(nₙ)) ≥ h_min
-- For partially correlated sources: H(S) ≥ H_∞(combined_sources) 
-- **Note**: Linear additivity H(S) = ΣH(nᵢ) only holds for perfectly independent sources, which is unrealistic in networked systems
-- Conservative bound: H(S) ≥ h_min ensures minimum security threshold ✓
+- For independent entropy sources: $H(S) \geq \max(H(n_1), H(n_2), \ldots, H(n_n)) \geq h_{\text{min}}$
+- For partially correlated sources: $H(S) \geq H_{\infty}(\text{combined sources})$ 
+- **Note**: Linear additivity $H(S) = \sum H(n_i)$ only holds for perfectly independent sources, which is unrealistic in networked systems
+- Conservative bound: $H(S) \geq h_{\text{min}}$ ensures minimum security threshold ✓
 
 ### A.2 DHT Lookup Complexity Proof
 
-**Lemma 2**: In a Kademlia DHT with n nodes, the expected number of lookup hops is O(log n).
+**Lemma 2**: In a Kademlia DHT with $n$ nodes, the expected number of lookup hops is $O(\log n)$.
 
 *Proof*: 
 - Each routing step eliminates at least half the remaining search space
-- Expected hops ≤ log₂(n/k) where k is the bucket size
-- With entropy injection, additional O(1) operations don't change asymptotic complexity
-- Total: O(log n) + O(1) = O(log n) ✓
+- Expected hops $\leq \log_2(n/k)$ where $k$ is the bucket size
+- With entropy injection, additional $O(1)$ operations don't change asymptotic complexity
+- Total: $O(\log n) + O(1) = O(\log n)$ ✓
 
 **Lemma 3**: Entropy injection maintains DHT correctness while adding security.
 
 *Proof*:
-- XOR distance metric: d(x,y) = x ⊕ y remains consistent
-- Random hash h = SHA3(task_id || entropy) preserves uniform distribution over key space
-- Closest node property maintained: ∀ h, ∃ unique closest node n_i where d(h, n_i) is minimal
+- XOR distance metric: $d(x,y) = x \oplus y$ remains consistent
+- Random hash $h = \text{SHA3}(\text{task\_id} || \text{entropy})$ preserves uniform distribution over key space
+- Closest node property maintained: $\forall h, \exists$ unique closest node $n_i$ where $d(h, n_i)$ is minimal
 - Therefore, DHT routing correctness is preserved ✓
 
 ### A.3 DHT Security Proofs
@@ -784,19 +768,19 @@ The author thanks the Nolock.social community for valuable feedback and the open
 **Theorem 5**: The probability of DHT eclipse attack success is negligible with entropy augmentation (under independence assumptions).
 
 *Proof*:
-Let A be adversary controlling m < n/3 nodes. For eclipse attack on target T:
-- Adversary must predict lookup key k = SHA3(task_id || entropy)
-- Probability of predicting entropy: P_entropy ≤ 2^(-256) (assuming cryptographic hash security)
-- Even if entropy known, adversary needs ≥ k surrounding nodes in key space
-- Probability of k malicious nodes in target region: P_surround ≤ (m/n)^k (assuming uniform distribution)
-- Combined probability: P_eclipse ≤ 2^(-256) × (m/n)^k ≈ 0 
+Let $A$ be adversary controlling $m < n/3$ nodes. For eclipse attack on target $T$:
+- Adversary must predict lookup key $k = \text{SHA3}(\text{task\_id} || \text{entropy})$
+- Probability of predicting entropy: $P_{\text{entropy}} \leq 2^{-256}$ (assuming cryptographic hash security)
+- Even if entropy known, adversary needs $\geq k$ surrounding nodes in key space
+- Probability of $k$ malicious nodes in target region: $P_{\text{surround}} \leq (m/n)^k$ (assuming uniform distribution)
+- Combined probability: $P_{\text{eclipse}} \leq 2^{-256} \times (m/n)^k \approx 0$ 
 - **Note**: This assumes statistical independence between entropy prediction and node positioning, which may not hold in sophisticated attacks ✓
 
 ### A.4 VRF Security Analysis
 
-**Theorem 6**: The probability of successful Sybil attack with m malicious nodes among n total nodes is bounded by (m/n)^k where k is the consensus threshold.
+**Theorem 6**: The probability of successful Sybil attack with $m$ malicious nodes among $n$ total nodes is bounded by $(m/n)^k$ where $k$ is the consensus threshold.
 
-*Proof*: VRF output is uniformly distributed in [0, 2^256). For k independent selections, probability of all selecting malicious nodes = (m/n)^k. For n=1000, m=100, k=5: P < 10^-5.
+*Proof*: VRF output is uniformly distributed in $[0, 2^{256})$. For $k$ independent selections, probability of all selecting malicious nodes $= (m/n)^k$. For $n=1000$, $m=100$, $k=5$: $P < 10^{-5}$.
 
 ---
 
