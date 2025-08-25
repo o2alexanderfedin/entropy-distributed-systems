@@ -544,6 +544,12 @@ where $H_{\infty}$ represents the min-entropy, which provides the strongest secu
 
 | Metric | Traditional Cloud (Est.) | Entropy-Native P2P (Est.) | Improvement (Est.) |
 |--------|--------------------------|---------------------------|--------------------|
+| **Latency** | ~50ms | ~65ms (+30%) | Security vs Speed Trade-off |
+| **Throughput** | ~1000 ops/sec | ~850 ops/sec (-15%) | Entropy Overhead |
+| **Attack Success Rate** | ~8.5% | ~1.2% (-86%) | Enhanced Security |
+| **Resource Usage** | Baseline | +25% CPU, +15% Memory | Cryptographic Operations |
+| **Node Discovery** | Static routing | $O(\log n)$ DHT lookup | Scalable Architecture |
+
 **Expected Performance Trade-offs**:
 - **Increased Latency**: Entropy generation, DHT lookups, and cryptographic operations add computational overhead
 - **Reduced Throughput**: Additional security operations decrease overall system throughput
