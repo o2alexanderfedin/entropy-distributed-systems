@@ -445,9 +445,9 @@ The WebAssembly sandbox provides:
 
 ### 7.1 Threat Model
 
-We consider an adversary A with capabilities:
+We consider an adversary $\mathcal{A}$ with capabilities:
 - Complete network visibility
-- Ability to compromise up to t < n/3 nodes
+- Ability to compromise up to $t < n/3$ nodes
 - Quantum computing resources for cryptanalysis
 - Knowledge of system architecture but not runtime entropy
 
@@ -470,15 +470,15 @@ We consider an adversary A with capabilities:
 
 **Theorem 3 (DHT Lookup Security)**: The probability of an adversary predicting the next node selection in our entropy-augmented DHT is negligible.
 
-*Proof*: Let P_predict be the probability of predicting the next lookup target. Given:
+*Proof*: Let $P_{\text{predict}}$ be the probability of predicting the next lookup target. Given:
 - Random entropy injection $e$ with $H(e) \geq 256$ bits
-- Task identifier t with uniform distribution
+- Task identifier $t$ with uniform distribution
 - Lookup key $k = \text{SHA3}(t || e)$
 - XOR distance metric $d(k, n_i) = k \oplus \text{node\_id}_i$
 
-The adversary must predict both e and the resulting closest nodes. Since SHA3 is cryptographically secure:
-$P_{\text{predict}} \leq 2^{-256} + \varepsilon$
-where ε is negligible for practical purposes.
+The adversary must predict both $e$ and the resulting closest nodes. Since SHA3 is cryptographically secure:
+$$P_{\text{predict}} \leq 2^{-256} + \varepsilon$$
+where $\varepsilon$ is negligible for practical purposes.
 
 **Theorem 4 (DHT Sybil Resistance)**: The system resists Sybil attacks through entropy-based proof-of-work in node admission.
 
@@ -771,7 +771,7 @@ The author thanks the Nolock.social community for valuable feedback and the open
 **Theorem 5**: The probability of DHT eclipse attack success is negligible with entropy augmentation (under independence assumptions).
 
 *Proof*:
-Let $A$ be adversary controlling $m < n/3$ nodes. For eclipse attack on target $T$:
+Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack on target $T$:
 - Adversary must predict lookup key $k = \text{SHA3}(\text{task\_id} || \text{entropy})$
 - Probability of predicting entropy: $P_{\text{entropy}} \leq 2^{-256}$ (assuming cryptographic hash security)
 - Even if entropy known, adversary needs $\geq k$ surrounding nodes in key space
