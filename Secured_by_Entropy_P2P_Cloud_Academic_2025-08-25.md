@@ -306,15 +306,13 @@ This conservative measure ensures security even against adversaries with partial
 
 We implement a modified Diffie-Hellman protocol with ephemeral keys:
 
-```
-Protocol: Entropy-Enhanced ECDHE
+**Protocol: Entropy-Enhanced ECDHE**
 1. Alice generates ephemeral key pair $(a, A = aG)$ with entropy $e_A$
 2. Bob generates ephemeral key pair $(b, B = bG)$ with entropy $e_B$  
 3. Exchange: Alice → Bob: $A || H(e_A)$, Bob → Alice: $B || H(e_B)$
 4. Shared secret: $K = \text{KDF}(abG || e_A || e_B)$
 5. Session key: $k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$
 6. Destroy ephemeral keys after use
-```
 
 The session key derivation uses the standard HKDF construction:
 $$k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$$
