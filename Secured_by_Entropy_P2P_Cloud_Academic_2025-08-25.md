@@ -510,11 +510,11 @@ The system entropy at time t is bounded by:
 $$H(S_t) \leq H(N_t) + H(K_t) + H(R_t) + H(M_t) + H(D_t)$$
 
 Where:
-- H(N_t): Node selection entropy
-- H(K_t): Key generation entropy  
-- H(R_t): Routing entropy
-- H(M_t): Memory layout entropy
-- H(D_t): DHT lookup entropy
+- $H(N_t)$: Node selection entropy
+- $H(K_t)$: Key generation entropy  
+- $H(R_t)$: Routing entropy
+- $H(M_t)$: Memory layout entropy
+- $H(D_t)$: DHT lookup entropy
 
 **Important**: This upper bound assumes perfect independence between entropy sources. In practice, sources are correlated and the actual system entropy $H(S_t)$ will be significantly lower due to mutual information $I(X_i; X_j)$ between sources.
 
