@@ -1,6 +1,6 @@
 # Entropy-Based Distributed Systems Research
 
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Academic Paper](https://img.shields.io/badge/Type-Academic%20Paper-blue.svg)](https://github.com/o2alexanderfedin/entropy-distributed-systems)
 [![Status: Research](https://img.shields.io/badge/Status-Research%20Phase-orange.svg)](https://github.com/o2alexanderfedin/entropy-distributed-systems)
 
@@ -142,14 +142,16 @@ entropy-distributed-systems/
 
 ## License
 
-This work is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+This work is licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 You are free to:
 - **Share**: Copy and redistribute the material in any medium or format
-- **Adapt**: Remix, transform, and build upon the material for any purpose
+- **Adapt**: Remix, transform, and build upon the material for **non-commercial purposes only**
 
 Under the following terms:
 - **Attribution**: You must give appropriate credit, provide a link to the license, and indicate if changes were made
+- **NonCommercial**: You may not use the material for commercial purposes
+- **ShareAlike**: If you remix, transform, or build upon the material, you must distribute your contributions under the same license
 
 ## Keywords
 

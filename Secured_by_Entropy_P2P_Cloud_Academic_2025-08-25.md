@@ -889,7 +889,7 @@ Fedin, A. (2025). Secured by Entropy: An Entropy-Based Cybersecurity Framework f
 
 **Contact**: af@O2.services
 
-**License**: This work is licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)
+**License**: This work is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
 **Data Availability**: Theoretical framework and specifications available. Implementation code would be developed in future work.
 
