@@ -152,7 +152,7 @@ Let S = (N, T, K, R, E, D) represent our system where:
 
 The system maintains the invariant:
 $$E(S) \geq H_{\text{min}}$$
-where H_min is the minimum entropy threshold for security.
+where $H_{\text{min}}$ is the minimum entropy threshold for security.
 
 ### 3.3 DHT-Based Node Discovery
 
