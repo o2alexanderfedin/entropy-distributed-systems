@@ -483,7 +483,7 @@ where $\varepsilon$ is negligible for practical purposes.
 **Theorem 4 (DHT Sybil Resistance)**: The system resists Sybil attacks through entropy-based proof-of-work in node admission.
 
 *Proof*: For a node to participate, it must solve:
-$\text{SHA3}(\text{node\_id} || \text{entropy} || \text{difficulty\_target}) < 2^{(256-k)}$
+$$\text{SHA3}(\text{node\_id} || \text{entropy} || \text{difficulty\_target}) < 2^{(256-k)}$$
 where $k$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires $2^k$ work per node, making large-scale Sybil attacks economically infeasible.
 
 ### 7.3 DHT Complexity Analysis
