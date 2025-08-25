@@ -885,7 +885,7 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 ---
 
 **Citation**:  
-Fedin, A. (2025). Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures. *Nolock.social*. https://nolock.social
+Fedin, A. (2025). Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures.<br/>*Nolock.social*. https://nolock.social
 
 **Contact**: af@O2.services
 
