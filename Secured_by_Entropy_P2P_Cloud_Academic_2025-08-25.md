@@ -143,12 +143,12 @@ graph TB
 ### 3.2 Formal System Model
 
 Let S = (N, T, K, R, E, D) represent our system where:
-- N = {n₁, n₂, ..., nₘ} is the set of peer nodes
-- T = {t₁, t₂, ..., tₖ} is the set of computational tasks
-- K = {k₁, k₂, ..., kₗ} is the set of ephemeral keys
-- R : T × N → [0,1] is the randomized assignment function
-- E : S → ℝ⁺ is the entropy measure of the system state
-- D = (H, d, k) is the DHT with hash space H, distance metric d, and replication factor k
+- $N = \{n_1, n_2, \ldots, n_m\}$ is the set of peer nodes
+- $T = \{t_1, t_2, \ldots, t_k\}$ is the set of computational tasks
+- $K = \{k_1, k_2, \ldots, k_l\}$ is the set of ephemeral keys
+- $R : T \times N \to [0,1]$ is the randomized assignment function
+- $E : S \to \mathbb{R}^+$ is the entropy measure of the system state
+- $D = (H, d, k)$ is the DHT with hash space $H$, distance metric $d$, and replication factor $k$
 
 The system maintains the invariant:
 $$E(S) \geq H_{\text{min}}$$
@@ -308,13 +308,16 @@ We implement a modified Diffie-Hellman protocol with ephemeral keys:
 
 ```
 Protocol: Entropy-Enhanced ECDHE
-1. Alice generates ephemeral key pair (a, A = aG) with entropy e_A
-2. Bob generates ephemeral key pair (b, B = bG) with entropy e_B  
-3. Exchange: Alice → Bob: A || H(e_A), Bob → Alice: B || H(e_B)
-4. Shared secret: K = KDF(abG || e_A || e_B)
+1. Alice generates ephemeral key pair $(a, A = aG)$ with entropy $e_A$
+2. Bob generates ephemeral key pair $(b, B = bG)$ with entropy $e_B$  
+3. Exchange: Alice → Bob: $A || H(e_A)$, Bob → Alice: $B || H(e_B)$
+4. Shared secret: $K = \text{KDF}(abG || e_A || e_B)$
 5. Session key: $k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$
 6. Destroy ephemeral keys after use
 ```
+
+The session key derivation uses the standard HKDF construction:
+$$k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$$
 
 ### 5.2 Verifiable Random Functions (VRF)
 
@@ -470,7 +473,7 @@ We consider an adversary A with capabilities:
 *Proof*: Let P_predict be the probability of predicting the next lookup target. Given:
 - Random entropy injection $e$ with $H(e) \geq 256$ bits
 - Task identifier t with uniform distribution
-- Lookup key k = SHA3(t || e)
+- Lookup key $k = \text{SHA3}(t || e)$
 - XOR distance metric $d(k, n_i) = k \oplus \text{node\_id}_i$
 
 The adversary must predict both e and the resulting closest nodes. Since SHA3 is cryptographically secure:
