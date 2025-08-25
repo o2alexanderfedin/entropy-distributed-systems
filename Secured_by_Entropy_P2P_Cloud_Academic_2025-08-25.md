@@ -474,7 +474,7 @@ We consider an adversary $\mathcal{A}$ with capabilities:
 - Random entropy injection $e$ with $H(e) \geq 256$ bits
 - Task identifier $t$ with uniform distribution
 - Lookup key $k = \text{SHA3}(t || e)$
-- XOR distance metric $d(k, n_i) = k \oplus \mathrm{node\_id}_i$
+- XOR distance metric $d(k, n_i) = k \oplus \text{nodeID}_i$
 
 The adversary must predict both $e$ and the resulting closest nodes. Since SHA3 is cryptographically secure:
 $$P_{\text{predict}} \leq 2^{-256} + \varepsilon$$
@@ -483,7 +483,7 @@ where $\varepsilon$ is negligible for practical purposes.
 **Theorem 4 (DHT Sybil Resistance)**: The system resists Sybil attacks through entropy-based proof-of-work in node admission.
 
 *Proof*: For a node to participate, it must solve:
-$$\text{SHA3}(\mathrm{node\_id} || \mathrm{entropy} || \mathrm{difficulty\_target}) < 2^{(256-k)}$$
+$$\text{SHA3}(\text{nodeID} || \text{entropy} || \text{difficultyTarget}) < 2^{(256-k)}$$
 where $k$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires $2^k$ work per node, making large-scale Sybil attacks economically infeasible.
 
 ### 7.3 DHT Complexity Analysis
@@ -762,7 +762,7 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 *Proof*:
 - XOR distance metric: $d(x,y) = x \oplus y$ remains consistent
-- Random hash $h = \text{SHA3}(\mathrm{task\_id} || \mathrm{entropy})$ preserves uniform distribution over key space
+- Random hash $h = \text{SHA3}(\text{taskID} || \text{entropy})$ preserves uniform distribution over key space
 - Closest node property maintained: $\forall h, \exists$ unique closest node $n_i$ where $d(h, n_i)$ is minimal
 - Therefore, DHT routing correctness is preserved ✓
 
@@ -772,7 +772,7 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 *Proof*:
 Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack on target $T$:
-- Adversary must predict lookup key $k = \text{SHA3}(\mathrm{task\_id} || \mathrm{entropy})$
+- Adversary must predict lookup key $k = \text{SHA3}(\text{taskID} || \text{entropy})$
 - Probability of predicting entropy: $P_{\text{entropy}} \leq 2^{-256}$ (assuming cryptographic hash security)
 - Even if entropy known, adversary needs $\geq k$ surrounding nodes in key space
 - Probability of $k$ malicious nodes in target region: $P_{\text{surround}} \leq (m/n)^k$ (assuming uniform distribution)
