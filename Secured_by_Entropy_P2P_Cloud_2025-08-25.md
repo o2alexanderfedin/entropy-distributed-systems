@@ -37,7 +37,7 @@ This paper makes the following contributions:
 
 1. **Formal Framework**: A comprehensive model for entropy-native security that extends Shannon's information theory to distributed systems with DHT-based discovery
 2. **Architectural Design**: A complete P2P architecture leveraging WebAssembly sandboxing, ephemeral cryptographic protocols, and entropy-augmented DHT for node location
-3. **Implementation Specifications**: Detailed technical specifications for .NET 9 AOT compilation to WebAssembly with runtime isolation and Kademlia-based DHT integration
+3. **Implementation Specifications**: Detailed technical specifications for .NET 9+ AOT compilation to WebAssembly with runtime isolation and Kademlia-based DHT integration
 4. **Security Analysis**: Formal proofs of security properties including forward secrecy, Sybil resistance in DHT lookups, and enhanced classical attack resistance
 5. **Performance Analysis**: Validated security mechanisms and performance projections with comparison to existing decentralized frameworks
 
@@ -753,7 +753,7 @@ public class VRFNodeSelector
 
 ### 6.1 Compilation Pipeline
 
-.NET 9 AOT compilation to WebAssembly with security hardening:
+.NET 9+ AOT compilation to WebAssembly with security hardening:
 
 ```csharp
 [WasmSecurity(
