@@ -1798,7 +1798,7 @@ Fedin, A. (2025). Secured by Entropy: An Entropy-Native Cybersecurity Framework 
 
 **Contact**: af@O2.services
 
-**Acknowledgments**: This research was enhanced with assistance from the AI Hive collective intelligence network.
+**Acknowledgments**: This research was enhanced with assistance from the AI Hive® collective intelligence network.
 
 **License**: This work is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
