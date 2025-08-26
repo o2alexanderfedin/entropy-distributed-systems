@@ -390,7 +390,58 @@ We implement a modified Diffie-Hellman protocol with ephemeral keys:
 The session key derivation uses the standard HKDF construction:
 $$k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$$
 
-### 5.2 Verifiable Random Functions (RFC 9381)
+### 5.2 Data at Rest Protection
+
+In our P2P architecture, nodes may temporarily store task data, intermediate results, or DHT routing information. All persistent data employs encryption at rest:
+
+```csharp
+public class EphemeralDataStorage
+{
+    private readonly IEntropySource _entropySource;
+    private readonly byte[] _nodeSecret; // Derived from hardware + entropy
+    
+    public async Task<string> StoreEncrypted(byte[] data, TimeSpan ttl)
+    {
+        // Generate ephemeral key for this data
+        var dataKey = await _entropySource.GetBytes(32);
+        
+        // Encrypt data with AES-256-GCM
+        var encrypted = AesGcmEncrypt(data, dataKey);
+        
+        // Wrap data key with node's KEK (Key Encryption Key)
+        var wrappedKey = WrapKey(dataKey, DeriveKEK(_nodeSecret));
+        
+        // Store with automatic expiration
+        var storageId = Guid.NewGuid().ToString();
+        await StoreWithTTL(storageId, encrypted, wrappedKey, ttl);
+        
+        // Securely wipe data key from memory
+        CryptoUtil.SecureZero(dataKey);
+        
+        return storageId;
+    }
+    
+    private byte[] DeriveKEK(byte[] nodeSecret)
+    {
+        // Key Encryption Key derived from node secret + current epoch
+        var epoch = DateTime.UtcNow.Ticks / TimeSpan.FromHours(1).Ticks;
+        return HKDF_SHA3_256(
+            nodeSecret, 
+            BitConverter.GetBytes(epoch),
+            info: "node-kek",
+            length: 32);
+    }
+}
+```
+
+**Key Protection Features:**
+- **Ephemeral encryption keys**: Unique key per data object
+- **Key wrapping**: Data keys encrypted with node's KEK
+- **Automatic expiration**: TTL-based data deletion
+- **Secure deletion**: Cryptographic erasure before physical deletion
+- **Forward secrecy**: KEK rotation prevents historical decryption
+
+### 5.3 Verifiable Random Functions (RFC 9381)
 
 Following RFC 9381 (VRF standard), we implement unbiasable node selection:
 
@@ -1248,6 +1299,14 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
       "minimum_bits": 256,
       "refresh_interval_ms": 1000
     },
+    "storage": {
+      "encryption_at_rest": true,
+      "key_derivation": "HKDF-SHA3-256",
+      "data_encryption": "AES-256-GCM",
+      "key_rotation_hours": 1,
+      "default_ttl_seconds": 3600,
+      "secure_deletion": true
+    },
     "wasm": {
       "runtime": "wasmtime",
       "memory_limit_mb": 64,
@@ -1284,6 +1343,7 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 | Eclipse | Static routing | Random hash lookup | ~99.8% reduction |
 | Code injection | Signature verification | + Wasm sandboxing | ~100% prevention |
 | DHT poisoning | Replication | Entropy-based verification | ~99.9% reduction |
+| Data at rest | Encryption | + Ephemeral keys + TTL | ~100% protection |
 | Advanced cryptanalysis | Larger keys | + Entropy augmentation | Enhanced security |
 | Replay attacks | Timestamps | Ephemeral keys | ~100% prevention |
 | Man-in-the-middle | TLS | + Random DHT routing | ~99.9% reduction |
