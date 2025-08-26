@@ -535,6 +535,8 @@ If anomalies are detected (test failure rate > 1%), the system automatically fal
 
 ## 5. Cryptographic Protocols
 
+**Note**: For comprehensive analysis of device-bound password-derived identity and decentralized certificate architecture that replaces traditional PKI, see [Appendix F: Device-Bound Identity Architecture](./decentralized-identity-comprehensive-analysis.md).
+
 ### 5.1 Ephemeral Key Exchange
 
 We implement a modified Diffie-Hellman protocol with ephemeral keys:
@@ -1326,6 +1328,10 @@ The following aspects require empirical validation to confirm theoretical projec
 
 ## 11. Use Cases and Applications
 
+**Note**: For detailed analysis of decentralized identity implementation and real-world applications including decentralized social networks and source-of-truth systems, see:
+- [Appendix F: Device-Bound Identity Architecture](./decentralized-identity-comprehensive-analysis.md)
+- [Appendix G: Real-World Applications Evaluation](./real-world-applications-evaluation.md)
+
 *Note: The following case studies represent conceptual applications of the proposed framework, not implemented systems.*
 
 ### 11.1 Decentralized AI Learning and Inference
@@ -1970,6 +1976,10 @@ Fedin, A. (2025). Secured by Entropy: An Entropy-Native Cybersecurity Framework 
 **Contact**: af@O2.services
 
 **Acknowledgments**: This research was enhanced with assistance from the AI Hive® collective intelligence network.
+
+**Appendices**:
+- [Appendix F: Device-Bound Password-Derived Identity and Decentralized Certificate Architecture](./decentralized-identity-comprehensive-analysis.md) - Comprehensive analysis of device-bound identity system that replaces traditional PKI
+- [Appendix G: Real-World Applications Evaluation](./real-world-applications-evaluation.md) - Detailed evaluation of decentralized social networks and source-of-truth systems
 
 **License**: This work is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
