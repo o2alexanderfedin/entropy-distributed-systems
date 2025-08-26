@@ -720,13 +720,13 @@ SECURITY_PARAMETERS = {
 ## 11. Mathematical Proofs
 
 ### Theorem 1: Unpredictability
-Given VRF output O = VRF(SK, X), the probability of predicting the next output O' = VRF(SK, X') without knowing SK is negligible (2^-256).
+Given VRF output $O = VRF(SK, X)$, the probability of predicting the next output $O' = VRF(SK, X')$ without knowing $SK$ is negligible: $P(predict) \leq 2^{-256}$.
 
 ### Theorem 2: Sybil Resistance  
-The cost of creating n Sybil identities that pass entropy challenges grows as O(n) in computational resources, making large-scale Sybil attacks economically infeasible.
+The cost of creating $n$ Sybil identities that pass entropy challenges grows as $O(n)$ in computational resources, making large-scale Sybil attacks economically infeasible.
 
 ### Theorem 3: Eclipse Resistance
-The probability of successfully eclipsing a node using entropy-driven peer selection is (k/N)^r where k=attacker nodes, N=total nodes, r=redundancy factor.
+The probability of successfully eclipsing a node using entropy-driven peer selection is $P_{eclipse} = \left(\frac{k}{N}\right)^r$ where $k$ = attacker nodes, $N$ = total nodes, $r$ = redundancy factor.
 
 ## 12. Conclusion
 
