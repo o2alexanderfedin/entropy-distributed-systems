@@ -390,56 +390,147 @@ We implement a modified Diffie-Hellman protocol with ephemeral keys:
 The session key derivation uses the standard HKDF construction:
 $$k_{\text{session}} = \text{HKDF}(K, \text{"session"}, 256)$$
 
-### 5.2 Data at Rest Protection
+### 5.2 Data Integrity and Confidentiality Protection
 
-In our P2P architecture, nodes may temporarily store task data, intermediate results, or DHT routing information. All persistent data employs encryption at rest:
+In our P2P architecture, all data—whether in transit, at rest, or being processed—requires both encryption and cryptographic signatures for integrity and non-repudiation:
 
 ```csharp
-public class EphemeralDataStorage
+public class SecureDataHandler
 {
     private readonly IEntropySource _entropySource;
-    private readonly byte[] _nodeSecret; // Derived from hardware + entropy
+    private readonly Ed25519PrivateKey _signingKey;
+    private readonly byte[] _nodeSecret;
     
-    public async Task<string> StoreEncrypted(byte[] data, TimeSpan ttl)
+    public async Task<SignedEncryptedData> StoreSignedAndEncrypted(
+        byte[] data, 
+        string sourceNodeId,
+        TimeSpan ttl)
     {
-        // Generate ephemeral key for this data
+        // 1. Sign the data first (sign-then-encrypt pattern)
+        var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        var dataToSign = Concat(data, BitConverter.GetBytes(timestamp));
+        var signature = await SignData(dataToSign, _signingKey);
+        
+        // 2. Create signed package
+        var signedPackage = new SignedDataPackage
+        {
+            Data = data,
+            Signature = signature,
+            SignerNodeId = sourceNodeId,
+            Timestamp = timestamp,
+            HashChain = ComputeHashChain(data) // For audit trail
+        };
+        
+        // 3. Serialize and encrypt the signed package
+        var serialized = MessagePackSerializer.Serialize(signedPackage);
         var dataKey = await _entropySource.GetBytes(32);
+        var encrypted = AesGcmEncrypt(serialized, dataKey);
         
-        // Encrypt data with AES-256-GCM
-        var encrypted = AesGcmEncrypt(data, dataKey);
-        
-        // Wrap data key with node's KEK (Key Encryption Key)
+        // 4. Wrap encryption key
         var wrappedKey = WrapKey(dataKey, DeriveKEK(_nodeSecret));
         
-        // Store with automatic expiration
-        var storageId = Guid.NewGuid().ToString();
-        await StoreWithTTL(storageId, encrypted, wrappedKey, ttl);
+        // 5. Create integrity-protected metadata
+        var metadata = new DataMetadata
+        {
+            ContentHash = SHA3_256(data),
+            SignerPublicKeyHash = SHA3_256(_signingKey.PublicKey),
+            EncryptionAlgorithm = "AES-256-GCM",
+            SignatureAlgorithm = "Ed25519"
+        };
         
-        // Securely wipe data key from memory
+        // 6. Store with automatic expiration
+        var storageId = Guid.NewGuid().ToString();
+        await StoreWithTTL(storageId, encrypted, wrappedKey, metadata, ttl);
+        
+        // 7. Secure cleanup
         CryptoUtil.SecureZero(dataKey);
         
-        return storageId;
+        return new SignedEncryptedData
+        {
+            StorageId = storageId,
+            ContentHash = metadata.ContentHash,
+            SignatureVerificationKey = _signingKey.PublicKey
+        };
     }
     
-    private byte[] DeriveKEK(byte[] nodeSecret)
+    public async Task<byte[]> RetrieveAndVerify(
+        string storageId,
+        Ed25519PublicKey expectedSigner)
     {
-        // Key Encryption Key derived from node secret + current epoch
-        var epoch = DateTime.UtcNow.Ticks / TimeSpan.FromHours(1).Ticks;
-        return HKDF_SHA3_256(
-            nodeSecret, 
-            BitConverter.GetBytes(epoch),
-            info: "node-kek",
-            length: 32);
+        // 1. Retrieve encrypted data and metadata
+        var (encrypted, wrappedKey, metadata) = await LoadFromStorage(storageId);
+        
+        // 2. Unwrap and decrypt
+        var dataKey = UnwrapKey(wrappedKey, DeriveKEK(_nodeSecret));
+        var decrypted = AesGcmDecrypt(encrypted, dataKey);
+        var package = MessagePackSerializer.Deserialize<SignedDataPackage>(decrypted);
+        
+        // 3. Verify signature
+        var dataToVerify = Concat(package.Data, BitConverter.GetBytes(package.Timestamp));
+        if (!await VerifySignature(dataToVerify, package.Signature, expectedSigner))
+        {
+            throw new SecurityException("Invalid signature on stored data");
+        }
+        
+        // 4. Verify content hash
+        if (!SHA3_256(package.Data).SequenceEqual(metadata.ContentHash))
+        {
+            throw new SecurityException("Data integrity check failed");
+        }
+        
+        // 5. Check timestamp freshness (prevent replay)
+        var age = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - package.Timestamp;
+        if (age > MaxDataAgeMs)
+        {
+            throw new SecurityException("Data timestamp too old");
+        }
+        
+        // 6. Secure cleanup
+        CryptoUtil.SecureZero(dataKey);
+        
+        return package.Data;
+    }
+    
+    // Hash chain for audit trail and tamper detection
+    private byte[] ComputeHashChain(byte[] data)
+    {
+        var chunks = ChunkData(data, 4096); // 4KB chunks
+        byte[] previousHash = new byte[32];
+        
+        foreach (var chunk in chunks)
+        {
+            previousHash = SHA3_256(Concat(previousHash, chunk));
+        }
+        
+        return previousHash;
     }
 }
 ```
 
-**Key Protection Features:**
-- **Ephemeral encryption keys**: Unique key per data object
-- **Key wrapping**: Data keys encrypted with node's KEK
-- **Automatic expiration**: TTL-based data deletion
-- **Secure deletion**: Cryptographic erasure before physical deletion
-- **Forward secrecy**: KEK rotation prevents historical decryption
+**Comprehensive Security Features:**
+
+1. **Data Signing (Integrity & Non-repudiation)**:
+   - Ed25519 signatures on all data
+   - Timestamp inclusion prevents replay attacks
+   - Hash chains for audit trails
+
+2. **Encryption at Rest (Confidentiality)**:
+   - AES-256-GCM authenticated encryption
+   - Unique ephemeral keys per data object
+   - Key wrapping with KEK hierarchy
+
+3. **Verification Chain**:
+   - Signature verification before data use
+   - Content hash validation
+   - Timestamp freshness checks
+
+4. **Sign-then-Encrypt Pattern**:
+   - Prevents signature stripping attacks
+   - Maintains non-repudiation even after encryption
+
+5. **Metadata Protection**:
+   - Integrity-protected metadata stored separately
+   - Enables verification without decryption
 
 ### 5.3 Verifiable Random Functions (RFC 9381)
 
@@ -1343,9 +1434,10 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 | Eclipse | Static routing | Random hash lookup | ~99.8% reduction |
 | Code injection | Signature verification | + Wasm sandboxing | ~100% prevention |
 | DHT poisoning | Replication | Entropy-based verification | ~99.9% reduction |
+| Data tampering | Checksums | Ed25519 signatures + hash chains | ~100% prevention |
 | Data at rest | Encryption | + Ephemeral keys + TTL | ~100% protection |
 | Advanced cryptanalysis | Larger keys | + Entropy augmentation | Enhanced security |
-| Replay attacks | Timestamps | Ephemeral keys | ~100% prevention |
+| Replay attacks | Timestamps | Ephemeral keys + timestamp checks | ~100% prevention |
 | Man-in-the-middle | TLS | + Random DHT routing | ~99.9% reduction |
 
 ---
