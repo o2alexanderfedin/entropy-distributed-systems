@@ -95,6 +95,405 @@ Recent research highlights several key developments:
 
 ### 3.1 Architectural Overview
 
+Our entropy-native P2P architecture is designed to operate across a heterogeneous spectrum of computing platforms, from resource-constrained mobile devices to high-performance datacenter servers. The architecture adapts dynamically to each platform's capabilities while maintaining consistent security guarantees.
+
+### 3.2 Multi-Platform Target Deployment
+
+The framework supports deployment across diverse computing environments:
+
+```csharp
+public class PlatformAdaptiveNode
+{
+    private readonly PlatformCapabilities _capabilities;
+    private readonly IEntropySource _entropySource;
+    
+    public enum PlatformType
+    {
+        Smartphone,        // iOS/Android, ARM processors, 2-8GB RAM
+        Laptop,           // x86/ARM, 8-32GB RAM, battery constraints
+        Desktop,          // x86/AMD64, 16-64GB RAM, stable power
+        GamingConsole,    // PS5/Xbox, custom APUs, 16GB unified memory
+        CryptoMiner,      // ASICs/GPUs, high throughput, 24/7 operation
+        DatacenterServer  // Xeon/EPYC, 128GB+ RAM, redundant infrastructure
+    }
+    
+    public async Task<NodeConfiguration> AdaptToPlatform()
+    {
+        return _capabilities.Type switch
+        {
+            PlatformType.Smartphone => new NodeConfiguration
+            {
+                // Mobile: Optimize for battery and bandwidth
+                TaskExecutionMode = ExecutionMode.Lightweight,
+                MaxWasmMemory = 256 * 1024 * 1024, // 256MB
+                EntropyPoolSize = 1024, // Smaller pool
+                DHTBucketSize = 8, // Reduced routing table
+                CryptoMode = CryptoMode.ECC_P256, // Lighter curves
+                NetworkStrategy = NetworkStrategy.WiFiPreferred,
+                PowerProfile = PowerProfile.Aggressive
+            },
+            
+            PlatformType.Laptop => new NodeConfiguration
+            {
+                // Laptop: Balance performance and battery
+                TaskExecutionMode = ExecutionMode.Balanced,
+                MaxWasmMemory = 1024 * 1024 * 1024, // 1GB
+                EntropyPoolSize = 4096,
+                DHTBucketSize = 16,
+                CryptoMode = CryptoMode.ECC_P384,
+                NetworkStrategy = NetworkStrategy.Adaptive,
+                PowerProfile = PowerProfile.Balanced
+            },
+            
+            PlatformType.Desktop => new NodeConfiguration
+            {
+                // Desktop: Full performance, no power constraints
+                TaskExecutionMode = ExecutionMode.Performance,
+                MaxWasmMemory = 2048 * 1024 * 1024, // 2GB
+                EntropyPoolSize = 8192,
+                DHTBucketSize = 20,
+                CryptoMode = CryptoMode.ECC_P521,
+                NetworkStrategy = NetworkStrategy.HighBandwidth,
+                PowerProfile = PowerProfile.Performance
+            },
+            
+            PlatformType.GamingConsole => new NodeConfiguration
+            {
+                // Gaming consoles: GPU acceleration, unified memory
+                TaskExecutionMode = ExecutionMode.GPUAccelerated,
+                MaxWasmMemory = 4096 * 1024 * 1024, // 4GB
+                EntropyPoolSize = 8192,
+                DHTBucketSize = 20,
+                CryptoMode = CryptoMode.Hardware, // Use console crypto chip
+                NetworkStrategy = NetworkStrategy.LowLatency,
+                PowerProfile = PowerProfile.Performance,
+                UseUnifiedMemory = true
+            },
+            
+            PlatformType.CryptoMiner => new NodeConfiguration
+            {
+                // Mining farms: Maximize throughput, parallel execution
+                TaskExecutionMode = ExecutionMode.MassivelyParallel,
+                MaxWasmMemory = 8192 * 1024 * 1024, // 8GB
+                EntropyPoolSize = 16384,
+                DHTBucketSize = 32,
+                CryptoMode = CryptoMode.ASIC, // Hardware acceleration
+                NetworkStrategy = NetworkStrategy.HighThroughput,
+                PowerProfile = PowerProfile.AlwaysOn,
+                ParallelTasks = Environment.ProcessorCount * 4
+            },
+            
+            PlatformType.DatacenterServer => new NodeConfiguration
+            {
+                // Datacenter: Enterprise features, maximum resources
+                TaskExecutionMode = ExecutionMode.Enterprise,
+                MaxWasmMemory = 16384 * 1024 * 1024, // 16GB
+                EntropyPoolSize = 32768,
+                DHTBucketSize = 64,
+                CryptoMode = CryptoMode.HSM, // Hardware Security Module
+                NetworkStrategy = NetworkStrategy.Datacenter,
+                PowerProfile = PowerProfile.AlwaysOn,
+                EnableTEE = true, // SEV-SNP or TDX
+                EnableRemoteAttestation = true
+            },
+            
+            _ => throw new NotSupportedException($"Platform {_capabilities.Type} not supported")
+        };
+    }
+    
+    public async Task<ResourceContribution> CalculateContribution()
+    {
+        // Adaptive contribution based on platform capabilities
+        var baseContribution = _capabilities.Type switch
+        {
+            PlatformType.Smartphone => new ResourceContribution
+            {
+                ComputeUnits = 0.1f,  // Minimal computation
+                StorageGB = 1,         // Limited storage
+                BandwidthMbps = 10,    // Constrained network
+                Availability = 0.3f    // Intermittent
+            },
+            PlatformType.DatacenterServer => new ResourceContribution
+            {
+                ComputeUnits = 100f,   // Maximum computation
+                StorageGB = 1000,      // Extensive storage
+                BandwidthMbps = 10000, // High bandwidth
+                Availability = 0.99f   // Nearly always online
+            },
+            _ => CalculateIntermediateContribution()
+        };
+        
+        // Apply entropy-based load balancing
+        return await ApplyEntropyLoadBalancing(baseContribution);
+    }
+}
+```
+
+**Platform-Specific Optimizations**:
+
+1. **Mobile Devices (Smartphones/Tablets)**:
+   - Reduced WebAssembly memory footprint
+   - Battery-aware task scheduling
+   - WiFi-preferred networking to reduce cellular data usage
+   - Lighter elliptic curves (P-256) for crypto operations
+   - Push notification integration for task assignments
+
+2. **Laptops**:
+   - Dynamic power profile switching based on battery/AC power
+   - Adaptive resource allocation based on current workload
+   - Support for sleep/wake cycles with state preservation
+   - Hybrid crypto using both CPU and integrated GPU
+
+3. **Desktops**:
+   - Full resource utilization without power constraints
+   - Background service mode for continuous operation
+   - Support for multiple concurrent WebAssembly instances
+   - Local caching for frequently accessed data
+
+4. **Gaming Consoles**:
+   - Leverage unified memory architecture for efficient data transfer
+   - GPU acceleration for cryptographic operations
+   - Custom APU optimization for parallel task execution
+   - Integration with platform-specific security features
+
+5. **Crypto Mining Farms**:
+   - ASIC/GPU acceleration for proof-of-work operations
+   - Massively parallel task execution
+   - High-throughput optimization over latency
+   - 24/7 operation with automatic failover
+
+6. **Datacenter Servers**:
+   - Hardware Security Module (HSM) integration
+   - TEE support (Intel TDX, AMD SEV-SNP)
+   - NUMA-aware memory allocation
+   - Container/VM isolation for multi-tenancy
+   - Hardware random number generators
+
+**Cross-Platform Interoperability**:
+
+The system ensures seamless interaction between heterogeneous nodes through:
+- **Capability Advertisement**: Nodes broadcast their platform type and resources via DHT metadata
+- **Adaptive Task Assignment**: Tasks are matched to appropriate platforms based on requirements
+- **Progressive Enhancement**: Complex tasks can be split across multiple platform types
+- **Fallback Mechanisms**: Automatic task migration when platform constraints are exceeded
+
+### 3.3 Offline Mesh Networking for Connectivity-Challenged Environments
+
+The architecture includes resilient mesh networking capabilities for scenarios where traditional internet connectivity is unavailable or unreliable:
+
+```csharp
+public class MeshNetworkAdapter
+{
+    private readonly IEntropySource _entropySource;
+    private readonly BluetoothManager _bluetooth;
+    private readonly WiFiDirectManager _wifiDirect;
+    
+    public enum ConnectivityMode
+    {
+        Internet,          // Standard internet connectivity
+        MeshBluetooth,     // Bluetooth mesh for short-range
+        MeshWiFiDirect,    // WiFi Direct for medium-range
+        Hybrid,            // Opportunistic switching between modes
+        StoreAndForward    // Delay-tolerant networking
+    }
+    
+    public class MeshNode
+    {
+        public string NodeId { get; set; }
+        public DateTime LastSeen { get; set; }
+        public int HopCount { get; set; }
+        public float SignalStrength { get; set; }
+        public byte[] PublicKey { get; set; }
+    }
+    
+    public async Task<MeshNetwork> EstablishMeshNetwork(
+        ConnectivityScenario scenario)
+    {
+        return scenario switch
+        {
+            ConnectivityScenario.Festival => await CreateFestivalMesh(),
+            ConnectivityScenario.Theater => await CreateTheaterMesh(),
+            ConnectivityScenario.Disaster => await CreateDisasterMesh(),
+            ConnectivityScenario.Rural => await CreateRuralMesh(),
+            _ => await CreateAdaptiveMesh()
+        };
+    }
+    
+    private async Task<MeshNetwork> CreateFestivalMesh()
+    {
+        // Burning Man scenario: 70,000+ people, no cellular
+        var config = new MeshConfiguration
+        {
+            Mode = ConnectivityMode.MeshBluetooth,
+            MaxHops = 10, // Allow multi-hop routing
+            BeaconInterval = TimeSpan.FromSeconds(5),
+            PowerMode = PowerMode.Balanced,
+            
+            // Entropy-based peer discovery
+            DiscoveryStrategy = new EntropyDiscovery
+            {
+                RandomWalkProbability = 0.3f,
+                MaxPeers = 20,
+                RefreshInterval = TimeSpan.FromMinutes(5)
+            }
+        };
+        
+        return await InitializeMesh(config);
+    }
+    
+    public async Task<RouteResult> RouteDataThroughMesh(
+        byte[] data, 
+        string targetNodeId)
+    {
+        // 1. Entropy-based route selection
+        var availableRoutes = await DiscoverRoutes(targetNodeId);
+        var selectedRoute = await SelectRouteWithEntropy(availableRoutes);
+        
+        // 2. Fragment data for mesh transmission
+        var fragments = FragmentData(data, maxSize: 512); // BT limitation
+        
+        // 3. Send with redundancy
+        var tasks = fragments.Select(async fragment =>
+        {
+            // Add entropy to prevent route prediction
+            var nonce = await _entropySource.GetBytes(16);
+            var packet = new MeshPacket
+            {
+                FragmentId = fragment.Id,
+                Data = fragment.Data,
+                Nonce = nonce,
+                TTL = 10,
+                Timestamp = DateTime.UtcNow
+            };
+            
+            // Multi-path routing for resilience
+            var redundantPaths = SelectRedundantPaths(selectedRoute, count: 3);
+            return await SendThroughPaths(packet, redundantPaths);
+        });
+        
+        return await Task.WhenAll(tasks);
+    }
+    
+    public class MeshDHT : EntropyDHT
+    {
+        // Adapted DHT for mesh networks
+        protected override async Task<Node> FindNode(byte[] nodeId)
+        {
+            if (IsConnectedToInternet())
+            {
+                return await base.FindNode(nodeId);
+            }
+            
+            // Mesh-only discovery
+            return await MeshOnlyDiscovery(nodeId);
+        }
+        
+        private async Task<Node> MeshOnlyDiscovery(byte[] nodeId)
+        {
+            // 1. Check local Bluetooth peers
+            var btPeers = await _bluetooth.DiscoverPeers(
+                timeout: TimeSpan.FromSeconds(10));
+            
+            // 2. Query peers for target
+            var queries = btPeers.Select(async peer =>
+            {
+                var response = await QueryPeerForNode(peer, nodeId);
+                return response?.Node;
+            });
+            
+            var results = await Task.WhenAll(queries);
+            return results.FirstOrDefault(n => n != null);
+        }
+    }
+    
+    // Store-and-forward for extreme disconnection
+    public async Task<string> StoreForLaterDelivery(
+        byte[] data, 
+        string targetNodeId)
+    {
+        var messageId = Guid.NewGuid().ToString();
+        
+        var queuedMessage = new QueuedMessage
+        {
+            Id = messageId,
+            TargetNodeId = targetNodeId,
+            Data = data,
+            CreatedAt = DateTime.UtcNow,
+            ExpiresAt = DateTime.UtcNow.AddHours(48),
+            DeliveryAttempts = 0,
+            
+            // Entropy-based retry scheduling
+            NextRetryAt = DateTime.UtcNow.AddMinutes(
+                _random.Next(5, 30))
+        };
+        
+        await _localStorage.StoreMessage(queuedMessage);
+        
+        // Opportunistic forwarding when connectivity returns
+        _connectivityMonitor.OnConnected += async () =>
+        {
+            await AttemptDelivery(messageId);
+        };
+        
+        return messageId;
+    }
+}
+```
+
+**Mesh Networking Security Features**:
+
+1. **Bluetooth Mesh Security**:
+   - End-to-end encryption even in mesh mode
+   - Entropy-based peer selection prevents targeted attacks
+   - Rotating session keys for each mesh connection
+   - Protection against Bluetooth-specific attacks (BlueBorne, KNOB)
+
+2. **Resilience Mechanisms**:
+   - Multi-path redundant routing
+   - Store-and-forward for delayed delivery
+   - Automatic failover between Bluetooth and WiFi Direct
+   - Gossip protocol for network-wide information dissemination
+
+3. **Use Case Scenarios**:
+
+   **Festival/Event Networks** (e.g., Burning Man):
+   - 70,000+ devices forming spontaneous mesh
+   - Content sharing and messaging without infrastructure
+   - Entropy prevents network partition attacks
+   - Battery-optimized beacon intervals
+
+   **Theater/Venue Networks**:
+   - Dense device proximity (100+ devices in small space)
+   - Low-latency local communication
+   - Automatic silence during performances
+   - Proximity-based service discovery
+
+   **Disaster Recovery**:
+   - Infrastructure-independent operation
+   - Priority message routing for emergency communications
+   - Mesh bridges to satellite or remaining cellular
+   - Persistent message storage until delivery
+
+   **Rural/Remote Areas**:
+   - Long-range mesh with WiFi Direct
+   - Solar-powered relay nodes
+   - Scheduled synchronization windows
+   - DTN (Delay Tolerant Networking) protocols
+
+4. **Performance Characteristics**:
+   - Bluetooth mesh: 1-2 Mbps, 10-30m range, 10+ hops
+   - WiFi Direct mesh: 100+ Mbps, 200m range, 5+ hops
+   - Latency: 50-500ms per hop depending on congestion
+   - Battery impact: +20-40% drain vs. standard operation
+
+5. **Entropy in Mesh Networks**:
+   - Random peer discovery intervals prevent timing analysis
+   - Unpredictable routing paths through mesh
+   - Entropy-based message fragmentation
+   - Randomized beacon timing to prevent tracking
+
+### 3.4 Core Architectural Components
+
 Our entropy-native P2P architecture comprises the following components:
 
 ```mermaid
@@ -140,7 +539,7 @@ graph TB
     end
 ```
 
-### 3.2 Formal System Model
+### 3.5 Formal System Model
 
 Let S = (N, T, K, R, E, D) represent our system where:
 - $N = \{n_1, n_2, \ldots, n_m\}$ is the set of peer nodes
@@ -156,7 +555,7 @@ where $H_{\text{min}}$ is the minimum entropy threshold for security.
 
 **Optional Hardware-Backed Attestation**: Nodes MAY optionally provide SEV-SNP or Intel TDX attestations, which bind the ephemeral execution environment and keys to a hardware-enforced Trusted Execution Environment (TEE). This provides additional assurance that node software has not been tampered with and that cryptographic operations occur within secure enclaves.
 
-### 3.3 Enhanced DHT Security (S/Kademlia Integration)
+### 3.6 Enhanced DHT Security (S/Kademlia Integration)
 
 Our node discovery implements S/Kademlia hardening with additional entropy-based defenses:
 
