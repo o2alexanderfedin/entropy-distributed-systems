@@ -1174,9 +1174,9 @@ where $\varepsilon$ is negligible for practical purposes.
 $$\text{SHA3}(\text{nodeID} || \text{entropy} || \text{difficultyTarget}) < 2^{(256-k)}$$
 where $k$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires $2^k$ work per node, making large-scale Sybil attacks economically infeasible.
 
-### 9.3 DHT Complexity Analysis
+### 9.3 DHT Complexity
 
-The entropy-augmented DHT maintains $O(\log n)$ lookup complexity (see Appendix A.2 for detailed proof and security analysis).
+Lookup remains $O(\log n)$; see Appendix A for formal proof.
 
 ### 9.4 Entropy Analysis
 
