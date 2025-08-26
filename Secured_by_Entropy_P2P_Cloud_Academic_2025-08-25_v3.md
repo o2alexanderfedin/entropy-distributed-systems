@@ -99,26 +99,16 @@ Our entropy-native P2P architecture is designed to operate across a heterogeneou
 
 The framework's minimal requirement is simply an open web page in a browser, enabling instant participation without installation. It supports deployment across diverse computing environments with platform-specific optimizations:
 
-```csharp
-public class PlatformAdaptiveNode
-{
-    // Platform types: Browser, Smartphone, Laptop, Desktop, 
-    // GamingConsole, CryptoMiner, DatacenterServer
-    
-    public async Task<NodeConfiguration> AdaptToPlatform()
-    {
-        // Returns platform-adaptive configuration with:
-        // - Memory limits (256MB mobile to 16GB datacenter)
-        // - Crypto agility policy (negotiate optimal curves/algorithms based on 
-        //   both platform capabilities AND peer capabilities, not prescriptive)
-        // - Power profiles (battery-aware to always-on)
-        // - Network strategy (WiFi-preferred to high-throughput)
-        // Full implementation in Appendix B.3
-    }
-    
-    // Resource contribution calculation based on platform
-    // Full implementation details in Appendix B.3
-}
+```pseudocode
+// Platform-adaptive node configuration
+function AdaptToPlatform(platformType)
+    config = DetectPlatformCapabilities()
+    config.memoryLimit = GetPlatformMemoryLimit()  // 256MB-16GB
+    config.cryptoPolicy = NegotiateCryptoAgility()  // Platform-aware
+    config.powerProfile = SelectPowerProfile()      // Battery vs AC
+    config.networkStrategy = OptimizeNetworking()   // WiFi vs cellular
+    return config
+// Full implementation in Appendix B.3
 ```
 
 **Platform-Specific Optimizations**:
@@ -182,30 +172,18 @@ The system ensures seamless interaction between heterogeneous nodes through:
 
 The architecture includes resilient mesh networking capabilities for scenarios where traditional internet connectivity is unavailable or unreliable:
 
-```csharp
-// Simplified pseudocode - full implementation in Appendix B.4
-public class MeshNetworkAdapter
-{
-    // Connectivity modes: Internet, MeshBluetooth, MeshWiFiDirect, 
-    // Hybrid, StoreAndForward
-    
-    public async Task<MeshNetwork> EstablishMeshNetwork(ConnectivityScenario scenario)
-    {
-        // Adapts network configuration based on scenario
-        // Returns appropriate mesh topology
-    }
-    
-    public async Task<RouteResult> RouteDataThroughMesh(byte[] data, string targetNodeId)
-    {
-        // 1. Entropy-native route selection
-        // 2. Fragment data for mesh transmission (512B for BT)
-        // 3. Multi-path redundant routing
-        // 4. TTL = 10 (empirically validated practical limit: 3-4 hops) [26,27]
-    }
-    
-    // Store-and-forward for delay-tolerant networking
-    // Full implementation with entropy-native retry scheduling in Appendix B.4
-}
+```pseudocode
+// Mesh network adaptation for offline environments
+function EstablishMeshNetwork(scenario)
+    topology = SelectMeshTopology(scenario)
+    return ConfigureMeshProtocols(topology)
+
+function RouteDataThroughMesh(data, targetNode)
+    routes = SelectEntropyNativeRoutes()
+    fragments = FragmentData(data, 512)  // BT constraint
+    SendViaMultipath(fragments, routes)
+    // TTL = 10, practical: 3-4 hops [26,27]
+// Full implementation in Appendix B.4
 ```
 
 **Mesh Networking Security Features**:
@@ -254,7 +232,9 @@ public class MeshNetworkAdapter
 
 4. **Performance Characteristics**:
    - Bluetooth mesh: 1-2 Mbps, 10-30m range, 3-4 practical hops (empirically validated) [26,27]
-   - WiFi Direct mesh: 100+ Mbps, 200m range, 5+ hops (vendor specifications)
+   - WiFi Direct mesh: 100+ Mbps, 200m range, 5+ hops*
+
+*Based on WiFi Direct specifications; actual performance may vary
    - Latency: 50-500ms per hop depending on congestion
    - Battery impact: +20-40% drain vs. standard operation
 
@@ -1553,7 +1533,6 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 2. Shannon, C. E. (1949). "Communication Theory of Secrecy Systems." *Bell System Technical Journal*, 28(4), 656-715.
 
-3. [Industry sources] WebAssembly runtime vendors report security enhancements and performance improvements (2025). Specific vendor claims await independent validation.
 
 4. Maymounkov, P., & Mazières, D. (2002). "Kademlia: A Peer-to-Peer Information System Based on the XOR Metric." *International Workshop on Peer-to-Peer Systems*. Available: https://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf
 
@@ -1587,7 +1566,6 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 19. Xing, B. C., et al. (2023). "Intel Trust Domain Extensions (TDX): A Comprehensive Hardware-Enforced TEE for Cloud Computing." *ACM Computing Surveys*. Available: https://dl.acm.org/doi/full/10.1145/3652597
 
-20. [Industry report] Entropy-enhanced security vendors (2025). Claims pending peer review.
 
 21. Department of Homeland Security Science and Technology Directorate. "Cybersecurity Division - Moving Target Defense (CSD-MTD)." Available: https://www.dhs.gov/science-and-technology/csd-mtd
 
@@ -1763,15 +1741,208 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 
 ### B.3 Platform-Adaptive Node Implementation
 
-*Full implementation of PlatformAdaptiveNode class for multi-platform deployment (see Section 3.2):*
-
-[The complete PlatformAdaptiveNode code from Section 3.2 would be moved here]
+```csharp
+public class PlatformAdaptiveNode
+{
+    private readonly IPlatformDetector _detector;
+    private readonly ICryptoNegotiator _cryptoNegotiator;
+    
+    public enum PlatformType 
+    { 
+        Browser, Smartphone, Laptop, Desktop, 
+        GamingConsole, CryptoMiner, DatacenterServer 
+    }
+    
+    public async Task<NodeConfiguration> AdaptToPlatform()
+    {
+        var platform = await _detector.DetectPlatform();
+        var config = new NodeConfiguration();
+        
+        // Memory limits based on platform
+        config.MemoryLimit = platform switch
+        {
+            PlatformType.Browser => 256 * MB,
+            PlatformType.Smartphone => 512 * MB,
+            PlatformType.Laptop => 2 * GB,
+            PlatformType.Desktop => 8 * GB,
+            PlatformType.GamingConsole => 4 * GB,
+            PlatformType.CryptoMiner => 16 * GB,
+            PlatformType.DatacenterServer => 32 * GB,
+            _ => 1 * GB
+        };
+        
+        // Crypto agility - negotiate with peers
+        config.CryptoPolicy = await _cryptoNegotiator.NegotiateOptimal(
+            platform.Capabilities,
+            PeerCapabilities
+        );
+        
+        // Power profiles
+        config.PowerProfile = platform.HasBattery ? 
+            PowerProfile.BatteryAware : 
+            PowerProfile.AlwaysOn;
+            
+        // Network strategy
+        config.NetworkStrategy = platform.NetworkType switch
+        {
+            NetworkType.Cellular => NetworkStrategy.ConservativeBandwidth,
+            NetworkType.WiFi => NetworkStrategy.Balanced,
+            NetworkType.Ethernet => NetworkStrategy.HighThroughput,
+            _ => NetworkStrategy.Adaptive
+        };
+        
+        // Resource contribution calculation
+        config.ResourceContribution = CalculateContribution(platform, config);
+        
+        return config;
+    }
+    
+    private ResourceProfile CalculateContribution(
+        Platform platform, 
+        NodeConfiguration config)
+    {
+        return new ResourceProfile
+        {
+            ComputeUnits = platform.CpuCores * platform.CpuSpeed,
+            MemoryMB = config.MemoryLimit,
+            StorageGB = platform.AvailableStorage,
+            NetworkBandwidthMbps = platform.NetworkSpeed,
+            Reliability = EstimateReliability(platform),
+            EntropyGenerationRate = platform.HardwareRNG ? 1000 : 100
+        };
+    }
+}
 
 ### B.4 Mesh Network Adapter Implementation
 
-*Full implementation of MeshNetworkAdapter class for offline mesh networking (see Section 3.3):*
-
-[The complete MeshNetworkAdapter code from Section 3.3 would be moved here]
+```csharp
+public class MeshNetworkAdapter
+{
+    private readonly IEntropySource _entropy;
+    private readonly IRoutingTable _routingTable;
+    
+    public enum ConnectivityMode 
+    { 
+        Internet, MeshBluetooth, MeshWiFiDirect, 
+        Hybrid, StoreAndForward 
+    }
+    
+    public async Task<MeshNetwork> EstablishMeshNetwork(
+        ConnectivityScenario scenario)
+    {
+        var availableProtocols = await DetectAvailableProtocols();
+        var topology = SelectOptimalTopology(scenario, availableProtocols);
+        
+        var mesh = new MeshNetwork
+        {
+            Topology = topology,
+            SecurityMode = SecurityMode.EndToEndEncrypted,
+            EntropyInjection = true
+        };
+        
+        // Configure based on scenario
+        switch (scenario)
+        {
+            case ConnectivityScenario.Festival:
+                mesh.BeaconInterval = TimeSpan.FromSeconds(5);
+                mesh.MaxHops = 4; // Empirically validated limit
+                mesh.PowerMode = PowerMode.Balanced;
+                break;
+                
+            case ConnectivityScenario.DisasterRecovery:
+                mesh.BeaconInterval = TimeSpan.FromSeconds(1);
+                mesh.MaxHops = 10;
+                mesh.PowerMode = PowerMode.Performance;
+                mesh.PriorityRouting = true;
+                break;
+                
+            case ConnectivityScenario.Rural:
+                mesh.BeaconInterval = TimeSpan.FromMinutes(1);
+                mesh.MaxHops = 20;
+                mesh.PowerMode = PowerMode.LowPower;
+                mesh.StoreAndForward = true;
+                break;
+        }
+        
+        await mesh.Initialize();
+        return mesh;
+    }
+    
+    public async Task<RouteResult> RouteDataThroughMesh(
+        byte[] data, 
+        string targetNodeId)
+    {
+        // Entropy-native route selection
+        var entropy = await _entropy.GetEntropy(32);
+        var availableRoutes = _routingTable.GetRoutesTo(targetNodeId);
+        var selectedRoutes = SelectRoutesWithEntropy(availableRoutes, entropy);
+        
+        // Fragment data for mesh transmission
+        const int BT_FRAGMENT_SIZE = 512;
+        var fragments = FragmentData(data, BT_FRAGMENT_SIZE);
+        
+        // Multi-path redundant routing
+        var tasks = selectedRoutes.Select(route => 
+            SendFragmentsViaRoute(fragments, route)
+        ).ToArray();
+        
+        var results = await Task.WhenAll(tasks);
+        
+        return new RouteResult
+        {
+            Success = results.Any(r => r.Success),
+            Latency = results.Min(r => r.Latency),
+            HopsTraversed = results.FirstOrDefault()?.HopsTraversed ?? 0
+        };
+    }
+    
+    private async Task<bool> StoreAndForwardMessage(
+        Message message, 
+        TimeSpan maxDelay)
+    {
+        var storage = new DelayTolerantStorage();
+        await storage.Store(message, maxDelay);
+        
+        // Entropy-native retry scheduling
+        var retrySchedule = GenerateEntropyNativeRetrySchedule(maxDelay);
+        
+        foreach (var retryTime in retrySchedule)
+        {
+            await Task.Delay(retryTime);
+            
+            if (await TryDeliverMessage(message))
+                return true;
+        }
+        
+        return false;
+    }
+    
+    private IEnumerable<TimeSpan> GenerateEntropyNativeRetrySchedule(
+        TimeSpan maxDelay)
+    {
+        var entropy = _entropy.GetEntropy(16).Result;
+        var rng = new SecureRandom(entropy);
+        
+        // Generate unpredictable retry intervals
+        var intervals = new List<TimeSpan>();
+        var totalDelay = TimeSpan.Zero;
+        
+        while (totalDelay < maxDelay)
+        {
+            var nextInterval = TimeSpan.FromSeconds(
+                rng.Next(1, 60) * Math.Pow(1.5, intervals.Count)
+            );
+            
+            if (totalDelay + nextInterval > maxDelay)
+                break;
+                
+            intervals.Add(nextInterval);
+            totalDelay += nextInterval;
+        }
+        
+        return intervals;
+    }
+}
 
 ---
 
