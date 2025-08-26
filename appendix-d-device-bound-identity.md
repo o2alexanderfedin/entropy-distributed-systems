@@ -24,15 +24,16 @@ D.11. [Conclusions and Recommendations](#d11-conclusions-and-recommendations)
 
 ## D.1 Executive Summary
 
-This comprehensive document presents a complete decentralized identity architecture combining password-derived cryptographic keys with device-binding constraints to create a revolutionary security model that:
+This comprehensive document presents the **first practical blockchain-free decentralized identity architecture** combining password-derived cryptographic keys with device-binding constraints to create an innovative security model that:
 
 1. **Eliminates all centralized dependencies** - No Certificate Authorities, no key servers, no identity providers
-2. **Ensures zero-storage security** - Neither passwords nor keys are ever stored anywhere
-3. **Provides device-level protection** - Keys never leave the device where created
-4. **Replaces traditional PKI** - Complete alternative to X.509 certificates at zero cost
-5. **Maintains user sovereignty** - Complete control over identity lifecycle
+2. **Operates without blockchain** - Pure DHT-based approach avoiding energy costs and scalability limits of blockchain
+3. **Ensures zero-storage security** - Neither passwords nor keys are ever stored anywhere
+4. **Provides device-level protection** - Keys never leave the device where created
+5. **Replaces traditional PKI** - Sustainable alternative to both X.509 certificates and blockchain-based DPKI
+6. **Maintains user sovereignty** - Complete control over identity lifecycle without tokens or gas fees
 
-**Key Innovation**: This architecture serves as a complete replacement for traditional X.509 certificates and centralized Certificate Authorities (CAs), providing a truly decentralized security certificate system with superior security properties.
+**Key Innovation**: Unlike existing decentralized identity solutions (Sovrin, uPort, ION) that rely on blockchain, this architecture achieves decentralized PKI using **only DHT for coordination**, making it the first practical blockchain-free alternative to traditional X.509 certificates and centralized Certificate Authorities (CAs).
 
 ### D.Critical Design Constraints
 
@@ -46,7 +47,32 @@ This comprehensive document presents a complete decentralized identity architect
 
 ## D.2 Core Architecture
 
-### D.2.1 Fundamental Identity Model
+### D.2.1 Distinction from Prior Art
+
+This architecture differs fundamentally from existing approaches:
+
+**Unlike FIDO2/WebAuthn [7]:**
+- No server registration required
+- No reliance on web browsers or specific protocols
+- Pure P2P operation without any central coordination
+
+**Unlike Blockchain-Based SSI (Sovrin [11], uPort [12], ION [13]):**
+- No blockchain or distributed ledger required
+- No consensus mechanisms or mining
+- No gas fees or cryptocurrency dependencies
+- Instant operations without block confirmations
+
+**Unlike Traditional Password Systems (SRP [15], OPAQUE [16]):**
+- No server-side storage of verifiers
+- Combined with hardware device binding
+- Decentralized discovery via DHT
+
+**Novel Integration:**
+- First system to combine password-derivation + device-binding + DHT
+- Operates without any blockchain or central servers
+- True zero-storage architecture
+
+### D.2.2 Fundamental Identity Model
 
 The architecture implements a three-layer identity model:
 
@@ -288,20 +314,21 @@ Where:
 
 ### D.5.1 Replacing X.509 with Device-Bound Certificates (DBC)
 
-The device-bound identity system serves as a **complete replacement for traditional X.509 certificates**:
+The device-bound identity system serves as an alternative to both traditional X.509 certificates and blockchain-based decentralized PKI:
 
-#### Comparison with Traditional PKI
+#### Comparison with Existing PKI Systems
 
-| Aspect | X.509/PKI | Device-Bound Certificates |
-|--------|-----------|--------------------------|
-| **Trust Model** | Centralized CAs | Self-sovereign, zero-trust |
-| **Cost** | $100-1000s/year | Free forever |
-| **Issuance** | Hours to weeks | Instant |
-| **Revocation** | CRL/OCSP lag | Real-time DHT |
-| **Privacy** | CA tracks everything | No tracking |
-| **Key Storage** | Files/HSM | Device-locked |
-| **Compromise Recovery** | Revoke all & reissue | Device-specific |
-| **Validation** | CA chain | Direct proof |
+| Aspect | X.509/PKI | Blockchain DPKI [11,12] | Our DHT-Based DBC |
+|--------|-----------|------------------------|-------------------|
+| **Trust Model** | Centralized CAs | Blockchain consensus | DHT + device binding |
+| **Cost** | $100-1000s/year | Gas fees per operation | Free forever |
+| **Energy Usage** | Minimal | High (PoW/PoS) | Minimal (O(log n)) |
+| **Issuance** | Hours to weeks | Block confirmation time | Instant |
+| **Revocation** | CRL/OCSP lag | Immutable (problematic) | Real-time DHT update |
+| **Privacy** | CA tracks everything | Public ledger | No tracking |
+| **Key Storage** | Files/HSM | Wallet/blockchain | Device-locked |
+| **Scalability** | Centralized bottleneck | TPS limited | Unlimited |
+| **Infrastructure** | Certificate authorities | Blockchain nodes | Pure P2P DHT |
 
 ### D.5.2 Certificate Generation and Management
 
@@ -1403,29 +1430,48 @@ class DecentralizedBlockchainIdentity:
 
 ### D.11.6 Conclusion
 
-The device-bound password-derived identity architecture with decentralized certificates represents a **paradigm shift** in digital identity:
+The device-bound password-derived identity architecture represents a significant advancement in digital identity by being the **first practical blockchain-free decentralized PKI**:
 
-- **From centralized to sovereign**: Users control their identity
-- **From expensive to free**: Zero infrastructure costs
-- **From vulnerable to secure**: Device-binding eliminates network attacks
-- **From complex to simple**: One system replaces multiple solutions
+- **From centralized to sovereign**: Users control their identity without blockchain dependency
+- **From expensive to free**: Zero infrastructure costs (no gas fees, no tokens)
+- **From energy-intensive to sustainable**: DHT efficiency vs blockchain consensus
+- **From complex to simple**: One system without blockchain infrastructure
 
-This is not just an improvement—it's a complete reimagination of digital identity for the decentralized future.
+This architecture provides a practical, sustainable alternative to both traditional PKI and blockchain-based identity systems.
 
 ---
 
 ## D.References
 
+### Core Architecture
 1. Secured by Entropy: An Entropy-Native Cybersecurity Framework for Decentralized Cloud Infrastructures (Fedin, 2025)
 2. Argon2: The Memory-Hard Function for Password Hashing (RFC 9106)
-3. OPAQUE: An Asymmetric PAKE Protocol (RFC 9497)
-4. BIP39: Mnemonic Code for Generating Deterministic Keys
+3. OPAQUE: An Asymmetric PAKE Protocol (RFC 9497)  
+4. BIP39: Mnemonic Code for Generating Deterministic Keys (https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
 5. NIST SP 800-63B: Digital Identity Guidelines
 6. NIST SP 800-90A/B/C: Random Number Generation Standards
-7. WebAssembly Security Model and Specifications
-8. TPM 2.0 Specifications (Trusted Computing Group)
-9. Secure Enclave Documentation (Apple)
-10. StrongBox Keymaster Documentation (Android)
+
+### Prior Art - Device-Bound Systems
+7. FIDO2/WebAuthn Specification (W3C, 2021) - https://www.w3.org/TR/webauthn-2/
+8. TPM 2.0 Specifications (Trusted Computing Group, 2019)
+9. Secure Enclave Documentation (Apple, 2023)
+10. StrongBox Keymaster Documentation (Android, 2024)
+
+### Prior Art - Blockchain-Based Identity (For Comparison)
+11. Sovrin: A Protocol and Token for Self-Sovereign Identity (Sovrin Foundation, 2018)
+12. uPort: A Platform for Self-Sovereign Identity (ConsenSys, 2017)
+13. Microsoft ION - Decentralized Identity on Bitcoin (Microsoft, 2019)
+14. Decentralized Identifiers (DIDs) v1.0 (W3C, 2022) - https://www.w3.org/TR/did-core/
+
+### Prior Art - Zero-Knowledge Authentication
+15. The Secure Remote Password Protocol (Wu, T., 1998) - RFC 2945
+16. OPAQUE: An Asymmetric PAKE Protocol (Jarecki et al., 2018)
+17. Zero-Knowledge Password Proof (Bellovin & Merritt, 1992)
+
+### DHT and P2P Systems
+18. Kademlia: A Peer-to-peer Information System Based on XOR Metric (Maymounkov & Mazières, 2002)
+19. Chord: A Scalable Peer-to-peer Lookup Service (Stoica et al., 2001)
+20. S/Kademlia: A Practicable Approach Towards Secure Key-Based Routing (Baumgart & Mies, 2007)
 
 ---
 
