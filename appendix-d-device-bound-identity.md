@@ -1,4 +1,4 @@
-# Appendix F: Device-Bound Password-Derived Identity and Decentralized Certificate Architecture
+# Appendix D: Device-Bound Password-Derived Identity and Decentralized Certificate Architecture
 
 **Author**: Analysis by AI Hive®  
 **Date**: August 26, 2025  
@@ -6,23 +6,23 @@
 **Context**: Complete Identity Architecture for Secured by Entropy P2P Cloud Framework  
 **Main Document**: [Secured by Entropy P2P Cloud Academic Paper](./Secured_by_Entropy_P2P_Cloud_2025-08-25.md)
 
-## Table of Contents (Appendix F)
+## Table of Contents (Appendix D)
 
-F.1. [Executive Summary](#f1-executive-summary)
-F.2. [Core Architecture](#f2-core-architecture)
-F.3. [Technical Implementation](#f3-technical-implementation)
-F.4. [Security Model](#f4-security-model)
-F.5. [Decentralized Certificate System](#f5-decentralized-certificate-system)
-F.6. [P2P Communication Protocols](#f6-p2p-communication-protocols)
-F.7. [Platform-Specific Implementations](#f7-platform-specific-implementations)
-F.8. [Security Analysis](#f8-security-analysis)
-F.9. [Recovery and Migration](#f9-recovery-and-migration)
-F.10. [Real-World Applications](#f10-real-world-applications)
-F.11. [Conclusions and Recommendations](#f11-conclusions-and-recommendations)
+D.1. [Executive Summary](#d1-executive-summary)
+D.2. [Core Architecture](#d2-core-architecture)
+D.3. [Technical Implementation](#d3-technical-implementation)
+D.4. [Security Model](#d4-security-model)
+D.5. [Decentralized Certificate System](#d5-decentralized-certificate-system)
+D.6. [P2P Communication Protocols](#d6-p2p-communication-protocols)
+D.7. [Platform-Specific Implementations](#d7-platform-specific-implementations)
+D.8. [Security Analysis](#d8-security-analysis)
+D.9. [Recovery and Migration](#d9-recovery-and-migration)
+D.10. [Real-World Applications](#d10-real-world-applications)
+D.11. [Conclusions and Recommendations](#d11-conclusions-and-recommendations)
 
 ---
 
-## F.1 Executive Summary
+## D.1 Executive Summary
 
 This comprehensive document presents a complete decentralized identity architecture combining password-derived cryptographic keys with device-binding constraints to create a revolutionary security model that:
 
@@ -34,7 +34,7 @@ This comprehensive document presents a complete decentralized identity architect
 
 **Key Innovation**: This architecture serves as a complete replacement for traditional X.509 certificates and centralized Certificate Authorities (CAs), providing a truly decentralized security certificate system with superior security properties.
 
-### F.Critical Design Constraints
+### D.Critical Design Constraints
 
 1. **No Storage**: Neither keys nor passwords shall be stored anywhere
 2. **Device Binding**: Identity keys never cross device boundaries (except voluntary regeneration)
@@ -44,9 +44,9 @@ This comprehensive document presents a complete decentralized identity architect
 
 ---
 
-## F.2 Core Architecture
+## D.2 Core Architecture
 
-### F.2.1 Fundamental Identity Model
+### D.2.1 Fundamental Identity Model
 
 The architecture implements a three-layer identity model:
 
@@ -58,7 +58,7 @@ Layer 2: Device-Bound Identity Keys (Never Exported)
 Layer 3: Entropy-Enhanced Session Keys (Ephemeral)
 ```
 
-### F.2.2 Key Derivation Flow
+### D.2.2 Key Derivation Flow
 
 ```python
 class DecentralizedIdentity:
@@ -114,7 +114,7 @@ class DecentralizedIdentity:
             return MemoryOnlyKeys(signing_key, encryption_key)
 ```
 
-### F.2.3 Device as Cryptographic Anchor
+### D.2.3 Device as Cryptographic Anchor
 
 Each device becomes a sovereign cryptographic entity:
 
@@ -130,9 +130,9 @@ username + password + [device context] → identity keys (never exported)
 
 ---
 
-## F.Technical Implementation
+## D.Technical Implementation
 
-### F.3.1 Complete Key Derivation Implementation
+### D.3.1 Complete Key Derivation Implementation
 
 ```python
 class PasswordDerivedDeviceBoundIdentity:
@@ -199,7 +199,7 @@ class PasswordDerivedDeviceBoundIdentity:
             self._use_memory_encryption()
 ```
 
-### F.3.2 Entropy Integration for Sessions
+### D.3.2 Entropy Integration for Sessions
 
 ```python
 class EntropyEnhancedSessions:
@@ -246,9 +246,9 @@ class EntropyEnhancedSessions:
 
 ---
 
-## F.Security Model
+## D.Security Model
 
-### F.4.1 Threat Mitigation Matrix
+### D.4.1 Threat Mitigation Matrix
 
 | Threat Vector | Traditional PKI | Password-Only | Device-Bound Password | Mitigation Effectiveness |
 |--------------|----------------|---------------|----------------------|-------------------------|
@@ -260,7 +260,7 @@ class EntropyEnhancedSessions:
 | Quantum Attack | Vulnerable | Vulnerable | Per-device migration | Future-ready |
 | Social Engineering | Moderate | High risk | Multi-factor required | 75% |
 
-### F.4.2 Security Properties
+### D.4.2 Security Properties
 
 1. **Forward Secrecy**: Compromise of identity keys doesn't compromise past sessions
 2. **Device Isolation**: Breach of one device doesn't affect others
@@ -268,7 +268,7 @@ class EntropyEnhancedSessions:
 4. **Cryptographic Agility**: Per-device upgrade path for quantum resistance
 5. **Zero-Knowledge**: Service providers never see private keys or passwords
 
-### F.4.3 Entropy Analysis
+### D.4.3 Entropy Analysis
 
 The complete system provides layered entropy:
 
@@ -284,9 +284,9 @@ Where:
 
 ---
 
-## F.Decentralized Certificate System
+## D.Decentralized Certificate System
 
-### F.5.1 Replacing X.509 with Device-Bound Certificates (DBC)
+### D.5.1 Replacing X.509 with Device-Bound Certificates (DBC)
 
 The device-bound identity system serves as a **complete replacement for traditional X.509 certificates**:
 
@@ -303,7 +303,7 @@ The device-bound identity system serves as a **complete replacement for traditio
 | **Compromise Recovery** | Revoke all & reissue | Device-specific |
 | **Validation** | CA chain | Direct proof |
 
-### F.5.2 Certificate Generation and Management
+### D.5.2 Certificate Generation and Management
 
 ```python
 class DecentralizedCertificateManager:
@@ -427,7 +427,7 @@ class DecentralizedCertificateManager:
         return CodeSigningCertificate(cert)
 ```
 
-### F.5.3 Certificate Validation
+### D.5.3 Certificate Validation
 
 ```python
 class DecentralizedCertificateValidator:
@@ -491,9 +491,9 @@ class DecentralizedCertificateValidator:
 
 ---
 
-## F.P2P Communication Protocols
+## D.P2P Communication Protocols
 
-### F.6.1 Authentication Without Key Transmission
+### D.6.1 Authentication Without Key Transmission
 
 Since private keys never leave devices, authentication uses zero-knowledge proofs:
 
@@ -582,7 +582,7 @@ class P2PAuthenticationProtocol:
         )
 ```
 
-### F.6.2 Multi-Device Coordination
+### D.6.2 Multi-Device Coordination
 
 ```python
 class MultiDeviceCoordinator:
@@ -634,9 +634,9 @@ class MultiDeviceCoordinator:
 
 ---
 
-## F.Platform-Specific Implementations
+## D.Platform-Specific Implementations
 
-### F.7.1 iOS/macOS - Secure Enclave
+### D.7.1 iOS/macOS - Secure Enclave
 
 ```swift
 class SecureEnclaveIdentity {
@@ -677,7 +677,7 @@ class SecureEnclaveIdentity {
 }
 ```
 
-### F.7.2 Android - StrongBox
+### D.7.2 Android - StrongBox
 
 ```kotlin
 class StrongBoxIdentity {
@@ -718,7 +718,7 @@ class StrongBoxIdentity {
 }
 ```
 
-### F.7.3 Windows/Linux - TPM 2.0
+### D.7.3 Windows/Linux - TPM 2.0
 
 ```python
 class TPMIdentity:
@@ -789,7 +789,7 @@ class TPMIdentity:
             return TPMKeyHandle(persistent_handle)
 ```
 
-### F.7.4 WebAssembly - Browser Sandbox
+### D.7.4 WebAssembly - Browser Sandbox
 
 ```javascript
 class WASMIdentity {
@@ -864,11 +864,11 @@ class WASMIdentity {
 
 ---
 
-## F.Security Analysis
+## D.Security Analysis
 
-### F.8.1 Comprehensive Threat Analysis
+### D.8.1 Comprehensive Threat Analysis
 
-#### F.8.1.1 Attack Vector Assessment
+#### D.8.1.1 Attack Vector Assessment
 
 | Attack Vector | Risk Level | Mitigation | Residual Risk |
 |--------------|------------|------------|---------------|
@@ -883,7 +883,7 @@ class WASMIdentity {
 | **CA Compromise** | N/A | No CAs exist | None |
 | **DNS Hijacking** | Low | Multiple validation methods | Low |
 
-#### F.8.1.2 Security Properties Analysis
+#### D.8.1.2 Security Properties Analysis
 
 1. **Perfect Forward Secrecy**: ✅ Achieved through ephemeral session keys
 2. **Post-Compromise Security**: ✅ Device isolation limits breach scope
@@ -891,7 +891,7 @@ class WASMIdentity {
 4. **Quantum Resistance Path**: ✅ Can upgrade to PQC per device
 5. **Zero Trust Architecture**: ✅ No central authorities required
 
-### F.8.2 Entropy Analysis
+### D.8.2 Entropy Analysis
 
 Complete entropy assessment across all layers:
 
@@ -935,7 +935,7 @@ def calculate_system_entropy():
     }
 ```
 
-### F.8.3 Formal Security Properties
+### D.8.3 Formal Security Properties
 
 **Theorem 1**: Device-bound keys provide unconditional network security.
 *Proof*: Keys $K$ exist only in device memory $M_d$. Network transmission $T$ never includes $K$. Therefore, $P(K \in T) = 0$.
@@ -948,9 +948,9 @@ def calculate_system_entropy():
 
 ---
 
-## F.Recovery and Migration
+## D.Recovery and Migration
 
-### F.9.1 Social Recovery Protocol
+### D.9.1 Social Recovery Protocol
 
 ```python
 class SocialRecoverySystem:
@@ -1025,7 +1025,7 @@ class SocialRecoverySystem:
         return new_identity
 ```
 
-### F.9.2 Device Migration
+### D.9.2 Device Migration
 
 ```python
 class DeviceMigration:
@@ -1128,9 +1128,9 @@ class DeviceMigration:
 
 ---
 
-## F.Real-World Applications
+## D.Real-World Applications
 
-### F.10.1 Web Services Without Passwords
+### D.10.1 Web Services Without Passwords
 
 ```python
 def setup_passwordless_web_auth(domain: str):
@@ -1191,7 +1191,7 @@ def setup_passwordless_web_auth(domain: str):
     return WebAuthHandler()
 ```
 
-### F.10.2 Secure Messaging Without Key Servers
+### D.10.2 Secure Messaging Without Key Servers
 
 ```python
 class DecentralizedSecureMessaging:
@@ -1250,7 +1250,7 @@ class DecentralizedSecureMessaging:
         return envelope
 ```
 
-### F.10.3 Blockchain Integration
+### D.10.3 Blockchain Integration
 
 ```python
 class DecentralizedBlockchainIdentity:
@@ -1326,9 +1326,9 @@ class DecentralizedBlockchainIdentity:
 
 ---
 
-## F.Conclusions and Recommendations
+## D.Conclusions and Recommendations
 
-### F.11.1 Key Findings
+### D.11.1 Key Findings
 
 1. **Superior Security Model**: Device-bound password-derived keys provide better security than traditional PKI by eliminating entire attack categories
 
@@ -1340,7 +1340,7 @@ class DecentralizedBlockchainIdentity:
 
 5. **Universal Applicability**: Can replace X.509 certificates, OAuth, passwords, and key servers across all applications
 
-### F.11.2 Implementation Recommendations
+### D.11.2 Implementation Recommendations
 
 #### Phase 1: Foundation (Months 1-3)
 - Implement Argon2id key derivation with production parameters
@@ -1366,7 +1366,7 @@ class DecentralizedBlockchainIdentity:
 - Add blockchain integration
 - Deploy production services
 
-### F.11.3 Security Best Practices
+### D.11.3 Security Best Practices
 
 1. **Mandatory Strong Passwords**: Enforce BIP39 passphrases (6+ words)
 2. **Hardware Security**: Always use platform security modules when available
@@ -1374,7 +1374,7 @@ class DecentralizedBlockchainIdentity:
 4. **Multi-Factor**: Require biometrics + password for high-value operations
 5. **Audit Logging**: Record all certificate operations in DHT
 
-### F.11.4 Risk Assessment
+### D.11.4 Risk Assessment
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|------------|--------|------------|
@@ -1384,7 +1384,7 @@ class DecentralizedBlockchainIdentity:
 | Quantum computers | Low | High | Migration ready |
 | User adoption | Medium | Low | Progressive deployment |
 
-### F.11.5 Final Recommendations
+### D.11.5 Final Recommendations
 
 **FOR IMMEDIATE DEPLOYMENT**: This architecture is recommended for production deployment with the following priorities:
 
@@ -1401,7 +1401,7 @@ class DecentralizedBlockchainIdentity:
 - Lower compliance costs
 - Simplified infrastructure
 
-### F.11.6 Conclusion
+### D.11.6 Conclusion
 
 The device-bound password-derived identity architecture with decentralized certificates represents a **paradigm shift** in digital identity:
 
@@ -1414,7 +1414,7 @@ This is not just an improvement—it's a complete reimagination of digital ident
 
 ---
 
-## F.References
+## D.References
 
 1. Secured by Entropy: An Entropy-Native Cybersecurity Framework for Decentralized Cloud Infrastructures (Fedin, 2025)
 2. Argon2: The Memory-Hard Function for Password Hashing (RFC 9106)
@@ -1429,7 +1429,7 @@ This is not just an improvement—it's a complete reimagination of digital ident
 
 ---
 
-## F.Appendix A: Implementation Checklist
+## D.Appendix A: Implementation Checklist
 
 - [ ] Argon2id implementation with 1GB memory requirement
 - [ ] Device fingerprinting without privacy violation
@@ -1449,7 +1449,7 @@ This is not just an improvement—it's a complete reimagination of digital ident
 
 ---
 
-## F.Appendix B: Security Audit Checklist
+## D.Appendix B: Security Audit Checklist
 
 - [ ] Key derivation timing attacks
 - [ ] Memory cleanup verification
