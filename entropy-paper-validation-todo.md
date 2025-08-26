@@ -14,9 +14,9 @@
 - [x] Verify -15% throughput reduction estimate
 - [x] Measure actual vs theoretical 6.5ms total entropy overhead per task:
   - [x] Key generation: ~2.3ms per session
-  - [ ] DHT random lookup: ~2.8ms per task
-  - [ ] Node selection: ~0.6ms per task
-  - [ ] Memory randomization: ~0.8ms per sandbox
+  - [x] DHT random lookup: ~2.8ms per task
+  - [x] Node selection: ~0.6ms per task
+  - [x] Memory randomization: ~0.8ms per sandbox
 
 ### Attack Resistance
 - [x] Validate -86% attack success rate improvement claim
