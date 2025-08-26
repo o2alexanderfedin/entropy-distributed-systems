@@ -1,4 +1,4 @@
-# Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures
+# Secured by Entropy: An Entropy-Native Cybersecurity Framework for Decentralized Cloud Infrastructures
 
 **Author:** Alex Fedin  
 **Affiliation:** O2.services (af@O2.services)  
@@ -69,15 +69,13 @@ Our framework extends MTD principles through comprehensive entropy injection at 
 
 WebAssembly's security architecture, as detailed in recent 2025 developments, provides critical isolation properties:
 
-**Microsoft's Wassette Runtime (August 2025)**: Introduces security-oriented runtime for WebAssembly Components via Model Context Protocol (MCP) with fine-grained, deny-by-default permission systems. Built on Wasmtime runtime using Rust, it offers browser-grade sandboxing with capability-based security.
-
-**Hyperlight Integration (CNCF Sandbox, February 2025)**: Microsoft's Hyperlight Wasm combines WebAssembly with micro-VMs, achieving microsecond-to-low-millisecond launch times (with Microsoft demonstrating 0.9ms execution times in controlled conditions) while maintaining strict memory constraints and time-bounded execution guarantees.
+**Industry WebAssembly Runtimes**: Recent vendor-reported developments include security-oriented runtimes with fine-grained, deny-by-default permission systems. These industry solutions (e.g., Microsoft's Wassette, CNCF Hyperlight) report sub-millisecond launch times in controlled conditions, though independent verification is pending. These vendor claims suggest WebAssembly's growing maturity for production security applications.
 
 ### 2.4 Decentralized Security Frameworks
 
 Recent research highlights several key developments:
 
-**Entrokey Labs (2025)**: Pioneering quantum-resistant security through AI-trained entropy generation, developing software-only solutions that bind cryptographic keys to high-quality entropy sources trained on natural entropic phenomena, preventing static key theft and providing crypto-agility against quantum threats.
+**Industry Entropy Initiatives**: Several vendors report developing quantum-resistant security through enhanced entropy generation techniques, though peer-reviewed validation of these approaches remains limited.
 
 **Blockchain Integration**: Peer-to-peer networks using consensus algorithms, Elliptic Curve Cryptography (ECC), and SHA-256 hashing for distributed trust without central authority.
 
@@ -185,161 +183,28 @@ The system ensures seamless interaction between heterogeneous nodes through:
 The architecture includes resilient mesh networking capabilities for scenarios where traditional internet connectivity is unavailable or unreliable:
 
 ```csharp
+// Simplified pseudocode - full implementation in Appendix B.4
 public class MeshNetworkAdapter
 {
-    private readonly IEntropySource _entropySource;
-    private readonly BluetoothManager _bluetooth;
-    private readonly WiFiDirectManager _wifiDirect;
+    // Connectivity modes: Internet, MeshBluetooth, MeshWiFiDirect, 
+    // Hybrid, StoreAndForward
     
-    public enum ConnectivityMode
+    public async Task<MeshNetwork> EstablishMeshNetwork(ConnectivityScenario scenario)
     {
-        Internet,          // Standard internet connectivity
-        MeshBluetooth,     // Bluetooth mesh for short-range
-        MeshWiFiDirect,    // WiFi Direct for medium-range
-        Hybrid,            // Opportunistic switching between modes
-        StoreAndForward    // Delay-tolerant networking
+        // Adapts network configuration based on scenario
+        // Returns appropriate mesh topology
     }
     
-    public class MeshNode
-    {
-        public string NodeId { get; set; }
-        public DateTime LastSeen { get; set; }
-        public int HopCount { get; set; }
-        public float SignalStrength { get; set; }
-        public byte[] PublicKey { get; set; }
-    }
-    
-    public async Task<MeshNetwork> EstablishMeshNetwork(
-        ConnectivityScenario scenario)
-    {
-        return scenario switch
-        {
-            ConnectivityScenario.Festival => await CreateFestivalMesh(),
-            ConnectivityScenario.Theater => await CreateTheaterMesh(),
-            ConnectivityScenario.Disaster => await CreateDisasterMesh(),
-            ConnectivityScenario.Rural => await CreateRuralMesh(),
-            _ => await CreateAdaptiveMesh()
-        };
-    }
-    
-    private async Task<MeshNetwork> CreateFestivalMesh()
-    {
-        // Burning Man scenario: 70,000+ people, no cellular
-        var config = new MeshConfiguration
-        {
-            Mode = ConnectivityMode.MeshBluetooth,
-            MaxHops = 10, // Theoretical max; practical BT mesh often degrades beyond 3-4 hops
-            BeaconInterval = TimeSpan.FromSeconds(5),
-            PowerMode = PowerMode.Balanced,
-            
-            // Entropy-native peer discovery
-            DiscoveryStrategy = new EntropyDiscovery
-            {
-                RandomWalkProbability = 0.3f,
-                MaxPeers = 20,
-                RefreshInterval = TimeSpan.FromMinutes(5)
-            }
-        };
-        
-        return await InitializeMesh(config);
-    }
-    
-    public async Task<RouteResult> RouteDataThroughMesh(
-        byte[] data, 
-        string targetNodeId)
+    public async Task<RouteResult> RouteDataThroughMesh(byte[] data, string targetNodeId)
     {
         // 1. Entropy-native route selection
-        var availableRoutes = await DiscoverRoutes(targetNodeId);
-        var selectedRoute = await SelectRouteWithEntropy(availableRoutes);
-        
-        // 2. Fragment data for mesh transmission
-        var fragments = FragmentData(data, maxSize: 512); // BT limitation
-        
-        // 3. Send with redundancy
-        var tasks = fragments.Select(async fragment =>
-        {
-            // Add entropy to prevent route prediction
-            var nonce = await _entropySource.GetBytes(16);
-            var packet = new MeshPacket
-            {
-                FragmentId = fragment.Id,
-                Data = fragment.Data,
-                Nonce = nonce,
-                TTL = 10,
-                Timestamp = DateTime.UtcNow
-            };
-            
-            // Multi-path routing for resilience
-            var redundantPaths = SelectRedundantPaths(selectedRoute, count: 3);
-            return await SendThroughPaths(packet, redundantPaths);
-        });
-        
-        return await Task.WhenAll(tasks);
+        // 2. Fragment data for mesh transmission (512B for BT)
+        // 3. Multi-path redundant routing
+        // 4. TTL = 10 (theoretical; practical limit 3-4 hops [26,27])
     }
     
-    public class MeshDHT : EntropyDHT
-    {
-        // Adapted DHT for mesh networks
-        protected override async Task<Node> FindNode(byte[] nodeId)
-        {
-            if (IsConnectedToInternet())
-            {
-                return await base.FindNode(nodeId);
-            }
-            
-            // Mesh-only discovery
-            return await MeshOnlyDiscovery(nodeId);
-        }
-        
-        private async Task<Node> MeshOnlyDiscovery(byte[] nodeId)
-        {
-            // 1. Check local Bluetooth peers
-            var btPeers = await _bluetooth.DiscoverPeers(
-                timeout: TimeSpan.FromSeconds(10));
-            
-            // 2. Query peers for target
-            var queries = btPeers.Select(async peer =>
-            {
-                var response = await QueryPeerForNode(peer, nodeId);
-                return response?.Node;
-            });
-            
-            var results = await Task.WhenAll(queries);
-            return results.FirstOrDefault(n => n != null);
-        }
-    }
-    
-    // Store-and-forward for extreme disconnection
-    public async Task<string> StoreForLaterDelivery(
-        byte[] data, 
-        string targetNodeId)
-    {
-        var messageId = Guid.NewGuid().ToString();
-        
-        var queuedMessage = new QueuedMessage
-        {
-            Id = messageId,
-            TargetNodeId = targetNodeId,
-            Data = data,
-            CreatedAt = DateTime.UtcNow,
-            ExpiresAt = DateTime.UtcNow.AddHours(48),
-            DeliveryAttempts = 0,
-            
-            // Entropy-native retry scheduling
-            NextRetryAt = DateTime.UtcNow.AddMinutes(
-                _random.Next(5, 30))
-        };
-        
-        await _localStorage.StoreMessage(queuedMessage);
-        
-        // Opportunistic forwarding when connectivity returns
-        _connectivityMonitor.OnConnected += async () =>
-        {
-            await AttemptDelivery(messageId);
-        };
-        
-        return messageId;
-    }
+    // Store-and-forward for delay-tolerant networking
+    // Full implementation with entropy-native retry scheduling in Appendix B.4
 }
 ```
 
@@ -359,11 +224,15 @@ public class MeshNetworkAdapter
 
 3. **Use Case Scenarios**:
 
-   **Festival/Event Networks** (e.g., Burning Man):
-   - 70,000+ devices forming spontaneous mesh
-   - Content sharing and messaging without infrastructure
+   **Festival/Event Networks**:
+   - Potential for localized mesh clusters in connectivity-challenged environments
+   - Content sharing and messaging without infrastructure (within BT range clusters)
    - Entropy prevents network partition attacks
    - Battery-optimized beacon intervals
+   - *Historical precedent: Open Garden's FireChat successfully deployed Bluetooth/WiFi 
+     mesh networking at Burning Man (2014-2017), connecting 4,000+ users [28]*
+   - *Note: Full festival-scale mesh (tens of thousands of devices) would require 
+     hybrid approaches combining BT, WiFi Direct, and opportunistic infrastructure*
 
    **Theater/Venue Networks**:
    - Dense device proximity (100+ devices in small space)
@@ -384,7 +253,7 @@ public class MeshNetworkAdapter
    - DTN (Delay Tolerant Networking) protocols
 
 4. **Performance Characteristics** (Theoretical):
-   - Bluetooth mesh: 1-2 Mbps, 10-30m range, theoretical 10+ hops (practical networks often degrade beyond 3-4 hops; real-world evaluation needed)
+   - Bluetooth mesh: 1-2 Mbps, 10-30m range, theoretical 10+ hops (practical networks often degrade beyond 3-4 hops per empirical testing [26,27]; real-world evaluation needed)
    - WiFi Direct mesh: 100+ Mbps, 200m range, 5+ hops
    - Latency: 50-500ms per hop depending on congestion
    - Battery impact: +20-40% drain vs. standard operation
@@ -1376,24 +1245,18 @@ where $H_{\infty}$ represents the min-entropy, which provides the strongest secu
 | **Resource Usage** | Baseline | +25% CPU, +15% Memory | Cryptographic Operations |
 | **Node Discovery** | Static routing | $O(\log n)$ DHT lookup | Scalable Architecture |
 
+*Assumptions: 10-20% malicious identities, 5%/hour churn rate, uniform geographic distribution; see Section 10.5 for planned validation.*
+
 **Expected Performance Trade-offs**:
 - **Increased Latency**: Entropy generation, DHT lookups, and cryptographic operations add computational overhead
 - **Reduced Throughput**: Additional security operations decrease overall system throughput
 - **Enhanced Security**: Systematic entropy injection should reduce successful attacks
 - **Higher Resource Usage**: Cryptographic operations and entropy management increase CPU/memory usage
 
-**Complexity**: Maintains $O(\log n)$ DHT lookup complexity (see Appendix A.2 for formal proof), with additional $O(1)$ entropy and verification operations per hop.
 
 ### 10.3 DHT Complexity
 
-Maintains $O(\log n)$ complexity (see Appendix A.2).
-
-**Security Properties**:
-- **Sybil Resistance**: Enhanced through proof-of-work requirements
-- **Predictability**: Reduced through entropy injection
-- **Eclipse Attacks**: Mitigated by random node selection
-
-*Note: Actual performance would depend on implementation, network conditions, and hardware capabilities.*
+Complexity remains $O(\log n)$; see Appendix A.2 for the formal proof and assumptions.
 
 ### 10.4 Estimated Entropy Overhead Analysis
 
@@ -1672,7 +1535,7 @@ Our entropy-native P2P architecture demonstrates that security need not come at 
 
 The implications extend beyond traditional cybersecurity. As we move toward an era of increasingly sophisticated cyber threats and advanced computing capabilities, the principles of entropy-native defense will become essential. Security is no longer about building higher walls—it is about creating an ever-shifting fog that makes those walls impossible to find.
 
-While the performance projections presented are theoretical, we have outlined a comprehensive empirical validation plan (Section 10.5) featuring a 1000-node prototype deployment across multiple Azure regions. This planned evaluation will measure actual DHT performance, entropy overhead, attack resilience under controlled adversarial scenarios, and scalability characteristics, providing the concrete evidence necessary to validate our theoretical framework.
+**Important Note**: All performance values herein are theoretical projections. A comprehensive 1000-node Azure/libp2p evaluation plan is outlined in Section 10.5 to empirically validate DHT performance, entropy overhead, and resilience. This planned deployment across multiple Azure regions will measure actual attack resistance under controlled adversarial scenarios with 10-20% malicious nodes, providing the concrete evidence necessary to validate our theoretical framework.
 
 > _"In the information age, security is achieved through systematic uncertainty rather than static barriers."_
 
@@ -1690,9 +1553,7 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 2. Shannon, C. E. (1949). "Communication Theory of Secrecy Systems." *Bell System Technical Journal*, 28(4), 656-715.
 
-3. Microsoft Azure Core Upstream Team. (August 6, 2025). "Introducing Wassette: WebAssembly-based tools for AI agents." *Microsoft Open Source Blog*. Available: https://opensource.microsoft.com/blog/2025/08/06/introducing-wassette-webassembly-based-tools-for-ai-agents/
-
-4. Cloud Native Computing Foundation. (February 2025). "Hyperlight accepted into CNCF Sandbox." Available: https://github.com/hyperlight-dev/hyperlight
+3. [Industry sources] WebAssembly runtime vendors report security enhancements and performance improvements (2025). Specific vendor claims await independent validation.
 
 5. National Institute of Standards and Technology. (2024). "FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard." Available: https://csrc.nist.gov/pubs/fips/203/final
 
@@ -1724,7 +1585,7 @@ The author thanks the Nolock.social community for valuable feedback and the open
 
 19. Xing, B. C., et al. (2023). "Intel Trust Domain Extensions (TDX): A Comprehensive Hardware-Enforced TEE for Cloud Computing." *ACM Computing Surveys*. Available: https://dl.acm.org/doi/full/10.1145/3652597
 
-20. Entrokey Labs. (2025). "Quantum-Resistant Security Solutions." Available: https://entrokeylabs.com/
+20. [Industry report] Entropy-enhanced security vendors (2025). Claims pending peer review.
 
 21. Department of Homeland Security Science and Technology Directorate. "Cybersecurity Division - Moving Target Defense (CSD-MTD)." Available: https://www.dhs.gov/science-and-technology/csd-mtd
 
@@ -1735,6 +1596,12 @@ The author thanks the Nolock.social community for valuable feedback and the open
 24. Anderson, R. (2020). "Security Engineering: A Guide to Building Dependable Distributed Systems." 3rd Edition. Wiley. ISBN: 978-1119642787.
 
 25. Katz, J., & Lindell, Y. (2020). "Introduction to Modern Cryptography." 3rd Edition. CRC Press. ISBN: 978-0815354369.
+
+26. Nordic Semiconductor. (2024). "Large Scale Bluetooth Mesh Testing." Nordic DevZone Blog. January 2024. Available: https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/large-scale-bluetooth-mesh-testing
+
+27. Silicon Labs. (2024). "AN1137: Bluetooth Mesh Network Performance." Application Note. Available: https://www.silabs.com/documents/public/application-notes/an1424-bluetooth-mesh-11-network-performance.pdf
+
+28. Open Garden. (2015). "FireChat at Burning Man: Mesh Networking for Off-Grid Communication." VentureBeat. Documented deployment of peer-to-peer Bluetooth/WiFi mesh network connecting 4,000+ users in desert conditions. Available: https://venturebeat.com/business/firechat-lets-burning-man-2015-attendees-create-their-own-wireless-network-on-the-playa/
 
 ---
 
@@ -1905,7 +1772,7 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 ---
 
 **Citation**:  
-Fedin, A. (2025). Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures.<br/>*Nolock.social*. https://nolock.social
+Fedin, A. (2025). Secured by Entropy: An Entropy-Native Cybersecurity Framework for Decentralized Cloud Infrastructures.<br/>*Nolock.social*. https://nolock.social
 
 **Contact**: af@O2.services
 
