@@ -64,35 +64,31 @@ By making every security-critical decision entropy-driven and verifiable, we mak
 
 ### 5.1 System Architecture
 
-```
-┌────────────────────────────────────┐
-│      ENTROPY GENERATION LAYER      │
-├────────────────────────────────────┤
-│ • Hardware RNG (RDRAND/RDSEED)     │
-│ • Network timing jitter             │
-│ • User interaction patterns         │
-│ • Sensor noise (mobile devices)     │
-│         ↓ Combined via XOF          │
-└────────────┬───────────────────────┘
-             │
-┌────────────▼───────────────────────┐
-│    VERIFIABLE RANDOM FUNCTIONS     │
-├────────────────────────────────────┤
-│ VRF_Generate(SK, input) → (proof, │
-│                           output)  │
-│ VRF_Verify(PK, input, proof,      │
-│            output) → bool          │
-└────────────┬───────────────────────┘
-             │
-┌────────────▼───────────────────────┐
-│   ENTROPY-ENHANCED PROTOCOLS       │
-├────────────────────────────────────┤
-│ • Random node selection            │
-│ • Unpredictable routing            │
-│ • Cryptographic sortition          │
-│ • Temporal mixing                  │
-│ • Attack detection via entropy     │
-└────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "Entropy Generation Layer"
+        A[Hardware RNG<br/>RDRAND/RDSEED] --> E[Combined via XOF]
+        B[Network timing jitter] --> E
+        C[User interaction patterns] --> E
+        D[Sensor noise<br/>mobile devices] --> E
+    end
+    
+    E --> F
+    
+    subgraph "Verifiable Random Functions"
+        F[VRF_Generate SK, input] --> G[proof, output]
+        H[VRF_Verify PK, input, proof, output] --> I[bool]
+    end
+    
+    G --> J
+    
+    subgraph "Entropy-Enhanced Protocols"
+        J --> K[Random node selection]
+        J --> L[Unpredictable routing]
+        J --> M[Cryptographic sortition]
+        J --> N[Temporal mixing]
+        J --> O[Attack detection via entropy]
+    end
 ```
 
 ### 5.2 Novel Security Mechanisms

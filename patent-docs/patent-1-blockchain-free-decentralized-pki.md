@@ -59,29 +59,26 @@ A revolutionary system that achieves decentralized public key infrastructure usi
 
 ### 5.1 System Architecture
 
-```
-┌──────────────────────────────────────────────┐
-│              User Device                      │
-├──────────────────────────────────────────────┤
-│  Password → Argon2id → Master Seed           │
-│     ↓                                        │
-│  Device Fingerprint → Binding Key            │
-│     ↓                                        │
-│  Identity Keys (Never Leave Device)          │
-│     ↓                                        │
-│  Self-Signed Certificate                     │
-└──────────────┬───────────────────────────────┘
-                │
-                ↓
-┌──────────────────────────────────────────────┐
-│           DHT Network (Kademlia)              │
-├──────────────────────────────────────────────┤
-│  • Certificate Publication                    │
-│  • Key Discovery (O(log n))                  │
-│  • Reputation Tracking                       │
-│  • Revocation Lists                          │
-│  • No Blockchain Required                    │
-└──────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "User Device"
+        A[Password] --> B[Argon2id]
+        B --> C[Master Seed]
+        D[Device Fingerprint] --> E[Binding Key]
+        C --> E
+        E --> F[Identity Keys<br/>Never Leave Device]
+        F --> G[Self-Signed Certificate]
+    end
+    
+    G --> H[DHT Network - Kademlia]
+    
+    subgraph "DHT Network Services"
+        H --> I[Certificate Publication]
+        H --> J[Key Discovery O log n]
+        H --> K[Reputation Tracking]
+        H --> L[Revocation Lists]
+        H --> M[No Blockchain Required]
+    end
 ```
 
 ### 5.2 Novel Method Steps

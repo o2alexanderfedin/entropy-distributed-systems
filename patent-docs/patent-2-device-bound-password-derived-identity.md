@@ -68,44 +68,37 @@ A revolutionary cryptographic identity system that:
 
 ### 5.1 System Architecture
 
-```
-┌─────────────────────────────────────┐
-│         USER INTERACTION            │
-├─────────────────────────────────────┤
-│   Password (memorized only)         │
-│            ↓                        │
-│   Argon2id (1GB RAM, 10 iterations) │
-│            ↓                        │
-│   Master Seed (256 bits)            │
-└────────────┬────────────────────────┘
-             │
-┌────────────▼────────────────────────┐
-│       DEVICE BINDING LAYER          │
-├─────────────────────────────────────┤
-│   Hardware Fingerprint:             │
-│   • CPU ID                          │
-│   • MAC Address                     │
-│   • Disk Serial                     │
-│   • TPM/Secure Enclave ID           │
-│            ↓                        │
-│   Device Binding Key = HMAC(seed,   │
-│                      fingerprint)   │
-└────────────┬────────────────────────┘
-             │
-┌────────────▼────────────────────────┐
-│    CRYPTOGRAPHIC IDENTITY LAYER     │
-├─────────────────────────────────────┤
-│   Identity Keys:                    │
-│   • Ed25519 Signing Key             │
-│   • X25519 Encryption Key           │
-│   • AES-256 Symmetric Key           │
-│                                     │
-│   Properties:                       │
-│   • Never stored                    │
-│   • Never leave device              │
-│   • Derived on-demand               │
-│   • Destroyed after use             │
-└─────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "User Interaction"
+        A[Password - memorized only] --> B[Argon2id<br/>1GB RAM, 10 iterations]
+        B --> C[Master Seed<br/>256 bits]
+    end
+    
+    C --> D
+    
+    subgraph "Device Binding Layer"
+        D[Hardware Fingerprint] --> E{Components}
+        E --> F[CPU ID]
+        E --> G[MAC Address]
+        E --> H[Disk Serial]
+        E --> I[TPM/Secure Enclave ID]
+        F & G & H & I --> J[Device Binding Key<br/>HMAC seed, fingerprint]
+    end
+    
+    J --> K
+    
+    subgraph "Cryptographic Identity Layer"
+        K[Identity Keys Generation] --> L[Ed25519 Signing Key]
+        K --> M[X25519 Encryption Key]
+        K --> N[AES-256 Symmetric Key]
+        
+        O[Properties:]
+        O --> P[Never stored]
+        O --> Q[Never leave device]
+        O --> R[Derived on-demand]
+        O --> S[Destroyed after use]
+    end
 ```
 
 ### 5.2 Novel Method Implementation
