@@ -711,10 +711,10 @@ SECURITY_PARAMETERS = {
 
 ### Performance Testing
 
-- 10,000 node network simulation
-- 1M operations per hour
+- $10^4$ node network simulation
+- $10^6$ operations per hour
 - Zero successful attacks
-- <5% overhead vs. standard DHT
+- $< 5\%$ overhead vs. standard DHT
 - Linear scalability demonstrated
 
 ## 11. Mathematical Proofs

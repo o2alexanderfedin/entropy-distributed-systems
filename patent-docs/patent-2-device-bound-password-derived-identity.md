@@ -112,13 +112,15 @@ def derive_master_seed(password: str) -> bytes:
     This ensures deterministic output while maintaining security
     """
     # Deterministic salt from password (novel approach)
+    # $salt = H(password)[0:16]$ where $H$ is SHA-256
     salt = SHA256(password.encode('utf-8'))[:16]
     
     # Memory-hard derivation (anti-ASIC)
+    # $seed = Argon2id(pwd, salt, mem=2^{20}KB, t=10, p=4)$
     master_seed = argon2id(
         password=password.encode('utf-8'),
         salt=salt,
-        memory_cost=1048576,  # 1GB RAM requirement
+        memory_cost=1048576,  # $2^{20}$ KB = 1GB RAM requirement
         time_cost=10,         # 10 iterations
         parallelism=4,        # 4 parallel threads
         hash_length=32        # 256-bit output
@@ -160,6 +162,7 @@ def generate_device_fingerprint() -> bytes:
         components.append(get_secure_enclave_id())
     
     # Combine all components
+    # $fingerprint = H(CPU\_ID || MAC || DISK\_ID || TPM\_ID)$
     fingerprint = SHA256(b''.join(components))
     return fingerprint
 ```
@@ -190,6 +193,7 @@ class DeviceBoundIdentity:
         master_seed = derive_master_seed(password)
         
         # Bind to device (CRITICAL INNOVATION)
+        # $bound\_seed = HMAC_{SHA256}(master\_seed, device\_fingerprint)$
         device_bound_seed = HMAC_SHA256(
             key=master_seed,
             message=self.device_fingerprint
@@ -199,18 +203,21 @@ class DeviceBoundIdentity:
         keys = {}
         
         # Signing key (Ed25519)
+        # $sk_{sign} = Ed25519\_derive(KDF(bound\_seed, \text{"signing"}, 32))$
         keys['signing_private'] = Ed25519_derive(
             seed=KDF(device_bound_seed, b"signing", 32)
         )
         keys['signing_public'] = Ed25519_public(keys['signing_private'])
         
         # Encryption key (X25519)
+        # $sk_{enc} = X25519\_derive(KDF(bound\_seed, \text{"encryption"}, 32))$
         keys['encryption_private'] = X25519_derive(
             seed=KDF(device_bound_seed, b"encryption", 32)
         )
         keys['encryption_public'] = X25519_public(keys['encryption_private'])
         
         # Symmetric key (AES-256)
+        # $k_{sym} = KDF(bound\_seed, \text{"symmetric"}, 32)$
         keys['symmetric'] = KDF(device_bound_seed, b"symmetric", 32)
         
         return keys
@@ -411,7 +418,7 @@ A system for optional hardware security module integration:
 
 ```python
 SECURITY_CONSTANTS = {
-    'argon2_memory': 1073741824,  # 1 GB
+    'argon2_memory': 1073741824,  # $2^{30}$ bytes = 1 GB
     'argon2_iterations': 10,
     'argon2_parallelism': 4,
     'key_size': 256,  # bits
@@ -424,11 +431,11 @@ SECURITY_CONSTANTS = {
 
 ### Performance Metrics
 
-- Key Generation: <2 seconds (including Argon2)
-- Signing Operation: <10ms
-- Encryption/Decryption: <5ms per MB
-- Device Fingerprinting: <100ms
-- Memory Usage: 1GB peak, <10MB runtime
+- Key Generation: $< 2$ seconds (including Argon2)
+- Signing Operation: $< 10$ms
+- Encryption/Decryption: $< 5$ms per MB
+- Device Fingerprinting: $< 100$ms
+- Memory Usage: $2^{30}$ bytes peak, $< 10$MB runtime
 - Battery Impact: Negligible (<0.1% per day)
 
 ## 9. Industrial Applicability

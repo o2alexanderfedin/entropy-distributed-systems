@@ -49,7 +49,7 @@ A revolutionary system that achieves decentralized public key infrastructure usi
 
 ### Key Technical Advantages
 
-1. **Energy Efficiency**: O(log n) DHT lookups vs blockchain consensus
+1. **Energy Efficiency**: $O(\log n)$ DHT lookups vs blockchain consensus
 2. **Scalability**: No global state synchronization required
 3. **Privacy**: No public ledger or tracking
 4. **Cost**: Zero fees, no tokens, no mining
@@ -74,7 +74,7 @@ graph TD
     
     subgraph "DHT Network Services"
         H --> I[Certificate Publication]
-        H --> J[Key Discovery O log n]
+        H --> J[Key Discovery O(log n)]
         H --> K[Reputation Tracking]
         H --> L[Revocation Lists]
         H --> M[No Blockchain Required]
@@ -87,18 +87,21 @@ graph TD
    ```python
    def generate_identity(password: str, device_id: bytes) -> Identity:
        # Step 1: Derive master seed from password
+       # $master\_seed = Argon2id(password, salt, mem=2^{30}, t=10, p=4)$
        master_seed = argon2id(
            password=password,
-           salt=SHA256(password),  # Deterministic salt
+           salt=SHA256(password),  # Deterministic salt: $salt = H(password)$
            memory=1GB,
            iterations=10,
            parallelism=4
        )
        
        # Step 2: Bind to device
+       # $device\_key = HMAC_{SHA256}(master\_seed, device\_id)$
        device_key = HMAC_SHA256(master_seed, device_id)
        
        # Step 3: Generate identity keys
+       # $sk = Ed25519\_derive(device\_key)$, $pk = Ed25519\_public(sk)$
        identity_private = Ed25519_derive(device_key)
        identity_public = Ed25519_public(identity_private)
        
@@ -120,6 +123,7 @@ graph TD
    ```python
    def publish_to_dht(identity: Identity, dht_network: DHT):
        # Calculate DHT key from public key
+       # $dht\_key = H(pk)$ where $H$ is SHA-256
        dht_key = SHA256(identity.public_key)
        
        # Publish without blockchain
@@ -151,7 +155,7 @@ graph TD
 | Aspect | Our Invention | Blockchain DPKI | Traditional PKI |
 |--------|--------------|-----------------|-----------------|
 | **Consensus Mechanism** | None needed | PoW/PoS | Centralized |
-| **Energy Usage** | ~0.001 kWh/year | ~150 TWh/year | ~1 kWh/year |
+| **Energy Usage** | $\sim 10^{-3}$ kWh/year | $\sim 1.5 \times 10^{14}$ Wh/year | $\sim 1$ kWh/year |
 | **Transaction Cost** | $0 | $1-100 per tx | $100-1000/year |
 | **Issuance Time** | Instant | 10-60 minutes | Hours-weeks |
 | **Scalability** | Unlimited | 7-30 TPS | Limited by CA |
@@ -177,7 +181,7 @@ A method for establishing cryptographic identity without trusted third parties:
 2. Binding keys to device using hardware fingerprints
 3. Creating self-signed certificates with expiration times
 4. Publishing certificates to DHT network without blockchain
-5. Verifying identities through DHT lookups in O(log n) time
+5. Verifying identities through DHT lookups in $O(\log n)$ time
 6. Revoking certificates through DHT updates without permanent records
 
 ### Claim 3: Device-Binding Claim
@@ -287,7 +291,7 @@ class BlockchainFreeIdentity:
 
 - Identity Generation: <100ms
 - DHT Publication: <500ms  
-- Verification Lookup: <200ms (O(log n))
+- Verification Lookup: <200ms ($O(\log n)$)
 - Memory Usage: 1GB during key derivation, <10MB runtime
 - Network Overhead: <1KB per operation
 - Energy Consumption: <0.001 kWh annually per user
