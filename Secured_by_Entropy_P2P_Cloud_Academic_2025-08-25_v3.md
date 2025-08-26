@@ -1433,6 +1433,52 @@ While the performance projections above are based on theoretical analysis and ex
 
 This empirical validation will provide the concrete evidence necessary to support our theoretical claims and identify areas where implementation optimizations may be needed.
 
+### 10.6 Specific Experimental Validation Requirements
+
+The following aspects require empirical validation to confirm theoretical projections:
+
+**1. Performance Metrics Validation**
+- **Current Status**: Latency (+30%), throughput (-15%), attack reduction (-86%) are theoretical models
+- **Required Experiments**: 
+  - End-to-end latency measurements under varying network conditions
+  - Throughput benchmarks with different task sizes and node counts
+  - Controlled adversarial testing to measure actual attack success rates
+- **Validation Criteria**: Results within ±20% of theoretical projections
+
+**2. Resource Usage Quantification**
+- **Current Status**: CPU/memory overhead estimates based on component analysis
+- **Required Experiments**:
+  - PQC overhead: Measure ML-KEM, ML-DSA operations on different hardware
+  - Entropy generation cost: Profile RNG operations per task
+  - WebAssembly sandbox overhead: Memory and CPU usage per isolated task
+  - DHT maintenance cost: Bandwidth and storage for routing tables
+- **Target Platforms**: Raspberry Pi (mobile), Intel NUC (desktop), AWS EC2 (datacenter)
+
+**3. Bluetooth Mesh Scalability Testing**
+- **Current Status**: Theoretical 10+ hops, acknowledged degradation beyond 3-4 hops
+- **Required Experiments**:
+  - Deploy 100+ node Bluetooth mesh in controlled environment
+  - Measure latency, packet loss, and throughput vs. hop count
+  - Test with different node densities and physical layouts
+  - Validate store-and-forward reliability in disconnected scenarios
+- **Success Metrics**: Establish practical hop limits and optimization strategies
+
+**4. WebRTC Traffic Analysis Resistance**
+- **Current Status**: Padding and cover traffic strategies proposed
+- **Required Experiments**:
+  - Implement padding with 20%, 50%, 100% overhead
+  - Deploy machine learning traffic classifiers as adversaries
+  - Measure false positive rates in traffic correlation
+  - Quantify bandwidth overhead vs. privacy gain trade-off
+- **Validation Method**: Use state-of-the-art traffic analysis tools (e.g., WeFDE, DeepCorr)
+
+**5. Additional Validation Requirements**
+- **Mesh Network Performance**: Real-world testing at events (festivals, conferences)
+- **Browser Compatibility**: Test WebAssembly performance across Chrome, Firefox, Safari
+- **Energy Consumption**: Battery drain measurements on mobile devices
+- **Network Churn**: System stability with 5%, 10%, 20% node churn rates
+- **Geographic Distribution**: Latency impact of global node distribution
+
 ---
 
 ## 11. Theoretical Use Cases and Applications
