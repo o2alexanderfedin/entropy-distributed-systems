@@ -330,6 +330,27 @@ The device-bound identity system serves as an alternative to both traditional X.
 | **Scalability** | Centralized bottleneck | TPS limited | Unlimited |
 | **Infrastructure** | Certificate authorities | Blockchain nodes | Pure P2P DHT |
 
+#### Comprehensive Feature Comparison
+
+| Feature | Our System | FIDO2/WebAuthn | Blockchain SSI | SRP/OPAQUE | Prior DHT Systems |
+|---------|-----------|----------------|----------------|------------|-------------------|
+| **No Servers** | ✅ | ❌ | ✅ | ❌ | ✅ |
+| **No Blockchain** | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **Device-Bound** | ✅ | ✅ | Partial | ❌ | ❌ |
+| **Password-Derived** | ✅ | ❌ | Some | ✅ | ❌ |
+| **Decentralized PKI** | ✅ | ❌ | ✅ | ❌ | ❌ |
+| **Zero Storage** | ✅ | ❌ | ❌ | Partial | ❌ |
+| **DHT-Based** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **No Gas Fees** | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **No Tokens** | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **Social Recovery** | ✅ | ❌ | ✅ | ❌ | ❌ |
+| **Instant Issuance** | ✅ | ✅ | ❌ | ✅ | ❌ |
+| **Energy Efficient** | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **Privacy Preserving** | ✅ | Partial | ❌ | ✅ | ✅ |
+| **All Features Combined** | ✅ | ❌ | ❌ | ❌ | ❌ |
+
+**Key Insight**: Only our system combines ALL these features without requiring blockchain, making it the first practical blockchain-free decentralized PKI solution.
+
 ### D.5.2 Certificate Generation and Management
 
 ```python
