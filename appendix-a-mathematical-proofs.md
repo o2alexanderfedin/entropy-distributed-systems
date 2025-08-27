@@ -40,12 +40,12 @@
 
 *Proof*:
 Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack on target $T$:
-- Adversary must predict lookup key $k = \text{SHA3}(\text{taskID} || \text{entropy})$
+- Adversary must either: (1) predict lookup key $k = \text{SHA3}(\text{taskID} || \text{entropy})$, OR (2) control surrounding nodes
 - Probability of predicting entropy: $P_{\text{entropy}} \leq 2^{-256}$ (SHA-3 security [30])
-- Even if entropy known, adversary needs $\geq k$ surrounding nodes in key space
-- Probability of $k$ malicious nodes in target region: $P_{\text{surround}} \leq (m/n)^k$ (uniform distribution [4])
-- Combined probability: $P_{\text{eclipse}} \leq 2^{-256} \times (m/n)^k \approx 0$ 
-- **Note**: Statistical independence between entropy prediction and node positioning required for this bound ✓
+- Probability of controlling $k$ nearest nodes: $P_{\text{surround}} \leq (m/n)^k$ (uniform distribution [4])
+- Since entropy prevents targeted positioning, adversary can only rely on random chance
+- Eclipse probability: $P_{\text{eclipse}} \leq \min(1, (m/n)^k)$ for $m < n/2$
+- Example: $n=1000$, $m=100$, $k=20$: $P_{\text{eclipse}} = (0.1)^{20} = 10^{-20}$ ✓
 
 ## A.4 VRF Security Analysis
 

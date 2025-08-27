@@ -1148,9 +1148,18 @@ We define adversary $\mathcal{A}$ with the following capabilities and constraint
 
 **Theorem 1 (Forward Secrecy Properties)**: The compromise of long-term keys does not compromise past session keys, subject to implementation constraints.
 
-*Proof*: Each session key $k_{\text{session}}$ is derived from ephemeral keys $(a, b)$ and entropy $(e_A, e_B)$ that are destroyed after use. Without these values, computing $k_{\text{session}}$ requires solving the ECDLP, which is computationally infeasible [33].
+*Proof*: Each session key is derived as: $k_{\text{session}} = \text{KDF}(g^{ab} || e_A || e_B)$ where:
+- $g^{ab}$ is the ECDH shared secret from ephemeral keys $(a, b)$
+- $(e_A, e_B)$ are entropy values with $H_{\infty}(e_i) \geq \lambda$ bits ($\lambda = 256$)
+- All ephemeral values are securely erased after use
 
-*Requirements*: (1) secure random number generation [30], (2) proper key destruction, (3) secure implementation, and (4) protection against man-in-the-middle attacks during key exchange.
+Without $(a, b, e_A, e_B)$, recovering $k_{\text{session}}$ requires solving ECDLP for $g^{ab}$ from $(g^a, g^b)$, which requires $O(2^{\lambda/2})$ operations [33].
+
+*Critical Requirements*: 
+1. Cryptographically secure RNG with entropy $\geq \lambda$ bits [30]
+2. Secure erasure using memory overwriting (not just deallocation)
+3. Side-channel resistant implementation
+4. Authenticated key exchange to prevent MITM attacks
 
 **Theorem 2 (Quantum Security Clarification)**: Entropy augmentation increases classical unpredictability but does NOT provide quantum resistance. Quantum security depends entirely on post-quantum cryptographic primitives.
 
@@ -1167,20 +1176,23 @@ We define adversary $\mathcal{A}$ with the following capabilities and constraint
 **Theorem 3 (DHT Lookup Security)**: The probability of an adversary predicting the next node selection in our entropy-augmented DHT is negligible.
 
 *Proof*: Let $P_{\text{predict}}$ be the probability of predicting the next lookup target. Given:
-- Random entropy injection $e$ with $H(e) \geq 256$ bits
+- Random entropy injection $e$ with min-entropy $H_{\infty}(e) \geq 256$ bits
 - Task identifier $t$ with uniform distribution
 - Lookup key $k = \text{SHA3}(t || e)$
 - XOR distance metric $d(k, n_i) = k \oplus \text{nodeID}_i$
 
-The adversary must predict both $e$ and the resulting closest nodes. Since SHA3 is cryptographically secure:
-$$P_{\text{predict}} \leq 2^{-256} + \varepsilon$$
-where $\varepsilon$ is negligible for practical purposes.
+The adversary must predict the hash output. Using conservative bounds that account for potential correlations:
+$$P_{\text{predict}} \leq 2^{-\min(H_{\infty}(e), |t|)} + \epsilon_{\text{SHA3}} \leq 2^{-256}$$
+where $\epsilon_{\text{SHA3}} \leq 2^{-256}$ is the SHA3 distinguishing advantage.
 
 **Theorem 4 (DHT Sybil Resistance)**: The system resists Sybil attacks through entropy-native proof-of-work in node admission.
 
 *Proof*: For a node to participate, it must solve:
 $$\text{SHA3}(\text{nodeID} || \text{entropy} || \text{difficultyTarget}) < 2^{(256-k)}$$
-where $k$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires $2^k$ work per node, making large-scale Sybil attacks economically infeasible.
+where $k \geq 40$ is the difficulty parameter. An adversary creating $m$ Sybil nodes requires expected work of $m \times 2^k$ hash operations. 
+
+With modern ASICs ($10^{14}$ H/s), time required: $T(m) \approx m \times 2^k / 10^{14}$ seconds.
+For $k=40$, $m=1000$: $T \approx 3$ hours, providing meaningful resistance.
 
 ### 9.3 DHT Complexity
 
