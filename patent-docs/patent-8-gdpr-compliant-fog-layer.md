@@ -211,10 +211,10 @@ class GDPRFogLayer:
 
 ### Market Opportunity
 
-- GDPR compliance market: $2.8B by 2025
-- Edge computing market: $43B by 2027
-- Privacy tech market: $15B by 2026
-- Total addressable: $60B+
+- GDPR compliance market: \$2.8B by 2025
+- Edge computing market: \$43B by 2027
+- Privacy tech market: \$15B by 2026
+- Total addressable: \$60B+
 
 ## 9. Technical Implementation Details
 

@@ -24,8 +24,8 @@ This invention relates to electronic payment systems, specifically to methods fo
 ### Current Payment System Limitations
 
 1. **High Transaction Costs**
-   - Credit cards: 2-3% + $0.30 per transaction
-   - Wire transfers: $15-50 per transaction
+   - Credit cards: 2-3% + \$0.30 per transaction
+   - Wire transfers: \$15-50 per transaction
    - Micropayments economically infeasible
    - International transfers: 5-7% total cost
 
@@ -207,10 +207,10 @@ class GraphPaymentSystem:
 
 ### Market Opportunity
 
-- Global payments: $150 trillion annually
-- Transaction fees: $2 trillion (1.5%)
-- Potential savings: $500 billion
-- Tax optimization: Additional $300 billion
+- Global payments: \$150 trillion annually
+- Transaction fees: \$2 trillion (1.5%)
+- Potential savings: \$500 billion
+- Tax optimization: Additional \$300 billion
 
 ## 9. Technical Implementation Details
 
@@ -248,15 +248,15 @@ class GraphPaymentSystem:
 
 ### Tax Savings Model
 ```
-Traditional: A→B ($100 tax) + B→C ($100 tax) + C→A ($100 tax) = $300 tax
-Our System: Cycle eliminated = $0 tax
-Savings: $300 per cycle
+Traditional: A→B (\$100 tax) + B→C (\$100 tax) + C→A (\$100 tax) = \$300 tax
+Our System: Cycle eliminated = \$0 tax
+Savings: \$300 per cycle
 ```
 
 ### Transaction Fee Reduction
 ```
-Traditional: 1000 transactions × $0.30 = $300 fees
-After optimization: 100 net transactions × $0.30 = $30 fees
+Traditional: 1000 transactions × \$0.30 = \$300 fees
+After optimization: 100 net transactions × \$0.30 = \$30 fees
 Savings: 90% fee reduction
 ```
 

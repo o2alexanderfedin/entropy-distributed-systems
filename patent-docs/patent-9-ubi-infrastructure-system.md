@@ -25,13 +25,13 @@ This invention relates to economic systems and distributed computing, specifical
 
 1. **Funding Crisis**
    - Traditional UBI requires massive taxation
-   - $1,000/month for 200M adults = $2.4 trillion/year
+   - \$1,000/month for 200M adults = \$2.4 trillion/year
    - Would need 50% increase in federal tax revenue
    - Creates economic drag and political resistance
 
 2. **Idle Resource Waste**
    - 11.5 billion devices globally idle 80% of time
-   - $3 trillion in underutilized hardware
+   - \$3 trillion in underutilized hardware
    - No mechanism to monetize idle capacity
    - Depreciating assets generate no returns
 
@@ -202,20 +202,20 @@ Where multipliers include:
 ### Individual Impact Scenarios
 
 **Single Person Household (3 devices)**
-- Monthly earnings: $1,014
-- Annual income: $12,168
+- Monthly earnings: \$1,014
+- Annual income: \$12,168
 - Covers: Rent/mortgage in many areas
 - Tax rate: 10-15% (vs 25-35% wages)
 
 **Family of Four (10 devices)**
-- Monthly earnings: $3,380
-- Annual income: $40,560
+- Monthly earnings: \$3,380
+- Annual income: \$40,560
 - Covers: Median household expenses
 - Qualifies for business deductions
 
 **Tech Enthusiast (15+ devices)**
-- Monthly earnings: $5,000+
-- Annual income: $60,000+
+- Monthly earnings: \$5,000+
+- Annual income: \$60,000+
 - Covers: Full living expenses
 - Creates small business opportunity
 
@@ -223,7 +223,7 @@ Where multipliers include:
 
 **Cost Reduction**
 - 65% savings vs AWS/Azure
-- $1,014/month vs $2,915/month equivalent
+- \$1,014/month vs \$2,915/month equivalent
 - No long-term contracts
 - Instant scaling capability
 
@@ -237,8 +237,8 @@ Where multipliers include:
 
 - Total devices: 11.5 billion globally
 - Addressable with 10% adoption: 1.15 billion
-- Average earnings per device: $338/month
-- Annual UBI distributed: $467 billion
+- Average earnings per device: \$338/month
+- Annual UBI distributed: \$467 billion
 - No government funding required
 
 ## 9. Technical Implementation Details
@@ -282,15 +282,15 @@ Where multipliers include:
 ### Self-Funding Mechanism
 ```
 Traditional UBI:
-- Government collects taxes: -$2.4T
-- Government distributes UBI: +$2.4T
-- Net economic value: $0 (transfer only)
+- Government collects taxes: -\$2.4T
+- Government distributes UBI: +\$2.4T
+- Net economic value: \$0 (transfer only)
 - Deadweight loss from taxation
 
 Device-Based UBI:
-- Enterprises save on cloud: +$300B
-- Individuals earn income: +$467B
-- Net economic value: +$767B (value creation)
+- Enterprises save on cloud: +\$300B
+- Individuals earn income: +\$467B
+- Net economic value: +\$767B (value creation)
 - No deadweight loss
 ```
 

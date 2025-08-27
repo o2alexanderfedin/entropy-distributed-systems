@@ -200,9 +200,9 @@ class EphemeralCloudSystem:
 
 ### Market Opportunity
 
-- Enterprise cloud spending: $600B annually
+- Enterprise cloud spending: \$600B annually
 - Compliance and security: 20% of IT budget
-- Potential market: $50B+ for ephemeral infrastructure
+- Potential market: \$50B+ for ephemeral infrastructure
 
 ## 9. Technical Implementation Details
 

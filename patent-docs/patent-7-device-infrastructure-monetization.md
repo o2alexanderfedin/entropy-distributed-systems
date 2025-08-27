@@ -30,7 +30,7 @@ This invention relates to edge computing and infrastructure monetization, specif
    - Laptops closed 16+ hours/day
 
 2. **Cloud Infrastructure Costs**
-   - Enterprises spend $600B on cloud
+   - Enterprises spend \$600B on cloud
    - Edge computing costs skyrocketing
    - Multi-region deployments expensive
    - 5G edge requires massive investment
@@ -183,13 +183,13 @@ class DeviceInfrastructureMonetization:
 ### Individual Device Owner Benefits
 
 1. **Single Person Household**
-   - 3 devices generate $1,000-2,000/month
+   - 3 devices generate \$1,000-2,000/month
    - Covers rent/mortgage payments
    - Passive income stream
    - Tax deductible expenses
 
 2. **Family Household**
-   - 10+ devices generate $2,000-4,000/month
+   - 10+ devices generate \$2,000-4,000/month
    - Significant income supplement
    - Children's devices contribute
    - Gaming consoles earn most
@@ -197,7 +197,7 @@ class DeviceInfrastructureMonetization:
 ### Enterprise Customer Benefits
 
 1. **True Edge Computing**
-   - 5G edge without $10,000/month commitment
+   - 5G edge without \$10,000/month commitment
    - Actual user proximity
    - Global coverage instantly
    - Pay per use model
@@ -217,8 +217,8 @@ class DeviceInfrastructureMonetization:
 ### Market Opportunity
 
 - Total addressable devices: 12 billion
-- Average revenue per device: $50/month
-- Potential market size: $600B annually
+- Average revenue per device: \$50/month
+- Potential market size: \$600B annually
 - Disrupts entire cloud industry
 
 ## 9. Technical Implementation Details

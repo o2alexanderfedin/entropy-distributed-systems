@@ -27,7 +27,7 @@ Public Key Infrastructure (PKI) currently relies on:
 
 1. **Centralized Certificate Authorities (CAs)**
    - Single points of failure
-   - High costs ($100-1000s per certificate annually)
+   - High costs (\$100-1000s per certificate annually)
    - Trust concentration in few entities
    - Privacy concerns (CAs track all certificates)
 
@@ -163,7 +163,7 @@ graph TD
 |--------|--------------|-----------------|-----------------|
 | **Consensus Mechanism** | None needed | PoW/PoS | Centralized |
 | **Energy Usage** | $\sim 10^{-3}$ kWh/year | $\sim 1.5 \times 10^{14}$ Wh/year | $\sim 1$ kWh/year |
-| **Transaction Cost** | $0 | $1-100 per tx | $100-1000/year |
+| **Transaction Cost** | \$0 | \$1-100 per tx | \$100-1000/year |
 | **Issuance Time** | Instant | 10-60 minutes | Hours-weeks |
 | **Scalability** | Unlimited | 7-30 TPS | Limited by CA |
 | **Privacy** | Complete | Public ledger | CA tracking |
@@ -212,7 +212,7 @@ A system wherein:
 ### Compared to Blockchain-Based Systems (Sovrin, uPort, ION)
 
 1. **No Energy Waste**: Our system uses 0.000001% of blockchain energy
-2. **No Transaction Fees**: Completely free vs $1-100 per blockchain transaction
+2. **No Transaction Fees**: Completely free vs \$1-100 per blockchain transaction
 3. **No Token Economics**: No cryptocurrency required
 4. **True Privacy**: No permanent public ledger
 5. **Instant Operations**: No waiting for block confirmations
@@ -220,7 +220,7 @@ A system wherein:
 ### Compared to Traditional PKI
 
 1. **No Certificate Authorities**: Eliminates single points of failure
-2. **No Annual Fees**: Free forever vs $100-1000s annually
+2. **No Annual Fees**: Free forever vs \$100-1000s annually
 3. **User Sovereignty**: Complete control over identity
 4. **Instant Issuance**: Immediate vs hours/weeks waiting
 5. **Perfect Privacy**: No tracking by authorities

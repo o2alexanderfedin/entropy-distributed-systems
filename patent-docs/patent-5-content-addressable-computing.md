@@ -207,10 +207,10 @@ class ContentAddressableCompute:
 
 ### Market Opportunity
 
-- Cloud computing market: $600B
-- Serverless computing: $30B by 2030
-- Scientific computing: $40B
-- Addressable market: $100B+
+- Cloud computing market: \$600B
+- Serverless computing: \$30B by 2030
+- Scientific computing: \$40B
+- Addressable market: \$100B+
 
 ## 9. Technical Implementation Details
 
