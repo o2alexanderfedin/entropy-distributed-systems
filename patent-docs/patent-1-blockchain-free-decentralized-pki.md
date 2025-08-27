@@ -348,11 +348,16 @@ The system is immediately deployable, requires no infrastructure investment, and
 **Applicant/Assignee**: [To be determined]  
 
 **Patent Classification**:  
-- **International**: H04L 9/32 (Cryptographic mechanisms)  
-- **US Class**: H04L 9/08 (Key distribution)  
-- **CPC**: H04L 29/06 (Network security)  
+- **Primary CPC**: H04L 9/0819 (Key transport/distribution using PKI)  
+- **Secondary CPC**:  
+  - H04L 9/3263 (Using blind signatures)  
+  - H04L 9/3073 (Identity-based encryption)  
+  - H04L 67/104 (Peer-to-peer networks)  
+  - H04L 9/0643 (Hash functions - SHA, HMAC)  
+- **International (IPC)**: H04L 9/32 (Identity verification/authentication)  
+- **US Class**: 380/277 (Cryptographic key management)  
 
-**Field of Search**: 380/44, 380/277, 713/168, 713/171  
+**Field of Search**: 380/44, 380/277-282, 713/168-171, 726/1-10  
 
 **Attorney Docket Number**: [To be assigned]  
 **Examiner**: [To be assigned]  

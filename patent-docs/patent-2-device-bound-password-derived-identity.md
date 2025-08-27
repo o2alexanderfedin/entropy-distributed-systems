@@ -567,14 +567,19 @@ The system is immediately deployable across all platforms and use cases, from en
 **Applicant/Assignee**: [To be determined]  
 
 **Patent Classification**:  
-- **International**: H04L 9/32 (Cryptographic mechanisms)  
-- **US Class**: H04L 9/08 (Key distribution)  
-- **CPC**: G06F 21/32 (User authentication)  
-- **Additional**: G06F 21/73 (Hardware security)  
+- **Primary CPC**: G06F 21/32 (User authentication using biometric data)  
+- **Secondary CPC**:  
+  - G06F 21/73 (Hardware security module protection)  
+  - H04L 9/3234 (Password-based authentication)  
+  - H04L 9/0861 (Key derivation functions)  
+  - H04L 9/0643 (Hash functions - Argon2, SHA)  
+  - G06F 21/31 (User authentication mechanisms)  
+- **International (IPC)**: H04L 9/32 (Identity verification)  
+- **US Class**: 726/5-7 (Authentication systems)  
 
 **Related Applications**: Patent #1 - Blockchain-Free Decentralized PKI  
 
-**Field of Search**: 380/44, 380/277, 713/168, 713/182, 726/5  
+**Field of Search**: 380/44-46, 380/277-282, 713/182-186, 726/2-7, 726/16-21  
 
 **Attorney Docket Number**: [To be assigned]  
 **Examiner**: [To be assigned]  

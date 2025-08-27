@@ -757,16 +757,22 @@ The system provides the first practical alternative to both proof-of-work and pr
 **Applicant/Assignee**: [To be determined]  
 
 **Patent Classification**:  
-- **International**: H04L 9/08 (Key distribution)  
-- **US Class**: H04L 29/08 (Network protocols)  
-- **CPC**: H04L 12/24 (Network management)  
-- **Additional**: G06F 21/55 (Attack detection)  
+- **Primary CPC**: G06F 21/55 (Intrusion detection systems)  
+- **Secondary CPC**:  
+  - H04L 67/104 (Peer-to-peer network protocols)  
+  - H04L 9/0643 (Cryptographic hash functions)  
+  - H04L 9/0869 (Random number generation)  
+  - H04L 63/1416 (Attack detection in networks)  
+  - H04L 67/1061 (Distributed hash tables - DHT)  
+  - H04L 9/3218 (Verifiable random functions)  
+- **International (IPC)**: H04L 29/06 (Network security arrangements)  
+- **US Class**: 726/22-25 (Network intrusion detection)  
 
 **Related Applications**:  
 - Patent #1 - Blockchain-Free Decentralized PKI  
 - Patent #2 - Device-Bound Password-Derived Identity  
 
-**Field of Search**: 380/255, 713/150, 726/22, 709/224  
+**Field of Search**: 380/255-268, 713/150-156, 726/22-25, 709/223-226, 370/389-395  
 
 **Attorney Docket Number**: [To be assigned]  
 **Examiner**: [To be assigned]  
