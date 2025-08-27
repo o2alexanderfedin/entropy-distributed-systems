@@ -759,6 +759,8 @@ public class VRFNodeSelector
 
 ## 6. WebAssembly Isolation and Runtime Security
 
+> *"Code snippets in this paper are presented in multiple languages (C#, Python, JavaScript, and WebAssembly text format) to illustrate cross-platform applicability of the proposed architecture. These examples are intended as illustrative references, not as a unified codebase, and the choice of language depends on the deployment context."*
+
 ### 6.1 Compilation Pipeline
 
 .NET 9+ AOT compilation to WebAssembly with security hardening:

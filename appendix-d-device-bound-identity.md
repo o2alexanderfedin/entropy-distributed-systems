@@ -140,6 +140,8 @@ class DecentralizedIdentity:
             return MemoryOnlyKeys(signing_key, encryption_key)
 ```
 
+*Examples shown in C#, Python, JavaScript, and WebAssembly are illustrative and deployment-specific.*
+
 ### D.2.3 Device as Cryptographic Anchor
 
 Each device becomes a sovereign cryptographic entity:

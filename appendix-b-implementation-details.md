@@ -6,6 +6,8 @@
 **Context**: WebAssembly and Platform-Specific Code for Secured by Entropy P2P Cloud Framework  
 **Main Document**: [Secured by Entropy P2P Cloud Academic Paper](./Secured_by_Entropy_P2P_Cloud_2025-08-25.md)
 
+> *"Code snippets in this paper are presented in multiple languages (C#, Python, JavaScript, and WebAssembly text format) to illustrate cross-platform applicability of the proposed architecture. These examples are intended as illustrative references, not as a unified codebase, and the choice of language depends on the deployment context."*
+
 ## B.1 WebAssembly Module Template
 
 ```wasm
@@ -42,6 +44,8 @@
   )
 )
 ```
+
+*Examples shown in C#, Python, JavaScript, and WebAssembly are illustrative and deployment-specific.*
 
 ## B.2 Node Configuration Schema
 

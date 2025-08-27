@@ -60,6 +60,8 @@ class DecentralizedSocialIdentity:
         }
 ```
 
+*Examples shown in C#, Python, JavaScript, and WebAssembly are illustrative and deployment-specific.*
+
 #### E.2.2.2 Content Distribution
 ```python
 class DecentralizedContentNetwork:
