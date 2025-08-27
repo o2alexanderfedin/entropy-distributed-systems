@@ -2193,159 +2193,113 @@ class PaymentModels:
 
 **Open Source Sustainability Solution**:
 
-```python
-class OpenSourceSustainability:
-    """How this solves the open source funding crisis"""
-    
-    def developer_earnings_example(self):
-        # Popular utility library (like lodash)
-        library_stats = {
-            'daily_executions': 1_000_000_000,  # 1B calls/day
-            'price_per_call': 0.000001,  # $0.000001
-            'daily_earnings': 1000,  # $1,000/day
-            'monthly_earnings': 30_000,  # $30,000/month
-            'yearly_earnings': 365_000  # $365,000/year
-        }
-        
-        # Niche scientific library
-        scientific_lib = {
-            'daily_executions': 10_000,
-            'price_per_call': 0.01,  # Higher price for specialized
-            'daily_earnings': 100,
-            'monthly_earnings': 3_000,
-            'yearly_earnings': 36_000  # Living wage!
-        }
-        
-        return {
-            'popular_lib': library_stats,
-            'niche_lib': scientific_lib
-        }
-    
-    def company_benefits(self):
-        """Why companies would participate"""
-        return {
-            'predictable_costs': 'Usage-based, not per-seat licensing',
-            'no_license_compliance': 'Just pay as you execute',
-            'guaranteed_maintenance': 'Developers incentivized to maintain',
-            'automatic_updates': 'New versions seamlessly available',
-            'tax_deductible': 'Clear business expense',
-            'no_vendor_lock': 'Code is content-addressed, portable'
-        }
-```
+**Open Source Sustainability Solution:**
+
+*Developer Earnings Examples:*
+
+**Popular Utility Library (like lodash):**
+- Daily executions: 1 billion calls/day
+- Price per call: $0.000001
+- Daily earnings: $1,000/day
+- Monthly earnings: $30,000/month
+- Yearly earnings: $365,000/year
+
+**Niche Scientific Library:**
+- Daily executions: 10,000 calls/day
+- Price per call: $0.01 (higher price for specialized)
+- Daily earnings: $100/day
+- Monthly earnings: $3,000/month
+- Yearly earnings: $36,000/year (living wage!)
+
+**Company Benefits for Participation:**
+- **Predictable costs**: Usage-based, not per-seat licensing
+- **No license compliance**: Just pay as you execute
+- **Guaranteed maintenance**: Developers incentivized to maintain
+- **Automatic updates**: New versions seamlessly available
+- **Tax deductible**: Clear business expense
+- **No vendor lock**: Code is content-addressed, portable
 
 **Marketplace Dynamics and Authorship Protection**:
 
-```python
-class CodeMarketplaceDynamics:
-    """How the marketplace creates efficient pricing with authorship protection"""
-    
-    def immutable_authorship_guarantee(self):
-        """First-to-register owns the hash forever"""
-        return {
-            'principle': 'Content-addressing creates natural copyright',
-            'hash_collision': 'Means EXACT identical code',
-            'first_registration': 'Permanent ownership assignment',
-            'no_reassignment': 'Author cannot be changed or disputed',
-            'timestamp_proof': 'Cryptographic proof of first publication',
-            'global_uniqueness': 'Hash ensures no naming conflicts'
-        }
-    
-    def quality_signals(self):
-        """Reputation and quality metrics"""
-        return {
-            'execution_count': 'Popularity metric',
-            'error_rate': 'Reliability score',
-            'performance_benchmarks': 'Speed ratings',
-            'test_coverage': 'Quality indicator',
-            'dependency_audit': 'Security score',
-            'developer_reputation': 'Historical performance'
-        }
-    
-    def competitive_dynamics(self):
-        """Multiple implementations compete - different code, different hash"""
-        
-        # Three different sorting algorithms - DIFFERENT implementations
-        quicksort_hash = "sha3:abc123..."  # Author: Alice, $0.000001/sort
-        mergesort_hash = "sha3:def456..."  # Author: Bob, $0.0000008/sort
-        timsort_hash = "sha3:ghi789..."    # Author: Carol, $0.0000012/sort
-        
-        # Each has unique hash = unique ownership
-        # Market chooses based on:
-        # - Price vs performance trade-off
-        # - Reliability history
-        # - Developer reputation
-        # Natural price discovery!
-    
-    def forking_and_improvement(self):
-        """Innovation through modification creates new hashes"""
-        
-        # Developer B improves Developer A's algorithm
-        original = "sha3:original..."  # Author A owns this forever
-        
-        # Even ONE character change creates new hash
-        improved = "sha3:improved..."  # Author B owns this new version
-        
-        # Both versions coexist in marketplace
-        # Users choose based on merit
-        # Original author keeps earning from original
-        # Improver earns from improved version
-        # True meritocracy!
-    
-    def plagiarism_protection(self):
-        """Content-addressing naturally prevents plagiarism"""
-        
-        # If someone copies exact code:
-        # - Hash already registered to original author
-        # - They cannot claim ownership
-        # - All payments go to original author
-        
-        # If they modify even slightly:
-        # - New hash = new function
-        # - Must compete on merit
-        # - Original still earns from original users
-        
-        return {
-            'exact_copy': 'Impossible to steal - hash already owned',
-            'modified_copy': 'New hash, must compete in market',
-            'attribution': 'Automatic via hash ownership',
-            'legal_protection': 'Timestamp proves first publication'
-        }
-```
+**Marketplace Dynamics and Authorship Protection:**
+
+*Immutable Authorship Guarantee (First-to-register owns the hash forever):*
+- **Principle**: Content-addressing creates natural copyright
+- **Hash collision**: Means EXACT identical code
+- **First registration**: Permanent ownership assignment
+- **No reassignment**: Author cannot be changed or disputed
+- **Timestamp proof**: Cryptographic proof of first publication
+- **Global uniqueness**: Hash ensures no naming conflicts
+
+*Quality Signals (Reputation and quality metrics):*
+- **Execution count**: Popularity metric
+- **Error rate**: Reliability score
+- **Performance benchmarks**: Speed ratings
+- **Test coverage**: Quality indicator
+- **Dependency audit**: Security score
+- **Developer reputation**: Historical performance
+
+*Competitive Dynamics:*
+Multiple implementations compete with different code producing different hashes:
+- Quicksort (sha3:abc123...) by Alice: $0.000001/sort
+- Mergesort (sha3:def456...) by Bob: $0.0000008/sort
+- Timsort (sha3:ghi789...) by Carol: $0.0000012/sort
+
+Each has unique hash ensuring unique ownership. Market chooses based on:
+- Price vs performance trade-off
+- Reliability history
+- Developer reputation
+- Natural price discovery!
+
+*Forking and Improvement:*
+Innovation through modification creates new hashes:
+- Original (sha3:original...) - Author A owns this forever
+- Improved (sha3:improved...) - Author B owns this new version
+- Both versions coexist in marketplace
+- Users choose based on merit
+- Original author keeps earning from original
+- Improver earns from improved version
+- True meritocracy!
+
+*Plagiarism Protection:*
+Content-addressing naturally prevents plagiarism:
+
+**If someone copies exact code:**
+- Hash already registered to original author
+- They cannot claim ownership
+- All payments go to original author
+
+**If they modify even slightly:**
+- New hash = new function
+- Must compete on merit
+- Original still earns from original users
+
+- **Exact copy**: Impossible to steal - hash already owned
+- **Modified copy**: New hash, must compete in market
+- **Attribution**: Automatic via hash ownership
+- **Legal protection**: Timestamp proves first publication
 
 **Real-World Implementation Path**:
 
-```python
-class MarketplaceEvolution:
-    """How this marketplace emerges naturally"""
-    
-    def adoption_phases(self):
-        return [
-            {
-                'phase': 1,
-                'name': 'Utility Functions',
-                'examples': ['sorting', 'hashing', 'parsing'],
-                'early_adopters': 'Startups wanting to reduce costs'
-            },
-            {
-                'phase': 2,
-                'name': 'Libraries and Frameworks',
-                'examples': ['React components', 'ML models', 'Database drivers'],
-                'adopters': 'Enterprises seeking compliance clarity'
-            },
-            {
-                'phase': 3,
-                'name': 'Business Logic',
-                'examples': ['Tax calculations', 'Risk models', 'Compliance checks'],
-                'adopters': 'Regulated industries needing auditability'
-            },
-            {
-                'phase': 4,
-                'name': 'Complete Applications',
-                'examples': ['SaaS backends', 'API services', 'Full platforms'],
-                'result': 'Traditional software licensing obsolete'
-            }
-        ]
-```
+**Real-World Implementation Path:**
+
+*Marketplace Evolution - How this marketplace emerges naturally:*
+
+**Phase 1: Utility Functions**
+- Examples: Sorting, hashing, parsing
+- Early adopters: Startups wanting to reduce costs
+
+**Phase 2: Libraries and Frameworks**
+- Examples: React components, ML models, Database drivers
+- Adopters: Enterprises seeking compliance clarity
+
+**Phase 3: Business Logic**
+- Examples: Tax calculations, Risk models, Compliance checks
+- Adopters: Regulated industries needing auditability
+
+**Phase 4: Complete Applications**
+- Examples: SaaS backends, API services, Full platforms
+- Result: Traditional software licensing obsolete
 
 **Transformative Impact on Software Industry**:
 
