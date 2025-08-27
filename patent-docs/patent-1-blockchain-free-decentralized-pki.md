@@ -1,7 +1,13 @@
+---
+**Patent Application Number**: [To be assigned]  
+**Title**: System and Method for Blockchain-Free Decentralized Public Key Infrastructure  
+**Filing Date**: [To be determined]  
+**Priority Date**: August 26, 2025  
+---
+
 # Patent Innovation Document #1: Blockchain-Free Decentralized Public Key Infrastructure
 
 **Technology Area**: Cryptographic Systems, Network Security, Distributed Systems  
-**Priority Date**: August 26, 2025  
 **Innovation Type**: System and Method  
 
 ## 1. Title of Invention
@@ -66,7 +72,7 @@ graph TD
         B --> C[Master Seed]
         D[Device Fingerprint] --> E[Binding Key]
         C --> E
-        E --> F[Identity Keys<br/>Never Leave Device]
+        E --> F["Identity Keys<br/>Never Leave Device"]
         F --> G[Self-Signed Certificate]
     end
     
@@ -74,7 +80,7 @@ graph TD
     
     subgraph "DHT Network Services"
         H --> I[Certificate Publication]
-        H --> J[Key Discovery O(log n)]
+        H --> J["Key Discovery O(log n)"]
         H --> K[Reputation Tracking]
         H --> L[Revocation Lists]
         H --> M[No Blockchain Required]
@@ -327,7 +333,30 @@ The system is immediately deployable, requires no infrastructure investment, and
 
 ---
 
+## Patent Application Information
+
+**Application Number**: [To be assigned]  
 **Filing Date**: [To be determined]  
-**Inventors**: [To be listed]  
-**Assignee**: [To be determined]  
-**Patent Classification**: H04L 9/32, H04L 9/08, H04L 29/06
+**Priority Date**: August 26, 2025  
+**Publication Number**: [To be assigned]  
+**Publication Date**: [To be determined]  
+
+**Inventors**:  
+- [Name to be listed]  
+- [Additional inventors to be listed]  
+
+**Applicant/Assignee**: [To be determined]  
+
+**Patent Classification**:  
+- **International**: H04L 9/32 (Cryptographic mechanisms)  
+- **US Class**: H04L 9/08 (Key distribution)  
+- **CPC**: H04L 29/06 (Network security)  
+
+**Field of Search**: 380/44, 380/277, 713/168, 713/171  
+
+**Attorney Docket Number**: [To be assigned]  
+**Examiner**: [To be assigned]  
+
+---
+
+*This document is a provisional patent application draft prepared for USPTO filing*

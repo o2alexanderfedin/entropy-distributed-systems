@@ -1,7 +1,13 @@
+---
+**Patent Application Number**: [To be assigned]  
+**Title**: Entropy-Enhanced Security for Distributed Systems  
+**Filing Date**: [To be determined]  
+**Priority Date**: August 26, 2025  
+---
+
 # Patent Innovation Document #3: Entropy-Enhanced Security for Distributed Systems
 
 **Technology Area**: Distributed Systems Security, Cryptographic Protocols, P2P Networks  
-**Priority Date**: August 26, 2025  
 **Innovation Type**: System and Method  
 
 ## 1. Title of Invention
@@ -736,6 +742,35 @@ The system provides the first practical alternative to both proof-of-work and pr
 
 ---
 
-**Patent Classification**: H04L 9/08, H04L 29/08, H04L 12/24, G06F 21/55  
-**Related Patents**: [Patent #1, Patent #2]  
-**Priority Date**: August 26, 2025
+## Patent Application Information
+
+**Application Number**: [To be assigned]  
+**Filing Date**: [To be determined]  
+**Priority Date**: August 26, 2025  
+**Publication Number**: [To be assigned]  
+**Publication Date**: [To be determined]  
+
+**Inventors**:  
+- [Name to be listed]  
+- [Additional inventors to be listed]  
+
+**Applicant/Assignee**: [To be determined]  
+
+**Patent Classification**:  
+- **International**: H04L 9/08 (Key distribution)  
+- **US Class**: H04L 29/08 (Network protocols)  
+- **CPC**: H04L 12/24 (Network management)  
+- **Additional**: G06F 21/55 (Attack detection)  
+
+**Related Applications**:  
+- Patent #1 - Blockchain-Free Decentralized PKI  
+- Patent #2 - Device-Bound Password-Derived Identity  
+
+**Field of Search**: 380/255, 713/150, 726/22, 709/224  
+
+**Attorney Docket Number**: [To be assigned]  
+**Examiner**: [To be assigned]  
+
+---
+
+*This document is a provisional patent application draft prepared for USPTO filing*
