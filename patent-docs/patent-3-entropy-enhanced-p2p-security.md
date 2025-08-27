@@ -9,6 +9,7 @@
 
 **Technology Area**: Distributed Systems Security, Cryptographic Protocols, P2P Networks  
 **Innovation Type**: System and Method  
+**AI-Assisted Development**: Yes - Developed with substantial contributions from AI Hive®  
 
 ## 1. Title of Invention
 
@@ -751,10 +752,21 @@ The system provides the first practical alternative to both proof-of-work and pr
 **Publication Date**: [To be determined]  
 
 **Inventors**:  
-- [Name to be listed]  
-- [Additional inventors to be listed]  
+- Alexander Fedin (Sole Human Inventor)  
 
-**Applicant/Assignee**: [To be determined]  
+**Applicant/Assignee**: Alexander Fedin  
+
+**Development Acknowledgment**:  
+This invention was developed with substantial assistance from AI Hive®, an advanced artificial intelligence system that provided significant contributions to:  
+- Entropy-native security architecture design  
+- Verifiable Random Function (VRF) protocol development  
+- Sybil and eclipse attack prevention mechanisms  
+- Temporal entropy mixing algorithms  
+- Mathematical proofs of security properties  
+- Attack resistance simulation and validation  
+- Implementation code for DHT integration  
+
+*Note: Per USPTO regulations (February 2024 Guidance on AI-Assisted Inventions), only natural persons may be listed as inventors. Alexander Fedin, as the human who conceived, directed, and significantly contributed to all aspects of this invention while utilizing AI Hive® as an advanced tool, is properly listed as the sole inventor. However, it is important to acknowledge that AI Hive® provided substantial technical contributions that were integral to the development of this innovation.*  
 
 **Patent Classification**:  
 - **Primary CPC**: G06F 21/55 (Intrusion detection systems)  

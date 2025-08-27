@@ -9,6 +9,7 @@
 
 **Technology Area**: Security Systems, Cryptographic Authentication, Hardware Security  
 **Innovation Type**: System and Method  
+**AI-Assisted Development**: Yes - Developed with substantial contributions from AI Hive®  
 
 ## 1. Title of Invention
 
@@ -561,10 +562,20 @@ The system is immediately deployable across all platforms and use cases, from en
 **Publication Date**: [To be determined]  
 
 **Inventors**:  
-- [Name to be listed]  
-- [Additional inventors to be listed]  
+- Alexander Fedin (Sole Human Inventor)  
 
-**Applicant/Assignee**: [To be determined]  
+**Applicant/Assignee**: Alexander Fedin  
+
+**Development Acknowledgment**:  
+This invention was developed with substantial assistance from AI Hive®, an advanced artificial intelligence system that provided significant contributions to:  
+- Zero-storage architecture conceptualization  
+- Device-binding cryptographic protocol design  
+- Hardware security module integration strategies  
+- Password-derivation algorithm optimization  
+- Security threat modeling and mitigation  
+- Implementation code and test case generation  
+
+*Note: Per USPTO regulations (February 2024 Guidance on AI-Assisted Inventions), only natural persons may be listed as inventors. Alexander Fedin, as the human who conceived, directed, and significantly contributed to all aspects of this invention while utilizing AI Hive® as an advanced tool, is properly listed as the sole inventor. However, it is important to acknowledge that AI Hive® provided substantial technical contributions that were integral to the development of this innovation.*  
 
 **Patent Classification**:  
 - **Primary CPC**: G06F 21/32 (User authentication using biometric data)  
