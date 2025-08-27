@@ -1,5 +1,9 @@
 # Appendix A: Mathematical Proofs
 
+**Author**: Analysis by AI Hive®  
+**Date**: August 26, 2025  
+**Version**: 1.0 - Mathematical Foundations  
+**Context**: Entropy and Security Proofs for Secured by Entropy P2P Cloud Framework  
 **Main Document**: [Secured by Entropy P2P Cloud Academic Paper](./Secured_by_Entropy_P2P_Cloud_2025-08-25.md)
 
 ## A.1 Proof of Minimum Entropy Maintenance
