@@ -28,11 +28,11 @@ This report provides thorough verification of all mathematical theorems, lemmas,
   3. No side-channel leakage occurs during key generation
 
 **Recommended Improvement**:
-```
-Session key: k_session = KDF(g^{ab} || e_A || e_B)
-Where g^{ab} requires solving ECDLP to recover from g^a, g^b
-Security parameter: λ ≥ 256 bits for quantum pre-resistance
-```
+$$k_{\text{session}} = \text{KDF}(g^{ab} \parallel e_A \parallel e_B)$$
+
+Where $g^{ab}$ requires solving ECDLP to recover from $g^a, g^b$
+
+Security parameter: $\lambda \geq 256$ bits for quantum pre-resistance
 
 ---
 
@@ -56,25 +56,24 @@ Security parameter: λ ≥ 256 bits for quantum pre-resistance
 **Verification**: ⚠️ **NEEDS REFINEMENT**
 
 **Issues Found**:
-1. Claims $P_{predict} ≤ 2^{-512}$ but calculation shows $2^{-256} × 2^{-256} = 2^{-512}$
+1. Claims $P_{\text{predict}} \leq 2^{-512}$ but calculation shows $2^{-256} \times 2^{-256} = 2^{-512}$
 2. This assumes perfect independence between entropy and task ID
 3. Real-world correlation could reduce effective entropy
 
 **Corrected Analysis**:
-```
+
 Given:
-- Entropy e with H(e) ≥ 256 bits
-- Task ID t with H(t) ≥ 256 bits
-- Hash function h = SHA3(t || e)
+- Entropy $e$ with $H(e) \geq 256$ bits
+- Task ID $t$ with $H(t) \geq 256$ bits
+- Hash function $h = \text{SHA3}(t \parallel e)$
 
-If e and t are independent:
-  P_predict ≤ 2^{-min(H(e), H(t))} = 2^{-256}
+If $e$ and $t$ are independent:
+$P_{\text{predict}} \leq 2^{-\min(H(e), H(t))} = 2^{-256}$
 
-If correlation exists (mutual information I(e;t) > 0):
-  P_predict ≤ 2^{-(H(e) + H(t) - I(e;t))}
-```
+If correlation exists (mutual information $I(e;t) > 0$):
+$P_{\text{predict}} \leq 2^{-(H(e) + H(t) - I(e;t))}$
 
-**Recommendation**: Use conservative bound $P_{predict} ≤ 2^{-256}$
+**Recommendation**: Use conservative bound $P_{\text{predict}} \leq 2^{-256}$
 
 ---
 
@@ -84,18 +83,16 @@ If correlation exists (mutual information I(e;t) > 0):
 **Verification**: ⚠️ **MATHEMATICALLY CORRECT BUT PRACTICALLY LIMITED**
 
 **Analysis**:
-```
-SHA3(nodeID || entropy || difficultyTarget) < 2^{(256-k)}
-```
+$\text{SHA3}(\text{nodeID} \parallel \text{entropy} \parallel \text{difficultyTarget}) < 2^{(256-k)}$
 
 **Issues**:
 1. **Correct**: Each node requires $2^k$ expected hash operations
 2. **Problem**: Modern ASICs can compute $10^{14}$ hashes/second
-3. For $k=20$: Only $2^{20} ≈ 10^6$ hashes ≈ 10 microseconds on ASIC
-4. For meaningful resistance, need $k ≥ 40$ (minutes of computation)
+3. For $k=20$: Only $2^{20} \approx 10^6$ hashes $\approx 10$ microseconds on ASIC
+4. For meaningful resistance, need $k \geq 40$ (minutes of computation)
 
 **Recommendation**: 
-- Increase difficulty: $k ≥ 40$ for production
+- Increase difficulty: $k \geq 40$ for production
 - Consider memory-hard functions (Argon2) instead of SHA3
 - Add time-based rate limiting
 
@@ -104,12 +101,12 @@ SHA3(nodeID || entropy || difficultyTarget) < 2^{(256-k)}
 ## 2. Appendix A Mathematical Proofs
 
 ### Lemma 1: Minimum Entropy Maintenance
-**Statement**: System maintains minimum entropy $H(S) ≥ h_{min}$
+**Statement**: System maintains minimum entropy $H(S) \geq h_{\min}$
 
 **Verification**: ✅ **CORRECTED PROPERLY**
 
 **Good**: The proof correctly notes that linear additivity only holds for independent sources
-**Correct bound**: $H(S) ≥ \max(H(n_1), ..., H(n_n))$ for correlated sources
+**Correct bound**: $H(S) \geq \max(H(n_1), ..., H(n_n))$ for correlated sources
 
 ---
 
@@ -119,13 +116,12 @@ SHA3(nodeID || entropy || difficultyTarget) < 2^{(256-k)}
 **Verification**: ✅ **MATHEMATICALLY SOUND**
 
 **Proof Validation**:
-```
+
 Kademlia routing:
 - Each hop reduces search space by factor of 2
-- After k hops: remaining nodes ≤ n/2^k
-- Expected hops: log₂(n)
-- With k-bucket size b: log_b(n)
-```
+- After $k$ hops: remaining nodes $\leq n/2^k$
+- Expected hops: $\log_2(n)$
+- With k-bucket size $b$: $\log_b(n)$
 
 **Confirmed**: Entropy injection adds $O(1)$, preserving $O(\log n)$
 
@@ -148,23 +144,21 @@ Kademlia routing:
 **Verification**: ❌ **FORMULA ERROR**
 
 **Issue in proof**:
-```
-Given: P_eclipse ≤ 2^{-256} × (m/n)^k
-```
+$P_{\text{eclipse}} \leq 2^{-256} \times (m/n)^k$
 
 This multiplication assumes independence, but these events are NOT independent!
 
 **Corrected Analysis**:
-```
+
 For successful eclipse attack, adversary needs:
-1. Control k nearest nodes to target: P₁ = (m/n)^k
-2. OR predict lookup key: P₂ = 2^{-256}
+1. Control $k$ nearest nodes to target: $P_1 = (m/n)^k$
+2. OR predict lookup key: $P_2 = 2^{-256}$
 
-P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
-```
+$P_{\text{eclipse}} = P_1 + P_2 - P_1 \times P_2 \approx (m/n)^k$
+(since $P_2$ is negligible)
 
-**Example**: n=1000, m=100, k=20
-- $P_{eclipse} = (0.1)^{20} = 10^{-20}$ ✅ Still negligible
+**Example**: $n=1000, m=100, k=20$
+- $P_{\text{eclipse}} = (0.1)^{20} = 10^{-20}$ ✅ Still negligible
 
 ---
 
@@ -183,7 +177,7 @@ P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
 ## 3. Patent Document Theorems
 
 ### Patent #3 - Theorem 1: VRF Unpredictability
-**Statement**: $P(predict) ≤ 2^{-256}$
+**Statement**: $P(\text{predict}) \leq 2^{-256}$
 
 **Verification**: ✅ **CORRECT**
 - Based on VRF security definition
@@ -201,11 +195,11 @@ P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
 ---
 
 ### Patent #3 - Theorem 3: Eclipse Resistance  
-**Statement**: $P_{eclipse} = (k/N)^r$
+**Statement**: $P_{\text{eclipse}} = (k/N)^r$
 
 **Verification**: ✅ **CORRECT MODEL**
 - Assumes uniform random peer selection
-- Accurate for r independent paths
+- Accurate for $r$ independent paths
 
 ---
 
@@ -221,7 +215,7 @@ P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
 **Location**: Theorem 4 (Sybil resistance)
 **Problem**: $k=20$ is too low for ASIC resistance
 **Impact**: Sybil attacks remain feasible
-**Fix**: Increase to $k≥40$ or use memory-hard functions
+**Fix**: Increase to $k \geq 40$ or use memory-hard functions
 
 ### Issue 3: Eclipse Attack Formula
 **Location**: Theorem 5
@@ -241,7 +235,7 @@ P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
 
 ### Strengthen Proofs:
 
-1. Add explicit security parameters (λ = 256 bits)
+1. Add explicit security parameters ($\lambda = 256$ bits)
 2. State cryptographic assumptions clearly
 3. Include computational security bounds
 4. Add concrete numerical examples
@@ -273,31 +267,29 @@ P_eclipse = P₁ + P₂ - P₁×P₂ ≈ (m/n)^k  (since P₂ is negligible)
 ## 7. Corrected Formulations
 
 ### Corrected Theorem 3:
-```
-Given entropy e with min-entropy H_∞(e) ≥ λ and task ID t,
-the probability of predicting h = SHA3(t || e) is bounded by:
-  P_predict ≤ 2^{-min(λ, |t|)} + ε_SHA3
-where ε_SHA3 ≤ 2^{-256} is the SHA3 distinguishing advantage.
-```
+
+Given entropy $e$ with min-entropy $H_{\infty}(e) \geq \lambda$ and task ID $t$,
+the probability of predicting $h = \text{SHA3}(t \parallel e)$ is bounded by:
+$P_{\text{predict}} \leq 2^{-\min(\lambda, |t|)} + \varepsilon_{\text{SHA3}}$
+where $\varepsilon_{\text{SHA3}} \leq 2^{-256}$ is the SHA3 distinguishing advantage.
 
 ### Corrected Theorem 4:
-```
-For Sybil resistance with difficulty parameter k ≥ 40,
-creating m identities requires expected work:
-  W(m) = m × 2^k hash operations
-  
-Time on ASIC (10^14 H/s): T(m) ≈ m × 2^k / 10^14 seconds
-For k=40, m=1000: T ≈ 3 hours
-```
+
+For Sybil resistance with difficulty parameter $k \geq 40$,
+creating $m$ identities requires expected work:
+$W(m) = m \times 2^k$ hash operations
+
+Time on ASIC ($10^{14}$ H/s): $T(m) \approx m \times 2^k / 10^{14}$ seconds
+
+For $k=40, m=1000$: $T \approx 3$ hours
 
 ### Corrected Theorem 5:
-```
+
 Eclipse attack success probability:
-  P_eclipse ≤ min(1, (m/n)^k) for m < n/2
-  
+$P_{\text{eclipse}} \leq \min(1, (m/n)^k)$ for $m < n/2$
+
 No multiplication with entropy term needed - 
 entropy prevents targeted attacks, not random positioning.
-```
 
 ---
 
