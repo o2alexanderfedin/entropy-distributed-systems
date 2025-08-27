@@ -1471,139 +1471,11 @@ The following aspects require empirical validation to confirm theoretical projec
 
 ---
 
-## 11. Use Cases and Applications
+## 11. Discussion
 
-**Note**: For detailed analysis of decentralized identity implementation and real-world applications including decentralized social networks and source-of-truth systems, see:
-- [Appendix D: Device-Bound Identity Architecture](./appendix-d-device-bound-identity.md)
-- [Appendix E: Real-World Applications Evaluation](./appendix-e-real-world-applications.md)
+**Note**: For detailed use cases and applications including decentralized AI, critical infrastructure protection, and healthcare analytics, see [Appendix E: Real-World Applications Evaluation](./appendix-e-real-world-applications.md#e8-additional-use-cases-and-applications).
 
-*Note: The following case studies represent conceptual applications of the proposed framework, not implemented systems.*
-
-### 11.1 Decentralized AI Learning and Inference
-
-**Challenge**: Training and deploying AI models in a decentralized manner while protecting intellectual property, ensuring data privacy, and preventing model extraction attacks.
-
-**Architecture for Distributed AI**:
-
-```csharp
-public class EntropyAINode
-{
-    private readonly IEntropySource _entropySource;
-    private readonly SecureDataHandler _dataHandler;
-    
-    public async Task<ModelUpdate> SecureGradientAggregation(
-        LocalGradient localGradient,
-        byte[] modelVersion)
-    {
-        // 1. Entropy-native peer selection for federated learning
-        var aggregationPeers = await SelectRandomPeers(_entropySource, 
-            minPeers: 5, maxPeers: 10);
-        
-        // 2. Secure multi-party computation for gradient aggregation
-        var encryptedGradient = await HomomorphicEncrypt(localGradient);
-        
-        // 3. Differential privacy with entropy-native noise
-        var dpNoise = await GenerateDPNoise(_entropySource, epsilon: 0.1);
-        encryptedGradient = AddNoise(encryptedGradient, dpNoise);
-        
-        // 4. Random shuffling of aggregation order
-        var shuffledPeers = ShuffleWithEntropy(aggregationPeers, _entropySource);
-        
-        return await SecureAggregate(encryptedGradient, shuffledPeers);
-    }
-    
-    public async Task<InferenceResult> DistributedInference(
-        InferenceRequest request)
-    {
-        // 1. Model sharding across entropy-selected nodes
-        var modelShards = await GetModelShards();
-        var executionNodes = await SelectExecutionNodes(_entropySource, 
-            shardCount: modelShards.Length);
-        
-        // 2. Secure computation with WebAssembly isolation
-        var partialResults = new List<PartialInference>();
-        foreach (var (shard, node) in modelShards.Zip(executionNodes))
-        {
-            var wasmModule = await CompileModelShard(shard);
-            var sandboxedResult = await node.ExecuteInWasm(wasmModule, request);
-            partialResults.Add(sandboxedResult);
-        }
-        
-        // 3. Entropy-native result verification
-        var consensusThreshold = 0.7;
-        var verifiedResult = await VerifyWithByzantineFaultTolerance(
-            partialResults, consensusThreshold, _entropySource);
-        
-        return verifiedResult;
-    }
-}
-```
-
-**Key Security Properties for AI Workloads**:
-
-1. **Model Protection**:
-   - Model weights distributed across nodes using secret sharing
-   - Each node holds only encrypted model shards
-   - Entropy-native shard distribution prevents targeted extraction
-   - WebAssembly isolation prevents memory access attacks
-
-2. **Data Privacy**:
-   - Training data never leaves source nodes
-   - Only encrypted gradients transmitted
-   - Differential privacy noise calibrated per-batch
-   - Entropy ensures unpredictable batch composition
-
-3. **Inference Security**:
-   - Model split across multiple nodes using entropy-native sharding
-   - No single node has complete model access
-   - Results verified through Byzantine fault-tolerant consensus
-   - Timing side-channels obscured through entropy injection
-
-4. **Attack Resistance**:
-   - **Model extraction**: Prevented through distributed execution and encryption
-   - **Gradient inversion**: Mitigated via differential privacy and secure aggregation
-   - **Membership inference**: Entropy-native sampling prevents pattern detection
-   - **Poisoning attacks**: Random peer selection limits adversarial influence
-
-**Performance Characteristics** (Projections):
-- Training overhead: +40-60% vs centralized (due to encryption and consensus)
-- Inference latency: +100-200ms (distributed execution + verification)
-- Model accuracy: -2-3% (differential privacy trade-off)
-- Scalability: Linear with node count up to ~1000 nodes
-
-**Use Cases**:
-- Healthcare AI: Train on distributed patient data without centralization
-- Financial models: Collaborative fraud detection across institutions
-- Edge AI: Distributed inference for IoT and autonomous systems
-- Research collaboration: Multi-institutional model training with IP protection
-
-### 11.2 Critical Infrastructure Protection
-
-**Challenge**: Protecting power grid SCADA systems from nation-state attacks.
-
-**Proposed Implementation**:
-- WebAssembly isolation for control logic
-- ~100ms key rotation for command channels - *estimated*
-- Random relay selection for sensor data
-
-**Projected Outcome**: Enhanced system resilience through unpredictable attack surface - *theoretical security improvement requiring empirical validation*.
-
-### 11.3 Theoretical Privacy-Preserving Healthcare Analytics
-
-**Application**: Multi-institutional COVID-19 research without data sharing.
-
-**Proposed Architecture**:
-- Secure multi-party computation protocols
-- Entropy-native participant selection
-- Federated learning with differential privacy
-
-**Projected Impact**: Framework for privacy-preserving multi-institutional research - *conceptual approach requiring regulatory and technical validation*.
-
----
-
-## 12. Discussion
-
-### 12.1 Advantages of Entropy-Native Architecture
+### 11.1 Advantages of Entropy-Native Architecture
 
 1. **Unpredictability**: Systematic entropy injection creates a non-deterministic attack surface
 2. **Resilience**: No single point of failure or persistent vulnerability
@@ -1611,7 +1483,7 @@ public class EntropyAINode
 4. **Privacy**: Ephemeral keys and random routing prevent tracking
 5. **Enhanced Security**: Entropy augmentation increases attack complexity against classical threats
 
-### 12.2 Limitations and Challenges
+### 11.2 Limitations and Challenges
 
 1. **Performance overhead**: 6-20% latency increase from DHT entropy operations
 2. **Complexity**: Requires sophisticated RNG management and DHT maintenance
@@ -1621,7 +1493,7 @@ public class EntropyAINode
 6. **DHT maintenance**: Requires continuous k-bucket refreshing and proof-of-work verification
 7. **Side-channel risks**: WASM isolation doesn't prevent all timing/cache attacks
 
-### 12.3 Future Directions
+### 11.3 Future Directions
 
 - **Hardware acceleration**: Custom ASICs for entropy generation, VRF computation, and DHT operations
 - **Quantum entropy sources**: Integration of quantum random number generators for DHT key generation
@@ -1632,7 +1504,7 @@ public class EntropyAINode
 
 ---
 
-## 13. Related Security Principles and Design Patterns
+## 12. Related Security Principles and Design Patterns
 
 ### 13.1 SOLID Principles Applied to Security Architecture
 
@@ -1658,7 +1530,7 @@ public class EntropyAINode
 
 ---
 
-## 14. Conclusion
+## 13. Conclusion
 
 This paper presents a paradigm shift in distributed system security through systematic entropy injection. By treating unpredictability as a fundamental architectural property rather than an operational inconvenience, we achieve robust defense against both current and emerging threats.
 
