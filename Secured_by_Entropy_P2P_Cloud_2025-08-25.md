@@ -47,6 +47,8 @@ This paper makes the following contributions:
 4. **Security Analysis**: Formal proofs of security properties including forward secrecy, Sybil resistance in DHT lookups, and enhanced classical attack resistance
 5. **Performance Analysis**: Validated security mechanisms and performance projections with comparison to existing decentralized frameworks
 
+**Note on Terminology**: Technical terms and concepts used throughout this paper are defined in [Appendix F: Glossary](./appendix-f-glossary.md).
+
 ---
 
 ## 2. Related Work and Foundations
@@ -1651,6 +1653,7 @@ Fedin, A. (2025). Secured by Entropy: An Entropy-Native Cybersecurity Framework 
 - [Appendix C: Threat Mitigation Matrix](./appendix-c-threat-mitigation-matrix.md) - Comprehensive threat analysis and mitigation effectiveness
 - [Appendix D: Device-Bound Identity Architecture](./appendix-d-device-bound-identity.md) - Device-bound identity system that replaces traditional PKI
 - [Appendix E: Real-World Applications Evaluation](./appendix-e-real-world-applications.md) - Decentralized social networks and source-of-truth systems
+- [Appendix F: Glossary](./appendix-f-glossary.md) - Comprehensive definitions of technical terms and concepts
 
 **License**: This work is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
