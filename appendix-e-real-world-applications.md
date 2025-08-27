@@ -1567,46 +1567,33 @@ class DeviceResourceProvider:
 - Entropy pool contribution
 - Chaos engineering
 
-**Smart Optimization Strategies**:
+**Smart Optimization Strategies:**
 
-```python
-class UBIOptimizer:
-    def maximize_earnings(self, household_profile: HouseholdProfile):
-        """Optimize device utilization for maximum UBI"""
-        
-        strategies = []
-        
-        # 1. Time-of-day optimization
-        if household_profile.work_schedule == "9-5":
-            strategies.append(
-                "Offer maximum resources 9AM-5PM weekdays (devices idle)"
-            )
-        
-        # 2. Device specialization
-        strategies.append({
-            "MacBook": "Focus on AI/ML tasks (Neural Engine)",
-            "Xbox": "Prioritize GPU computing (best TFLOPS/$)",
-            "iPhone": "Entropy generation + edge inference"
-        })
-        
-        # 3. Energy cost awareness
-        if household_profile.has_solar:
-            strategies.append(
-                "Maximize computing during solar generation hours"
-            )
-        elif household_profile.electricity_rate_varies:
-            strategies.append(
-                "Schedule intensive tasks during off-peak rates"
-            )
-        
-        # 4. Bandwidth optimization
-        if household_profile.unlimited_internet:
-            strategies.append(
-                "Enable storage and CDN services (bandwidth-intensive)"
-            )
-        
-        return OptimizationPlan(strategies)
-```
+*Optimize device utilization for maximum UBI earnings:*
+
+**1. Time-of-Day Optimization:**
+- For 9-5 work schedule: Offer maximum resources 9AM-5PM weekdays (devices idle)
+- For night shift workers: Maximize daytime compute availability
+- For remote workers: Intelligent scheduling around video calls
+
+**2. Device Specialization:**
+- **MacBook**: Focus on AI/ML tasks (Neural Engine)
+- **Xbox**: Prioritize GPU computing (best TFLOPS/$)
+- **iPhone**: Entropy generation + edge inference
+- **Gaming PC**: Deep learning training during non-gaming hours
+- **Smart TV**: Video transcoding and streaming cache
+
+**3. Energy Cost Awareness:**
+- **With solar panels**: Maximize computing during solar generation hours
+- **Time-of-use rates**: Schedule intensive tasks during off-peak rates
+- **Flat rate electricity**: Run 24/7 for maximum earnings
+- **Battery backup**: Provide premium "always-on" services
+
+**4. Bandwidth Optimization:**
+- **Unlimited internet**: Enable storage and CDN services (bandwidth-intensive)
+- **Capped plans**: Focus on compute-intensive, low-bandwidth tasks
+- **High upload speed**: Prioritize content serving and backup services
+- **5G unlimited**: Become mobile edge node for premium earnings
 
 **Why Your Devices Are Worth More Than Raw Compute**:
 
