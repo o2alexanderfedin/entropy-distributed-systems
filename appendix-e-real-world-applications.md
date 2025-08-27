@@ -1601,32 +1601,28 @@ class UBIOptimizer:
 
 **Why Your Devices Are Worth More Than Raw Compute**:
 
-```python
-class InfrastructureValueMultipliers:
-    """Factors that multiply base compute value"""
-    
-    def calculate_true_value(self, device_network):
-        multipliers = {
-            'geographic_diversity': 2.5,   # Devices in different locations
-            'network_diversity': 1.8,      # WiFi + 5G + Ethernet
-            'automatic_failover': 2.0,     # One device fails, others continue
-            'edge_proximity': 3.0,          # True edge vs datacenter
-            'compliance_ready': 1.5,        # Cryptographic attestation
-            'zero_ops': 2.0                # No DevOps team needed
-        }
-        
-        # Your 3 devices provide what enterprises pay thousands for:
-        # - Geographic redundancy (home, mobile, entertainment center)
-        # - Network path diversity (reduces single point of failure)
-        # - Automatic failover (P2P network self-heals)
-        # - True edge computing (actually at the edge, not "edge" datacenter)
-        # - Built-in compliance (cryptographic proofs)
-        # - Zero operational overhead (self-managing)
-        
-        base_compute_value = 215  # Original calculation
-        infrastructure_value = base_compute_value * sum(multipliers.values())
-        return infrastructure_value  # $215 × 13.6 = $2,924/month potential
-```
+**Factors that multiply base compute value:**
+
+*Infrastructure Value Multipliers:*
+- **Geographic diversity**: 2.5x - Devices in different locations
+- **Network diversity**: 1.8x - WiFi + 5G + Ethernet
+- **Automatic failover**: 2.0x - One device fails, others continue
+- **Edge proximity**: 3.0x - True edge vs datacenter
+- **Compliance ready**: 1.5x - Cryptographic attestation
+- **Zero ops**: 2.0x - No DevOps team needed
+
+**Your 3 devices provide what enterprises pay thousands for:**
+- Geographic redundancy (home, mobile, entertainment center)
+- Network path diversity (reduces single point of failure)
+- Automatic failover (P2P network self-heals)
+- True edge computing (actually at the edge, not "edge" datacenter)
+- Built-in compliance (cryptographic proofs)
+- Zero operational overhead (self-managing)
+
+**Calculation:**
+- Base compute value: $215/month
+- Total multiplier: 13.6x (sum of all multipliers)
+- Infrastructure value: $215 × 13.6 = $2,924/month potential
 
 **Real-World Impact Analysis**:
 
@@ -1656,155 +1652,116 @@ class InfrastructureValueMultipliers:
 
 **The Hidden Value Enterprises Pay For**:
 
-```python
-class EnterpriseFeaturePricing:
-    """What AWS/Azure actually charges for infrastructure features"""
-    
-    def compare_costs(self):
-        # Real AWS/Azure pricing for enterprise features
-        enterprise_costs = {
-            # Geographic Redundancy
-            'multi_region_active': {
-                'AWS': 'Route 53 Application Recovery Controller',
-                'monthly_cost': '$2,500',  # For 3-region active-active
-                'your_devices': 'Natural geo-distribution',
-                'your_value': '$500/month'
-            },
-            
-            # True Edge Computing
-            'edge_locations': {
-                'AWS': 'Wavelength Zones',
-                'monthly_cost': '$10,000+',  # Minimum commitment
-                'your_iphone': '5G edge node',
-                'your_value': '$800/month'
-            },
-            
-            # Compliance & Audit
-            'compliance_package': {
-                'AWS': 'Artifact + CloudTrail + Config',
-                'monthly_cost': '$1,000',
-                'entropy_native': 'Cryptographic proofs built-in',
-                'your_value': '$200/month'
-            },
-            
-            # High Availability SLA
-            'five_nines_sla': {
-                'Azure': '99.999% SLA',
-                'monthly_cost': '$5,000',  # Enterprise agreement
-                'p2p_redundancy': 'Self-healing mesh',
-                'your_value': '$400/month'
-            },
-            
-            # DDoS Protection
-            'ddos_shield': {
-                'AWS': 'Shield Advanced',
-                'monthly_cost': '$3,000',
-                'entropy_routing': 'Natural DDoS resistance',
-                'your_value': '$300/month'
-            }
-        }
-        
-        return sum(item['your_value'] for item in enterprise_costs.values())
-```
+**The Hidden Value Enterprises Pay For:**
+
+*What AWS/Azure actually charges for infrastructure features:*
+
+**Geographic Redundancy:**
+- AWS Service: Route 53 Application Recovery Controller
+- Monthly cost: $2,500 (for 3-region active-active)
+- Your devices: Natural geo-distribution
+- Your value: $500/month
+
+**True Edge Computing:**
+- AWS Service: Wavelength Zones
+- Monthly cost: $10,000+ (minimum commitment)
+- Your iPhone: 5G edge node
+- Your value: $800/month
+
+**Compliance & Audit:**
+- AWS Service: Artifact + CloudTrail + Config
+- Monthly cost: $1,000
+- Entropy-native: Cryptographic proofs built-in
+- Your value: $200/month
+
+**High Availability SLA:**
+- Azure Service: 99.999% SLA
+- Monthly cost: $5,000 (enterprise agreement)
+- P2P redundancy: Self-healing mesh
+- Your value: $400/month
+
+**DDoS Protection:**
+- AWS Service: Shield Advanced
+- Monthly cost: $3,000
+- Entropy routing: Natural DDoS resistance
+- Your value: $300/month
+
+**Total value your devices provide: $2,200/month**
 
 **Economic Model Sustainability**:
 
-```python
-class UBIEconomics:
-    def calculate_market_size(self):
-        """Global market potential"""
-        
-        # Global device count (2025 estimates)
-        devices = {
-            'smartphones': 6_500_000_000,
-            'laptops': 2_000_000_000,
-            'tablets': 1_500_000_000,
-            'gaming_consoles': 500_000_000,
-            'smart_tvs': 1_000_000_000
-        }
-        
-        # Average idle capacity
-        idle_percentage = 0.80  # 80% idle time
-        participation_rate = 0.10  # 10% initial adoption
-        
-        # Computing market value
-        cloud_market_size = 600_000_000_000  # $600B annually
-        addressable_market = cloud_market_size * 0.30  # 30% suitable for edge
-        
-        # Per device earning potential
-        avg_device_earning = 50  # $50/month average
-        total_device_months = sum(devices.values()) * participation_rate * 12
-        total_ubi_distributed = avg_device_earning * total_device_months
-        
-        return {
-            'total_devices': sum(devices.values()),
-            'participating_devices': sum(devices.values()) * participation_rate,
-            'annual_ubi_distributed': total_ubi_distributed,
-            'value_created': addressable_market
-        }
-```
+**Economic Model Sustainability:**
+
+*Global market potential:*
+
+**Global device count (2025 estimates):**
+- Smartphones: 6.5 billion
+- Laptops: 2 billion
+- Tablets: 1.5 billion
+- Gaming consoles: 500 million
+- Smart TVs: 1 billion
+
+**Market parameters:**
+- Average idle capacity: 80% idle time
+- Participation rate: 10% initial adoption
+- Cloud market size: $600B annually
+- Addressable market: $180B (30% suitable for edge)
+- Average device earning: $50/month
+
+**Market calculations:**
+- Total devices: 11.5 billion
+- Participating devices: 1.15 billion (10% adoption)
+- Annual UBI distributed: $69 billion
+- Value created: $180 billion addressable market
 
 **You're Not Just a Device Owner - You're a Micro-Datacenter Operator**:
 
-```python
-class DatacenterOperatorRole:
-    """Your actual job description in the P2P cloud economy"""
-    
-    def calculate_true_compensation(self):
-        # Traditional datacenter roles you're performing:
-        roles = {
-            'facilities_manager': {
-                'responsibilities': [
-                    'Provide power (you pay electricity bill)',
-                    'Maintain cooling (your AC/heating)',
-                    'Physical security (your home/pocket)',
-                    'Fire suppression (your responsibility)'
-                ],
-                'market_rate': '$500/month',
-                'your_share': '$150/month'
-            },
-            
-            'network_administrator': {
-                'responsibilities': [
-                    'Internet connectivity (you pay ISP)',
-                    'Router maintenance (your equipment)',
-                    'Bandwidth management (your data cap)',
-                    'Network security (your firewall)'
-                ],
-                'market_rate': '$300/month',
-                'your_share': '$100/month'
-            },
-            
-            'hardware_technician': {
-                'responsibilities': [
-                    'Hardware replacement when failed',
-                    'Device cleaning and maintenance',
-                    'Performance monitoring',
-                    'Upgrade planning'
-                ],
-                'market_rate': '$200/month',
-                'your_share': '$75/month'
-            },
-            
-            'operations_engineer': {
-                'responsibilities': [
-                    'Ensure uptime (keep devices on)',
-                    'Apply updates (OS/security)',
-                    'Manage availability windows',
-                    'Incident response (restart if needed)'
-                ],
-                'market_rate': '$400/month',
-                'your_share': '$125/month'
-            }
-        }
-        
-        total_compensation = sum(r['your_share'] for r in roles.values())
-        return {
-            'base_operator_salary': total_compensation,  # $450/month
-            'infrastructure_revenue': 564,  # From earlier calculation
-            'total_earnings': 1014  # You're paid as operator + infrastructure
-        }
-```
+**You're Not Just a Device Owner - You're a Micro-Datacenter Operator:**
+
+*Your actual job description in the P2P cloud economy:*
+
+**Traditional datacenter roles you're performing:**
+
+**Facilities Manager:**
+- Responsibilities:
+  - Provide power (you pay electricity bill)
+  - Maintain cooling (your AC/heating)
+  - Physical security (your home/pocket)
+  - Fire suppression (your responsibility)
+- Market rate: $500/month
+- Your share: $150/month
+
+**Network Administrator:**
+- Responsibilities:
+  - Internet connectivity (you pay ISP)
+  - Router maintenance (your equipment)
+  - Bandwidth management (your data cap)
+  - Network security (your firewall)
+- Market rate: $300/month
+- Your share: $100/month
+
+**Hardware Technician:**
+- Responsibilities:
+  - Hardware replacement when failed
+  - Device cleaning and maintenance
+  - Performance monitoring
+  - Upgrade planning
+- Market rate: $200/month
+- Your share: $75/month
+
+**Operations Engineer:**
+- Responsibilities:
+  - Ensure uptime (keep devices on)
+  - Apply updates (OS/security)
+  - Manage availability windows
+  - Incident response (restart if needed)
+- Market rate: $400/month
+- Your share: $125/month
+
+**Total Compensation:**
+- Base operator salary: $450/month (sum of all roles)
+- Infrastructure revenue: $564/month (from earlier calculation)
+- Total earnings: $1,014/month (operator + infrastructure)
 
 **The Real Business Model - Distributed Datacenter Corporation**:
 
@@ -2033,22 +1990,17 @@ class ComputeBackedEconomy:
    - Each eliminated transaction = saved fees + tax simplification
 
 4. **Natural Evolution to Local Currency**:
-   ```python
-   class LocalComputeCurrency:
-       """Compute credits become local currency"""
-       
-       def evolution_stages(self):
-           stages = [
-               "Stage 1: Compute providers earn credits",
-               "Stage 2: Retailers accept compute credits for discounts",
-               "Stage 3: B2B settlements in compute credits",
-               "Stage 4: Wages partially paid in compute credits",
-               "Stage 5: De-facto local currency emerges"
-           ]
-           
-           # Real example: Ithaca HOURS, BerkShares, but backed by COMPUTE
-           # Compute is universal value (unlike local labor currencies)
-   ```
+   
+   *Compute credits become local currency through evolution stages:*
+   
+   - **Stage 1**: Compute providers earn credits
+   - **Stage 2**: Retailers accept compute credits for discounts
+   - **Stage 3**: B2B settlements in compute credits
+   - **Stage 4**: Wages partially paid in compute credits
+   - **Stage 5**: De-facto local currency emerges
+   
+   Real examples: Ithaca HOURS, BerkShares, but backed by COMPUTE.
+   Compute is universal value (unlike local labor currencies).
 
 **Advantages Over Traditional Payments**:
 
@@ -2156,40 +2108,31 @@ class CodeMarketplace:
 
 **Revolutionary Payment Models**:
 
-```python
-class PaymentModels:
-    """Different ways developers can monetize their code"""
-    
-    def usage_based_pricing(self):
-        """Pay per actual execution"""
-        return {
-            'sorting_algorithm': '$0.000001 per sort',
-            'image_processing': '$0.001 per image',
-            'ml_inference': '$0.01 per prediction',
-            'database_driver': '$0.0001 per query'
-        }
-    
-    def tiered_pricing(self):
-        """Volume discounts for heavy users"""
-        return {
-            'first_1M_calls': '$0.0001 each',
-            'next_10M_calls': '$0.00005 each',
-            'above_10M_calls': '$0.00001 each',
-            'enterprise_flat': '$10,000/month unlimited'
-        }
-    
-    def dependency_revenue_sharing(self):
-        """Libraries used by function get percentage"""
-        # If your function uses lodash, moment, etc.
-        # Those developers get ~10% of your revenue
-        # Incentivizes building on others' work
-        
-    def cache_residuals(self):
-        """Earn even when result is cached"""
-        # First execution: $0.001
-        # Each cache hit: $0.00001 (1% of execution price)
-        # Popular functions earn from cache hits
-```
+**Revolutionary Payment Models:**
+
+*Different ways developers can monetize their code:*
+
+**Usage-Based Pricing (Pay per actual execution):**
+- Sorting algorithm: $0.000001 per sort
+- Image processing: $0.001 per image
+- ML inference: $0.01 per prediction
+- Database driver: $0.0001 per query
+
+**Tiered Pricing (Volume discounts for heavy users):**
+- First 1M calls: $0.0001 each
+- Next 10M calls: $0.00005 each
+- Above 10M calls: $0.00001 each
+- Enterprise flat: $10,000/month unlimited
+
+**Dependency Revenue Sharing:**
+- Libraries used by function get percentage (~10% of revenue)
+- If your function uses lodash, moment, etc., those developers earn too
+- Incentivizes building on others' work
+
+**Cache Residuals (Earn even when result is cached):**
+- First execution: $0.001
+- Each cache hit: $0.00001 (1% of execution price)
+- Popular functions earn from cache hits
 
 **Open Source Sustainability Solution**:
 
@@ -2337,26 +2280,25 @@ Content-addressing naturally prevents plagiarism:
 
 **Economic Projections**:
 
-```python
-def market_size_estimation():
-    # Current software market: $700B annually
-    # Open source value creation: $500B (estimated)
-    # Currently captured by developers: <$1B
-    
-    # With usage-based micropayments:
-    # 10% of software market transitions: $70B
-    # Developer capture rate: 30% = $21B
-    # Average developer earnings: $50,000/year
-    # Sustainable developers supported: 420,000
-    
-    return {
-        'addressable_market': '$70B',
-        'developer_revenue': '$21B',
-        'developers_supported': 420_000,
-        'price_reduction_for_users': '50%',  # Vs traditional licensing
-        'open_source_sustainability': 'SOLVED'
-    }
-```
+**Economic Projections:**
+
+*Market Size Estimation:*
+- Current software market: $700B annually
+- Open source value creation: $500B (estimated)
+- Currently captured by developers: <$1B
+
+*With usage-based micropayments:*
+- 10% of software market transitions: $70B
+- Developer capture rate: 30% = $21B
+- Average developer earnings: $50,000/year
+- Sustainable developers supported: 420,000
+
+**Results:**
+- Addressable market: $70B
+- Developer revenue: $21B
+- Developers supported: 420,000
+- Price reduction for users: 50% (vs traditional licensing)
+- Open source sustainability: SOLVED
 
 This fundamentally solves the "tragedy of the commons" in open source - developers are finally compensated proportionally to the value they create, while users get transparent, usage-based pricing without licensing complexity!
 
