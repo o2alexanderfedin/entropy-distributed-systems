@@ -6,7 +6,11 @@
 **Context**: Entropy and Security Proofs for Secured by Entropy P2P Cloud Framework  
 **Main Document**: [Secured by Entropy P2P Cloud Academic Paper](./Secured_by_Entropy_P2P_Cloud_2025-08-25.md)
 
-## A.1 Proof of Minimum Entropy Maintenance
+## A.1 Fundamental Assumptions
+
+**Randomness Extractor Assumption**: We treat SHA3 as a randomness extractor ensuring entropy mixing outputs are indistinguishable from uniform distribution over $\{0,1\}^{256}$.
+
+## A.2 Proof of Minimum Entropy Maintenance
 
 **Lemma 1**: Given $n$ nodes with individual min-entropy $H_{\infty}(n_i) \geq h_{\text{min}}$, the system has aggregate entropy bounded below.
 
@@ -34,7 +38,19 @@
 - Closest node property maintained: $\forall h, \exists$ unique closest node $n_i$ where $d(h, n_i)$ is minimal
 - Therefore, DHT routing correctness is preserved ✓
 
-## A.3 DHT Security Proofs
+## A.3 Independence Assumptions for Security Proofs
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ **Required Independence Conditions**                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│ 1. VRF outputs are statistically independent across rounds          │
+│ 2. Entropy sources are not adversary-biased (min-entropy preserved) │
+│ 3. Node ID distribution is not skewed beyond m/n ratio             │
+│ 4. Hash function outputs are independent of input structure         │
+│ 5. Network delays are independent of cryptographic operations       │
+└─────────────────────────────────────────────────────────────────────┘
+
+## A.4 DHT Security Proofs
 
 **Theorem 5**: The probability of DHT eclipse attack success is negligible with entropy augmentation.
 
@@ -47,11 +63,15 @@ Let $\mathcal{A}$ be adversary controlling $m < n/3$ nodes. For eclipse attack o
 - Eclipse probability: $P_{\text{eclipse}} \leq \min(1, (m/n)^k)$ for $m < n/2$
 - Example: $n=1000$, $m=100$, $k=20$: $P_{\text{eclipse}} = (0.1)^{20} = 10^{-20}$ ✓
 
-## A.4 VRF Security Analysis
+## A.5 VRF Security Analysis
 
 **Theorem 6**: The probability of successful Sybil attack with $m$ malicious nodes among $n$ total nodes is bounded by $(m/n)^k$ where $k$ is the consensus threshold.
 
-*Proof*: VRF output is uniformly distributed in $[0, 2^{256})$. For $k$ independent selections, probability of all selecting malicious nodes $= (m/n)^k$. For $n=1000$, $m=100$, $k=5$: $P < 10^{-5}$.
+*Proof*: VRF output is uniformly distributed in $[0, 2^{256})$. For $k$ independent selections, probability of all selecting malicious nodes:
+$$P_{\text{Sybil}} = (m/n)^k$$
+
+*General bound*: $(m/n)^k$  
+*Illustrative example*: For parameters $(n=1000, m=100, k=5)$, the probability is approximately $10^{-5}$.
 
 ---
 

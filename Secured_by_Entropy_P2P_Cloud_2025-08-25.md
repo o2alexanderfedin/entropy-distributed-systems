@@ -87,7 +87,7 @@ Recent research highlights several key developments:
 
 ### 2.5 Distributed Hash Tables for Decentralized Discovery
 
-**Kademlia DHT**: A peer-to-peer distributed hash table with XOR metric for distance calculation, providing O(log n) lookup complexity and inherent redundancy through k-buckets.
+**Kademlia DHT**: A peer-to-peer distributed hash table with XOR metric for distance calculation, providing O(log n) lookup complexity and inherent redundancy through k-buckets. See Appendix B.2 for default configuration parameters (α replication factor, k-bucket size, PoW difficulty, rotation intervals).
 
 **Security Enhancements**: S/Kademlia extends the base protocol with cryptographic puzzles as proof-of-work to mitigate Sybil attacks, while maintaining the efficiency of the underlying DHT structure.
 
@@ -176,7 +176,7 @@ The system ensures seamless interaction between heterogeneous nodes through:
 
 ### 3.3 Offline Mesh Networking for Connectivity-Challenged Environments
 
-The architecture includes resilient mesh networking capabilities for scenarios where traditional internet connectivity is unavailable or unreliable:
+The architecture includes resilient mesh networking capabilities for scenarios where traditional internet connectivity is unavailable or unreliable. Note that Bluetooth mesh networks have practical limits of 3-4 hops with approximately 50-500ms latency per hop:
 
 ```pseudocode
 // Mesh network adaptation for offline environments
@@ -200,7 +200,7 @@ function RouteDataThroughMesh(data, targetNode)
    - Rotating session keys for each mesh connection
    - Protection against Bluetooth-specific attacks (BlueBorne, KNOB)
 
-2. **Resilience Mechanisms**:
+2. **Resilience Mechanisms** (Under IND-CPA (AES-GCM), EUF-CMA (Ed25519/ML-DSA), and VRF pseudorandomness assumptions):
    - Multi-path redundant routing
    - Store-and-forward for delayed delivery
    - Automatic failover between Bluetooth and WiFi Direct
@@ -1607,25 +1607,25 @@ The authors extend their gratitude to:
 
 25. Katz, J., & Lindell, Y. (2020). "Introduction to Modern Cryptography." 3rd Edition. CRC Press. ISBN: 978-0815354369.
 
-26. Nordic Semiconductor. (2024). "Large Scale Bluetooth Mesh Testing." Nordic DevZone Blog. January 2024. Available: https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/large-scale-bluetooth-mesh-testing
+26. Nordic Semiconductor. (2024). "Large Scale Bluetooth Mesh Testing." Nordic DevZone Blog. January 2024. [Industry-reported] Available: https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/large-scale-bluetooth-mesh-testing
 
-27. Silicon Labs. (2024). "AN1137: Bluetooth Mesh Network Performance." Application Note. Available: https://www.silabs.com/documents/public/application-notes/an1424-bluetooth-mesh-11-network-performance.pdf
+27. Silicon Labs. (2024). "AN1137: Bluetooth Mesh Network Performance." Application Note. [Vendor-reported] Available: https://www.silabs.com/documents/public/application-notes/an1424-bluetooth-mesh-11-network-performance.pdf
 
-28. Open Garden. (2015). "FireChat at Burning Man: Mesh Networking for Off-Grid Communication." VentureBeat. Documented deployment of peer-to-peer Bluetooth/WiFi mesh network connecting 4,000+ users in desert conditions. Available: https://venturebeat.com/business/firechat-lets-burning-man-2015-attendees-create-their-own-wireless-network-on-the-playa/
+28. Open Garden. (2015). "FireChat at Burning Man: Mesh Networking for Off-Grid Communication." VentureBeat. [Industry-reported] Documented deployment of peer-to-peer Bluetooth/WiFi mesh network connecting 4,000+ users in desert conditions. Available: https://venturebeat.com/business/firechat-lets-burning-man-2015-attendees-create-their-own-wireless-network-on-the-playa/
 
 29. Stoica, I., Morris, R., Liben-Nowell, D., et al. (2003). "Chord: A Scalable Peer-to-peer Lookup Protocol for Internet Applications." *IEEE/ACM Transactions on Networking*, 11(1), 17-32.
 
-30. V8 Team. (2024). "The V8 Sandbox." Google Chrome Blog. Shows ~1% overhead for memory sandboxing on typical workloads. Available: https://v8.dev/blog/sandbox
+30. V8 Team. (2024). "The V8 Sandbox." Google Chrome Blog. [Vendor-reported] Shows ~1% overhead for memory sandboxing on typical workloads. Available: https://v8.dev/blog/sandbox
 
-31. Immunant. (2024). "In-process Sandboxing with Memory Protection Keys." Shows single-instruction memory protection changes (wrpkru) with minimal overhead. Available: https://immunant.com/blog/2024/04/sandboxing/
+31. Immunant. (2024). "In-process Sandboxing with Memory Protection Keys." [Vendor-reported] Shows single-instruction memory protection changes (wrpkru) with minimal overhead. Available: https://immunant.com/blog/2024/04/sandboxing/
 
-32. Cloudflare. (2024). "NIST's First Post-Quantum Standards." Analysis showing ML-KEM adds ~1.5KB overhead, ML-DSA adds 14.7kB to TLS handshakes. Available: https://blog.cloudflare.com/nists-first-post-quantum-standards/
+32. Cloudflare. (2024). "NIST's First Post-Quantum Standards." [Industry-reported] Analysis showing ML-KEM adds ~1.5KB overhead, ML-DSA adds 14.7kB to TLS handshakes. Available: https://blog.cloudflare.com/nists-first-post-quantum-standards/
 
 33. Marcus, Y., Heilman, E., & Goldberg, S. (2018). "Low-Resource Eclipse Attacks on Ethereum's Peer-to-Peer Network." *IACR Cryptology ePrint Archive*. Available: https://eprint.iacr.org/2018/236.pdf
 
 34. Castro, M., & Liskov, B. (1999). "Practical Byzantine Fault Tolerance." *Proceedings of the Third Symposium on Operating Systems Design and Implementation*. Available: http://pmg.csail.mit.edu/papers/osdi99.pdf
 
-35. Morphisec. (2024). "Automated Moving Target Defense." Shows AMTD effectiveness in preventing attacks through memory structure morphing. Available: https://www.morphisec.com/automated-moving-target-defense/
+35. Morphisec. (2024). "Automated Moving Target Defense." [Vendor-reported] Shows AMTD effectiveness in preventing attacks through memory structure morphing. Available: https://www.morphisec.com/automated-moving-target-defense/
 
 36. CISA. (2024). "Nation-State Threats." Cybersecurity and Infrastructure Security Agency analysis of APT capabilities. Available: https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors
 
