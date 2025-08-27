@@ -1706,12 +1706,17 @@ class UBIOptimizer:
 - Participation rate: 10% initial adoption
 - Cloud market size: $600B annually
 - Addressable market: $180B (30% suitable for edge)
-- Average device earning: $50/month
+- Average device earning (basic compute only): $50/month
+- Average device earning (with infrastructure value): $338/month
+  - Includes: geographic redundancy, load balancing, edge computing
+  - True edge location premium, disaster recovery, compliance features
+  - Based on 3-device household earning $1,014/month
 
 **Market calculations:**
 - Total devices: 11.5 billion
 - Participating devices: 1.15 billion (10% adoption)
-- Annual UBI distributed: $69 billion
+- Annual UBI distributed (basic): $69 billion
+- Annual UBI distributed (infrastructure-aware): $467 billion
 - Value created: $180 billion addressable market
 
 **You're Not Just a Device Owner - You're a Micro-Datacenter Operator**:
