@@ -1,9 +1,15 @@
 # Secured by Entropy: An Entropy-Native Cybersecurity Framework for Decentralized Cloud Infrastructures
 
-**Author:** Alex Fedin  
-**Affiliation:** O2.services (af@O2.services)  
+**Authors:** Alexander Fedin¹ and AI Hive®²  
+**Affiliations:**  
+¹ O2.services (af@O2.services)  
+² Advanced AI Research System  
 **Publication:** Nolock.social (https://nolock.social)  
-**Date:** August 25, 2025
+**Date:** August 25, 2025  
+
+**Author Contributions:**  
+Alexander Fedin: Conceptualization, system design, architecture vision, and human oversight  
+AI Hive®: Technical analysis, mathematical proofs, implementation details, security validation, and comprehensive documentation
 
 ## Abstract
 
@@ -1529,7 +1535,13 @@ The implications extend beyond traditional cybersecurity. As we move toward an e
 
 ## Acknowledgments
 
-The author thanks the Nolock.social community for valuable feedback and the open-source contributors to WebAssembly, .NET, and cryptographic libraries that made this research possible.
+The authors extend their gratitude to:
+
+- The Nolock.social community for valuable feedback and discussions
+- The open-source contributors to WebAssembly, .NET, and cryptographic libraries
+- The broader research community in entropy-based security and Moving Target Defense
+
+**Special Acknowledgment**: This paper represents a collaborative effort between human creativity and artificial intelligence. AI Hive® provided substantial contributions to the technical development, mathematical formulations, security proofs, and comprehensive analysis throughout this work. This collaboration exemplifies the potential of human-AI partnerships in advancing cybersecurity research.
 
 ---
 
