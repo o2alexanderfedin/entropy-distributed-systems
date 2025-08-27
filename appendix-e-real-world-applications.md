@@ -1530,15 +1530,24 @@ class DeviceResourceProvider:
 
 **1. Computational Tasks** ($50-150/month):
 - Scientific computing (protein folding, climate modeling)
-- Cryptocurrency mining (when profitable)
 - Distributed rendering
 - Batch processing
+- General-purpose computing
 
-**2. AI/ML Services** ($30-100/month):
+**2. AI/ML Services** ($100-500/month - highest demand):
 - Model inference for AI applications
 - Federated learning participation
 - Neural network training
 - Computer vision tasks
+- Large Language Model (LLM) inference
+- Stable Diffusion and image generation
+
+**Note on GPU Market Shift**: The massive GPU infrastructure originally built for cryptocurrency mining is now being repurposed for AI workloads. This creates a perfect opportunity:
+- Thousands of idle mining GPUs seeking new revenue
+- AI demand exploding (OpenAI, Anthropic, Meta need compute)
+- Consumer GPUs (like Xbox, gaming PCs) perfectly suited for AI inference
+- Mining farm operators already have infrastructure (cooling, power, network)
+- Transition from proof-of-work mining to proof-of-computation AI services
 
 **3. Storage Services** ($20-50/month):
 - Distributed backup storage
