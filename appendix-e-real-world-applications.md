@@ -1710,23 +1710,23 @@ class UBIOptimizer:
 **Device Earning Calculation (Infrastructure-Aware):**
 
 Based on earlier analysis (see Section E.8.6), a 3-device household provides:
-- **Multi-Zone Deployment**: $58/month (equivalent to AWS 3 AZs @ $0.12/hr each)
-- **Cross-Region Backup**: $35/month (vs S3 Cross-Region Replication)
-- **Disaster Recovery**: $45/month (vs AWS Backup @ $200/month)
-- **CDN Edge Location**: $180/month (vs CloudFront POP @ $500/month)
-- **Edge Functions**: $25/month (vs Lambda@Edge)
-- **IoT Edge Gateway**: $40/month (vs AWS Greengrass)
-- **Application Load Balancing**: $22/month (vs ALB @ $45/month)
-- **Auto-scaling**: $15/month (vs EC2 Auto Scaling)
-- **Traffic Distribution**: $10/month (vs Route 53)
-- **ARM64 Compute**: $87/month (MacBook M1 vs Graviton2)
-- **GPU Computing**: $252/month (Xbox vs g4dn.xlarge)
-- **99.95% SLA**: $120/month (vs Enterprise support @ $500/month)
-- **Compliance Features**: $75/month (vs SOC2/HIPAA @ $300/month)
-- **P2P Mesh Network**: $50/month (vs Direct Connect @ $200/month)
+- **Multi-Zone Deployment**: \$58/month (equivalent to AWS 3 AZs @ \$0.12/hr each)
+- **Cross-Region Backup**: \$35/month (vs S3 Cross-Region Replication)
+- **Disaster Recovery**: \$45/month (vs AWS Backup @ \$200/month)
+- **CDN Edge Location**: \$180/month (vs CloudFront POP @ \$500/month)
+- **Edge Functions**: \$25/month (vs Lambda@Edge)
+- **IoT Edge Gateway**: \$40/month (vs AWS Greengrass)
+- **Application Load Balancing**: \$22/month (vs ALB @ \$45/month)
+- **Auto-scaling**: \$15/month (vs EC2 Auto Scaling)
+- **Traffic Distribution**: \$10/month (vs Route 53)
+- **ARM64 Compute**: \$87/month (MacBook M1 vs Graviton2)
+- **GPU Computing**: \$252/month (Xbox vs g4dn.xlarge)
+- **99.95% SLA**: \$120/month (vs Enterprise support @ \$500/month)
+- **Compliance Features**: \$75/month (vs SOC2/HIPAA @ \$300/month)
+- **P2P Mesh Network**: \$50/month (vs Direct Connect @ \$200/month)
 
-**Total for 3 devices**: $1,014/month
-**Average per device**: $338/month
+**Total for 3 devices**: \$1,014/month
+**Average per device**: \$338/month
 
 This reflects the true value devices provide when considering infrastructure services,
 not just raw compute power. Enterprises pay premium for these features.
@@ -1734,16 +1734,36 @@ not just raw compute power. Enterprises pay premium for these features.
 **Market calculations:**
 - Total devices: 11.5 billion globally
 - Participating devices: 1.15 billion (10% initial adoption)
-- Annual UBI distributed: $467 billion
-  - Calculation: 1.15B devices × $338/month × 12 months
+- Annual UBI distributed: \$467 billion
+  - Calculation: 1.15B devices × \$338/month × 12 months
   - This assumes devices provide infrastructure services, not just compute
-- Value created: $180 billion (30% of $600B cloud market)
+- Value created: \$180 billion (30% of \$600B cloud market)
 - Cost savings for enterprises: ~70% vs traditional cloud
-  - Example: $1,014/month for 3-device "micro-datacenter"
-  - Equivalent AWS/Azure services: $2,915/month
-  - Savings: $1,901/month (65% reduction)
+  - Example: \$1,014/month for 3-device "micro-datacenter"
+  - Equivalent AWS/Azure services: \$2,915/month
+  - Savings: \$1,901/month (65% reduction)
 
-**You're Not Just a Device Owner - You're a Micro-Datacenter Operator**:
+**Revolutionary Tax Implications for UBI:**
+
+*Traditional UBI Tax Burden:*
+- Government-funded UBI requires massive tax increases
+- Example: \$1,000/month UBI for 200M adults = \$2.4 trillion/year
+- Would require ~50% increase in federal tax revenue
+- Creates economic drag from high taxation
+
+*Device-Based UBI Tax Advantages:*
+- **Self-Funded**: No government taxation required
+- **Business Income**: Device earnings treated as business revenue
+  - Business expense deductions (electricity, internet, depreciation)
+  - Potential 20% pass-through deduction (Section 199A)
+  - Effective tax rate: 10-15% vs 25-35% for wages
+- **Graph Cycle Elimination**: Reduces taxable transactions
+  - Payment cycles eliminated = no taxable events
+  - Example: A→B→C→A cycle eliminated = 3 fewer taxable events
+- **Economic Growth**: Creates value rather than redistributing
+  - No deadweight loss from taxation
+  - Increases GDP rather than being transfer payment
+  - Enterprises save money, individuals earn income
 
 **You're Not Just a Device Owner - You're a Micro-Datacenter Operator:**
 
