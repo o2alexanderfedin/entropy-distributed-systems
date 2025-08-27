@@ -1706,18 +1706,42 @@ class UBIOptimizer:
 - Participation rate: 10% initial adoption
 - Cloud market size: $600B annually
 - Addressable market: $180B (30% suitable for edge)
-- Average device earning (basic compute only): $50/month
-- Average device earning (with infrastructure value): $338/month
-  - Includes: geographic redundancy, load balancing, edge computing
-  - True edge location premium, disaster recovery, compliance features
-  - Based on 3-device household earning $1,014/month
+
+**Device Earning Calculation (Infrastructure-Aware):**
+
+Based on earlier analysis (see Section E.8.6), a 3-device household provides:
+- **Multi-Zone Deployment**: $58/month (equivalent to AWS 3 AZs @ $0.12/hr each)
+- **Cross-Region Backup**: $35/month (vs S3 Cross-Region Replication)
+- **Disaster Recovery**: $45/month (vs AWS Backup @ $200/month)
+- **CDN Edge Location**: $180/month (vs CloudFront POP @ $500/month)
+- **Edge Functions**: $25/month (vs Lambda@Edge)
+- **IoT Edge Gateway**: $40/month (vs AWS Greengrass)
+- **Application Load Balancing**: $22/month (vs ALB @ $45/month)
+- **Auto-scaling**: $15/month (vs EC2 Auto Scaling)
+- **Traffic Distribution**: $10/month (vs Route 53)
+- **ARM64 Compute**: $87/month (MacBook M1 vs Graviton2)
+- **GPU Computing**: $252/month (Xbox vs g4dn.xlarge)
+- **99.95% SLA**: $120/month (vs Enterprise support @ $500/month)
+- **Compliance Features**: $75/month (vs SOC2/HIPAA @ $300/month)
+- **P2P Mesh Network**: $50/month (vs Direct Connect @ $200/month)
+
+**Total for 3 devices**: $1,014/month
+**Average per device**: $338/month
+
+This reflects the true value devices provide when considering infrastructure services,
+not just raw compute power. Enterprises pay premium for these features.
 
 **Market calculations:**
-- Total devices: 11.5 billion
-- Participating devices: 1.15 billion (10% adoption)
-- Annual UBI distributed (basic): $69 billion
-- Annual UBI distributed (infrastructure-aware): $467 billion
-- Value created: $180 billion addressable market
+- Total devices: 11.5 billion globally
+- Participating devices: 1.15 billion (10% initial adoption)
+- Annual UBI distributed: $467 billion
+  - Calculation: 1.15B devices × $338/month × 12 months
+  - This assumes devices provide infrastructure services, not just compute
+- Value created: $180 billion (30% of $600B cloud market)
+- Cost savings for enterprises: ~70% vs traditional cloud
+  - Example: $1,014/month for 3-device "micro-datacenter"
+  - Equivalent AWS/Azure services: $2,915/month
+  - Savings: $1,901/month (65% reduction)
 
 **You're Not Just a Device Owner - You're a Micro-Datacenter Operator**:
 
