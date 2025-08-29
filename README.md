@@ -10,7 +10,7 @@ This repository contains academic research on entropy-based cybersecurity framew
 
 ## Research Paper
 
-**[Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures](./Secured_by_Entropy_P2P_Cloud_Academic_2025-08-25.md)**
+**[Secured by Entropy: An Entropy-Based Cybersecurity Framework for Decentralized Cloud Infrastructures](./Secured_by_Entropy_P2P_Cloud_2025-08-25.md)**
 
 *Author*: Alex Fedin (af@O2.services)  
 *Publication*: Nolock.social  
@@ -101,8 +101,25 @@ This research maintains strict academic integrity standards:
 ```
 entropy-distributed-systems/
 ├── README.md                                          # This file
-├── Secured_by_Entropy_P2P_Cloud_Academic_2025-08-25.md  # Main research paper
-└── LICENSE                                           # CC BY 4.0 License
+├── Secured_by_Entropy_P2P_Cloud_2025-08-25.md          # Main research paper
+├── appendix-a-mathematical-proofs.md                    # Mathematical foundations
+├── appendix-b-implementation-details.md                 # Technical specifications
+├── appendix-c-threat-mitigation-matrix.md              # Security analysis
+├── appendix-d-device-bound-identity.md                 # Identity framework
+├── appendix-e-real-world-applications.md               # Use cases
+├── appendix-f-glossary.md                              # Technical terms
+├── patent-docs/                                        # Patent documentation
+│   ├── patent-1-blockchain-free-decentralized-pki.md
+│   ├── patent-2-device-bound-password-derived-identity.md
+│   ├── patent-3-entropy-enhanced-p2p-security.md
+│   ├── patent-4-ephemeral-private-clouds.md
+│   ├── patent-5-content-addressable-computing.md
+│   ├── patent-6-graph-optimized-payment-system.md
+│   ├── patent-7-device-infrastructure-monetization.md
+│   ├── patent-8-gdpr-compliant-fog-layer.md
+│   └── patent-9-ubi-infrastructure-system.md
+├── reviews-verifications/                              # Research verifications
+└── LICENSE                                           # CC BY-NC-SA 4.0 License
 ```
 
 ## Future Work
@@ -129,7 +146,7 @@ entropy-distributed-systems/
   journal={Nolock.social},
   year={2025},
   url={https://nolock.social},
-  license={CC BY 4.0}
+  license={CC BY-NC-SA 4.0}
 }
 ```
 
