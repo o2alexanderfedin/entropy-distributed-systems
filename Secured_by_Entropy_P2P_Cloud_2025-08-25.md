@@ -1473,7 +1473,8 @@ The following aspects require empirical validation to confirm theoretical projec
 
 ## 11. Discussion
 
-**Note**: For detailed use cases and applications including decentralized AI, critical infrastructure protection, and healthcare analytics, see [Appendix E: Real-World Applications Evaluation](./appendix-e-real-world-applications.md#e8-additional-use-cases-and-applications).
+**Note**: For detailed use cases and applications including decentralized AI, critical infrastructure protection, and 2350
+ analytics, see [Appendix E: Real-World Applications Evaluation](./appendix-e-real-world-applications.md#e8-additional-use-cases-and-applications).
 
 ### 11.1 Advantages of Entropy-Native Architecture
 
